@@ -31,6 +31,13 @@ public class SQLServer {
             callableStatement.setInt(1, 50);
             resultSet = callableStatement.executeQuery();
 
+
+
+            // Create and execute an SQL statement that returns some data.
+            String SQL = "SELECT Title, DocumentSummary " +
+                    "FROM Production.Document";
+            statement = conn.createStatement();
+
             while (resultSet.next()) {
                 System.out.println("EMPLOYEE: " + resultSet.getString("LastName") +
                         ", " + resultSet.getString("FirstName"));
