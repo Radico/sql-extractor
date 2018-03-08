@@ -1,11 +1,12 @@
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.microsoft.sqlserver.jdbc.*;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 
 public class SQLServer {
 
@@ -19,18 +20,15 @@ public class SQLServer {
     public static List<String> getColumnNames(ResultSet rs) throws SQLException {
         ResultSetMetaData md = rs.getMetaData();
         List<String> columns = new ArrayList<>(md.getColumnCount());
-        for(int i = 1; i <= md.getColumnCount(); i++){
+        for (int i = 1; i <= md.getColumnCount(); i++) {
             columns.add(md.getColumnName(i));
         }
         return columns;
     }
 
 
-    public void query() {
+    public List<Map<String, Object>> query() {
         Connection conn = null;
-        CallableStatement callableStatement = null;
-        ResultSet resultSet = null;
-
         try {
             SQLServerDataSource ds = new SQLServerDataSource();
             ds.setUser(params.getUser());
@@ -42,28 +40,14 @@ public class SQLServer {
 
             String SQL = "SELECT Title, DocumentSummary " +
                     "FROM Production.Document";
-            Statement statement = conn.createStatement();
-            resultSet = statement.executeQuery(SQL);
-            ResultSetMetaData md = resultSet.getMetaData();
+
+            QueryRunner queryRunner = new QueryRunner(ds);
+            MapListHandler handler = new MapListHandler();
+            return queryRunner.query(SQL, handler);
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception e) {
-                }
-            }
-
-            if (callableStatement != null) {
-                try {
-                    callableStatement.close();
-                } catch (Exception e) {
-
-                }
-            }
-
             if (conn != null) {
                 try {
                     conn.close();
@@ -74,6 +58,7 @@ public class SQLServer {
 
             System.exit(1);
         }
+        return null;
     }
 
 

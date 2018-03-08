@@ -1,27 +1,30 @@
-import java.nio.file.Files;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
+import com.google.gson.Gson;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class OutputWriter {
 
+    private Gson gson;
 
-    public String writeResultSet(ResultSet rs) {
-        try {
-            List<String> cols = SQLServer.getColumnNames(rs);
-            while(rs.next()) {
-                Map row = new HashMap();
-                for(String col : cols){
-                    row.put(col, rs.getObject(col));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public OutputWriter() {
+        this.gson = new Gson();
     }
 
-    Files.wr
+    public void writeQuery(List<Map<String, ?>> results) {
 
+        Stream<String> json = results.stream().map(this.gson::toJson);
+        try (PrintWriter pw = new PrintWriter("output.txt", "UTF-8")) {
+            json.forEachOrdered(pw::println);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
