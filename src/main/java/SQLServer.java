@@ -1,5 +1,9 @@
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.microsoft.sqlserver.jdbc.*;
 
@@ -11,6 +15,16 @@ public class SQLServer {
 
         this.params = params;
     }
+
+    public static List<String> getColumnNames(ResultSet rs) throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+        List<String> columns = new ArrayList<>(md.getColumnCount());
+        for(int i = 1; i <= md.getColumnCount(); i++){
+            columns.add(md.getColumnName(i));
+        }
+        return columns;
+    }
+
 
     public void query() {
         Connection conn = null;
@@ -26,43 +40,36 @@ public class SQLServer {
             ds.setDatabaseName(params.getDatabase());
             conn = ds.getConnection();
 
-            // Execute a stored procedure that returns some data.
-            callableStatement = conn.prepareCall("{call dbo.uspGetEmployeeManagers(?)}");
-            callableStatement.setInt(1, 50);
-            resultSet = callableStatement.executeQuery();
-
-
-
-            // Create and execute an SQL statement that returns some data.
             String SQL = "SELECT Title, DocumentSummary " +
                     "FROM Production.Document";
-            statement = conn.createStatement();
-
-            while (resultSet.next()) {
-                System.out.println("EMPLOYEE: " + resultSet.getString("LastName") +
-                        ", " + resultSet.getString("FirstName"));
-                System.out.println("MANAGER: " + resultSet.getString("ManagerLastName") +
-                        ", " + resultSet.getString("ManagerFirstName"));
-                System.out.println();
-            }
-
+            Statement statement = conn.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            ResultSetMetaData md = resultSet.getMetaData();
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (resultSet != null) try {
-                resultSet.close();
-            } catch (Exception e) {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                }
             }
 
-            if (callableStatement != null) try {
-                callableStatement.close();
-            } catch (Exception e) {
+            if (callableStatement != null) {
+                try {
+                    callableStatement.close();
+                } catch (Exception e) {
+
+                }
             }
 
-            if (conn != null) try {
-                conn.close();
-            } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Exception e) {
+
+                }
             }
 
             System.exit(1);
