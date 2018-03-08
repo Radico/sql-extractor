@@ -1,36 +1,42 @@
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Map;
 
 public class JsonLOutputWriter {
+
+    static String ENCODING = "UTF-8";
 
     private Gson gson;
     private String encoding;
 
-    public JsonLOutputWriter() {
+    JsonLOutputWriter() {
         this.gson = new Gson();
-        this.encoding = "UTF-8";
     }
 
-    public void writeQuery(List<?> results, String filename) {
-        this.writeQuery(results, new File(filename));
+    String toJson(Map<String, Object> input) {
+        return this.gson.toJson(input);
     }
 
-    public void writeQuery(List<?> results, File file) {
+    void writeQuery(List<Map<String, Object>> results, OutputStream os) {
+        this.writeQueryToWriter(results, new PrintWriter(os));
+    }
 
-        Stream<String> json = results.stream().map(this.gson::toJson);
-        try (PrintWriter pw = new PrintWriter(file, this.encoding)) {
-            json.forEachOrdered(pw::println);
+    public void writeQuery(List<Map<String, Object>> results, String filename) {
+        try (PrintWriter writer = new PrintWriter(new File(filename), ENCODING)) {
+            this.writeQueryToWriter(results, writer);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
 
+    private void writeQueryToWriter(List<Map<String, Object>> results, PrintWriter writer) {
+        results.stream().
+                map(this::toJson).
+                forEach(writer::println);
+        writer.flush();
     }
 }
