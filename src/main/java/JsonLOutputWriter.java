@@ -7,18 +7,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class OutputWriter {
+public class JsonLOutputWriter {
 
     private Gson gson;
+    private String encoding;
 
-    public OutputWriter() {
+    public JsonLOutputWriter() {
         this.gson = new Gson();
+        this.encoding = "UTF-8";
     }
 
-    public void writeQuery(List<Map<String, ?>> results) {
+    public void writeQuery(List<Map<String, ?>> results, String filename) {
 
         Stream<String> json = results.stream().map(this.gson::toJson);
-        try (PrintWriter pw = new PrintWriter("output.txt", "UTF-8")) {
+        try (PrintWriter pw = new PrintWriter(filename, this.encoding)) {
             json.forEachOrdered(pw::println);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
