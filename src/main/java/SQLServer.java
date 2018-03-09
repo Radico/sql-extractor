@@ -8,7 +8,7 @@ import com.microsoft.sqlserver.jdbc.*;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
-public class SQLServer {
+public class SQLServer implements SQLClient {
 
     private SQLServerParams params;
 
