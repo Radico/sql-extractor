@@ -16,6 +16,16 @@ public class Extractor {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine line = parser.parse(getOptions(), args);
+
+            SQLServer client = new SQLServer(null);
+            JsonLOutputWriter writer = new JsonLOutputWriter();
+
+            String queryText = "";
+            String outputFile = "";
+
+            writer.writeQuery(client.query(queryText), outputFile);
+
+            System.out.println("Wrote to " + outputFile);
         } catch (ParseException exp) {
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
         }

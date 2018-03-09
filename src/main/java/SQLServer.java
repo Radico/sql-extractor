@@ -13,7 +13,6 @@ public class SQLServer {
     private SQLServerParams params;
 
     public SQLServer(SQLServerParams params) {
-
         this.params = params;
     }
 
