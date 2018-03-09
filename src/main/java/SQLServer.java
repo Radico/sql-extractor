@@ -27,7 +27,7 @@ public class SQLServer {
     }
 
 
-    public List<Map<String, Object>> query() {
+    public List<Map<String, Object>> query(String queryText) {
         Connection conn = null;
         try {
             SQLServerDataSource ds = new SQLServerDataSource();
@@ -38,12 +38,9 @@ public class SQLServer {
             ds.setDatabaseName(params.getDatabase());
             conn = ds.getConnection();
 
-            String SQL = "SELECT Title, DocumentSummary " +
-                    "FROM Production.Document";
-
             QueryRunner queryRunner = new QueryRunner(ds);
             MapListHandler handler = new MapListHandler();
-            return queryRunner.query(SQL, handler);
+            return queryRunner.query(queryText, handler);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,10 +56,6 @@ public class SQLServer {
             System.exit(1);
         }
         return null;
-    }
-
-
-    public static void main(String[] args) {
     }
 
 }
