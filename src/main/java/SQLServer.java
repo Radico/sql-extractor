@@ -41,6 +41,8 @@ public class SQLServer implements SQLClient {
             return queryRunner.query(queryText, handler);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
+
             e.printStackTrace();
         } finally {
             if (conn != null) {

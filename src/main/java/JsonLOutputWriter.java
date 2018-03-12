@@ -32,7 +32,7 @@ public class JsonLOutputWriter {
             PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
             logger.info("Opening " + filename + " with encoding " + ENCODING);
             this.writeQueryToWriterIterate(results, writer);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)   {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
