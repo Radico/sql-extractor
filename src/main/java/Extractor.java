@@ -37,14 +37,18 @@ public class Extractor {
             String user = line.getOptionValue("user");
             String host = line.getOptionValue("host", "localhost");
             String type = line.getOptionValue("type", "SQLSERVER").toUpperCase();
-            int port = Integer.parseInt(line.getOptionValue("port"));
+            String strPort = line.getOptionValue("port");
+            Integer port = null;
+            if (strPort != null) {
+                port = Integer.parseInt(strPort);
+            }
             String database = line.getOptionValue("database");
             String password = getPassword();
 
             SQLParams params = new SQLParams(host, port, user, password, database);
 
             SQLClient client;
-            if (type.equals("SQLSERVER")) {
+            if (type.equals("SQLSERVER") || type.equals("MSSQL")) {
                 client = new SQLServer(params);
             } else {
                 System.out.println("Invalid DB type.");
