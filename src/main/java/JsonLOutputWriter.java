@@ -31,12 +31,25 @@ public class JsonLOutputWriter {
         try {
             PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
             logger.info("Opening " + filename + " with encoding " + ENCODING);
-            this.writeQueryToWriter(results, writer);
+            this.writeQueryToWriterIterate(results, writer);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    private void writeQueryToWriterIterate(List<Map<String, Object>> results, PrintWriter writer) {
+        int count = 0;
+        for (Map<String, Object> result : results) {
+            writer.println(this.toJson(result));
+            count++;
+            if (count % 10000 == 0) {
+                logger.info("Written " + count + " lines...");
+            }
+        }
+        writer.flush();
+        logger.info("Flushed writer.");
     }
 
     private void writeQueryToWriter(List<Map<String, Object>> results, PrintWriter writer) {
