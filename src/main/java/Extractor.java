@@ -1,6 +1,10 @@
 import org.apache.commons.cli.*;
 
 import java.io.Console;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Extractor {
     /**
@@ -16,6 +20,8 @@ public class Extractor {
         options.addOption("p", "port", true, "port");
         options.addOption("d", "database", true, "database");
         options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
+        options.addOption("s", "sql", true, "SQL file to read");
+        options.addOption("o", "output", true, "File to write to");
         return options;
     }
 
@@ -29,7 +35,13 @@ public class Extractor {
         }
     }
 
+    private static void configure() {
+        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
+    }
+
     public static void main(String[] args) {
+        configure();
+
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine line = parser.parse(getOptions(), args);
@@ -55,14 +67,17 @@ public class Extractor {
                 return;
             }
 
-            JsonLOutputWriter writer = new JsonLOutputWriter();
+            try {
+                String inputSql = new String(
+                        Files.readAllBytes(Paths.get("manifest.mf")),
+                        StandardCharsets.UTF_8);
+                String outputFile = line.getOptionValue("output", "out.json");
+                JsonLOutputWriter writer = new JsonLOutputWriter();
+                writer.writeQuery(client.query(inputSql), outputFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            String queryText = "";
-            String outputFile = "";
-
-            writer.writeQuery(client.query(queryText), outputFile);
-
-            System.out.println("Wrote to " + outputFile);
         } catch (ParseException exp) {
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
         }

@@ -6,8 +6,12 @@ import java.util.Map;
 import com.microsoft.sqlserver.jdbc.*;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SQLServer implements SQLClient {
+
+    final Logger logger = LoggerFactory.getLogger(SQLServer.class);
 
     private SQLParams params;
 
@@ -28,6 +32,9 @@ public class SQLServer implements SQLClient {
 
             QueryRunner queryRunner = new QueryRunner(ds);
             MapListHandler handler = new MapListHandler();
+
+            logger.debug(queryText);
+
             return queryRunner.query(queryText, handler);
 
         } catch (Exception e) {
@@ -35,12 +42,14 @@ public class SQLServer implements SQLClient {
         } finally {
             if (conn != null) {
                 try {
+                    logger.debug("Closing connection...");
                     conn.close();
                 } catch (Exception e) {
 
                 }
             }
 
+            logger.debug("Exiting 1.");
             System.exit(1);
         }
         return null;

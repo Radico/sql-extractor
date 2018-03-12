@@ -2,6 +2,7 @@ group 'simon'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
 
@@ -9,7 +10,18 @@ repositories {
     mavenCentral()
 }
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+    }
+}
+
 dependencies {
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
     compile group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
     compile 'com.google.code.gson:gson:2.8.2'
