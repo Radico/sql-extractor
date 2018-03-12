@@ -68,8 +68,9 @@ public class Extractor {
             }
 
             try {
+                String inputFileName = line.getOptionValue("sql");
                 String inputSql = new String(
-                        Files.readAllBytes(Paths.get("manifest.mf")),
+                        Files.readAllBytes(Paths.get(inputFileName)),
                         StandardCharsets.UTF_8);
                 String outputFile = line.getOptionValue("output", "out.json");
                 JsonLOutputWriter writer = new JsonLOutputWriter();
