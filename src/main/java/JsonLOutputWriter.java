@@ -1,10 +1,14 @@
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.List;
 import java.util.Map;
 
 public class JsonLOutputWriter {
+
+    private final Logger logger = LoggerFactory.getLogger(JsonLOutputWriter.class);
 
     static String ENCODING = "UTF-8";
 
@@ -24,7 +28,9 @@ public class JsonLOutputWriter {
     }
 
     public void writeQuery(List<Map<String, Object>> results, String filename) {
-        try (PrintWriter writer = new PrintWriter(new File(filename), ENCODING)) {
+        try {
+            PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
+            logger.info("Opening " + filename + " with encoding " + ENCODING);
             this.writeQueryToWriter(results, writer);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -38,5 +44,6 @@ public class JsonLOutputWriter {
                 map(this::toJson).
                 forEach(writer::println);
         writer.flush();
+        logger.info("Flushed writer.");
     }
 }
