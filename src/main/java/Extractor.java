@@ -1,15 +1,32 @@
 import org.apache.commons.cli.*;
 
+import java.io.Console;
+
 public class Extractor {
+    /**
+     * Extractor
+     *
+     * @return
+     */
 
     private static Options getOptions() {
         Options options = new Options();
-        options.addOption( "u", "user", false, "user" );
-        options.addOption( "w", "password", false, "password" );
-        options.addOption( "h", "host", false, "host" );
-        options.addOption( "p", "port", false, "port" );
-        options.addOption( "d", "database", false, "database" );
+        options.addRequiredOption("u", "user", true, "user");
+        options.addOption("h", "host", true, "host");
+        options.addOption("p", "port", true, "port");
+        options.addOption("d", "database", true, "database");
+        options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
         return options;
+    }
+
+    private static String getPassword() {
+        String value = System.getenv("EXTRACT_DB_PASSWORD");
+        if (value != null) {
+            return value;
+        } else {
+            Console console = System.console();
+            return new String(console.readPassword("Password: "));
+        }
     }
 
     public static void main(String[] args) {
@@ -17,7 +34,23 @@ public class Extractor {
         try {
             CommandLine line = parser.parse(getOptions(), args);
 
-            SQLServer client = new SQLServer(null);
+            String user = line.getOptionValue("user");
+            String host = line.getOptionValue("host", "localhost");
+            String type = line.getOptionValue("type", "SQLSERVER").toUpperCase();
+            int port = Integer.parseInt(line.getOptionValue("port"));
+            String database = line.getOptionValue("database");
+            String password = getPassword();
+
+            SQLParams params = new SQLParams(host, port, user, password, database);
+
+            SQLClient client;
+            if (type.equals("SQLSERVER")) {
+                client = new SQLServer(params);
+            } else {
+                System.out.println("Invalid DB type.");
+                return;
+            }
+
             JsonLOutputWriter writer = new JsonLOutputWriter();
 
             String queryText = "";

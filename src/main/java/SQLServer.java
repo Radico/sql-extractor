@@ -1,6 +1,5 @@
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,21 +9,11 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 
 public class SQLServer implements SQLClient {
 
-    private SQLServerParams params;
+    private SQLParams params;
 
-    public SQLServer(SQLServerParams params) {
+    public SQLServer(SQLParams params) {
         this.params = params;
     }
-
-    public static List<String> getColumnNames(ResultSet rs) throws SQLException {
-        ResultSetMetaData md = rs.getMetaData();
-        List<String> columns = new ArrayList<>(md.getColumnCount());
-        for (int i = 1; i <= md.getColumnCount(); i++) {
-            columns.add(md.getColumnName(i));
-        }
-        return columns;
-    }
-
 
     public List<Map<String, Object>> query(String queryText) {
         Connection conn = null;

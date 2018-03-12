@@ -1,5 +1,5 @@
 
-public class SQLServerParams {
+public class SQLParams {
 
     private String host;
     private Integer port;
@@ -7,7 +7,7 @@ public class SQLServerParams {
     private String password;
     private String database;
 
-    public SQLServerParams(String host, Integer port, String user, String password, String database) {
+    public SQLParams(String host, Integer port, String user, String password, String database) {
         this.host = host;
         this.port = port;
         this.user = user;
