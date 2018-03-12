@@ -73,9 +73,9 @@ public class Extractor {
                 String inputSql = new String(
                         Files.readAllBytes(Paths.get(inputFileName)),
                         StandardCharsets.UTF_8);
-                logger.info("Query:" + inputSql);
+                logger.debug("Reading " + inputFileName);
                 String outputFile = line.getOptionValue("output", "out.json");
-                logger.info("Output File: " + outputFile);
+                logger.debug("Output File: " + outputFile);
                 JsonLOutputWriter writer = new JsonLOutputWriter();
                 writer.writeQuery(client.query(inputSql), outputFile);
             } catch (IOException e) {

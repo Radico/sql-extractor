@@ -20,6 +20,9 @@ public class SQLServer implements SQLClient {
     }
 
     public List<Map<String, Object>> query(String queryText) {
+
+        logger.info("Querying for: " + queryText);
+
         Connection conn = null;
         try {
             SQLServerDataSource ds = new SQLServerDataSource();
