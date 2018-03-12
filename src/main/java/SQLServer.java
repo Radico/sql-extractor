@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class SQLServer implements SQLClient {
 
-    final Logger logger = LoggerFactory.getLogger(SQLServer.class);
+    private final Logger logger = LoggerFactory.getLogger(SQLServer.class);
 
     private SQLParams params;
 

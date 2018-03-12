@@ -1,4 +1,6 @@
 import org.apache.commons.cli.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Console;
 import java.io.IOException;
@@ -7,11 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Extractor {
-    /**
-     * Extractor
-     *
-     * @return
-     */
+
+    final static Logger logger = LoggerFactory.getLogger(Extractor.class);
 
     private static Options getOptions() {
         Options options = new Options();
@@ -36,7 +35,7 @@ public class Extractor {
     }
 
     private static void configure() {
-        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE");
+        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace");
     }
 
     public static void main(String[] args) {
@@ -59,11 +58,13 @@ public class Extractor {
 
             SQLParams params = new SQLParams(host, port, user, password, database);
 
+            logger.info(params.getSqlServerConnectionUrl());
+
             SQLClient client;
             if (type.equals("SQLSERVER") || type.equals("MSSQL")) {
                 client = new SQLServer(params);
             } else {
-                System.out.println("Invalid DB type.");
+                logger.error("Invalid DB type.");
                 return;
             }
 
@@ -72,7 +73,9 @@ public class Extractor {
                 String inputSql = new String(
                         Files.readAllBytes(Paths.get(inputFileName)),
                         StandardCharsets.UTF_8);
+                logger.info("Query:" + inputSql);
                 String outputFile = line.getOptionValue("output", "out.json");
+                logger.info("Output File: " + outputFile);
                 JsonLOutputWriter writer = new JsonLOutputWriter();
                 writer.writeQuery(client.query(inputSql), outputFile);
             } catch (IOException e) {
@@ -80,7 +83,7 @@ public class Extractor {
             }
 
         } catch (ParseException exp) {
-            System.err.println("Parsing failed.  Reason: " + exp.getMessage());
+            logger.error("Parsing failed.  Reason: " + exp.getMessage());
         }
 
     }

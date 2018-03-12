@@ -39,7 +39,7 @@ public class SQLParams {
         return database;
     }
 
-    public String getConnectionUrl() {
+    public String getSqlServerConnectionUrl() {
         return String.format(
                 "jdbc:sqlserver://%s:%d;databaseName=%s;integratedSecurity=true;",
                 this.getHost(), this.getPort(), this.getDatabase());
