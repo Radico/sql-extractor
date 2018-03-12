@@ -25,6 +25,10 @@ public class Extractor {
     }
 
     private static String getPassword() {
+        /*
+          Try to get password from environment var.
+          If that doesn't exist prompt on console.
+         */
         String value = System.getenv("EXTRACT_DB_PASSWORD");
         if (value != null) {
             return value;
@@ -36,6 +40,30 @@ public class Extractor {
 
     private static void configure() {
         System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace");
+    }
+
+    private static SQLClient sqlClientFactory(String sqlType, SQLParams params) {
+        SQLClient client = null;
+        switch (sqlType) {
+            case "SQLSERVER":
+            case "MSSQL":
+                client = new SQLServer(params);
+                break;
+            case "MYSQL":
+                logger.error("Not supported yet.");
+                break;
+            case "POSTGRES":
+            case "POSTGRESQL":
+                logger.error("Not supported yet.");
+                break;
+            case "ORACLE":
+                logger.error("Not supported yet.");
+                break;
+            default:
+                logger.error("Invalid DB type.");
+                break;
+        }
+        return client;
     }
 
     public static void main(String[] args) {
@@ -59,15 +87,7 @@ public class Extractor {
             SQLParams params = new SQLParams(host, port, user, password, database);
 
             logger.info(params.getSqlServerConnectionUrl());
-
-            SQLClient client;
-            if (type.equals("SQLSERVER") || type.equals("MSSQL")) {
-                client = new SQLServer(params);
-            } else {
-                logger.error("Invalid DB type.");
-                return;
-            }
-
+            SQLClient client = sqlClientFactory(type, params)
             try {
                 String inputFileName = line.getOptionValue("sql");
                 String inputSql = new String(
