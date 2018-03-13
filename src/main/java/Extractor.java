@@ -66,6 +66,11 @@ public class Extractor {
         return client;
     }
 
+    private static String readSql(String filename) throws IOException {
+        logger.debug("Reading " + filename);
+        return new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+    }
+
     public static void main(String[] args) {
         configure();
 
@@ -89,15 +94,12 @@ public class Extractor {
             logger.info(params.getSqlServerConnectionUrl());
             SQLClient client = sqlClientFactory(type, params);
             try {
-                String inputFileName = line.getOptionValue("sql");
-                String inputSql = new String(
-                        Files.readAllBytes(Paths.get(inputFileName)),
-                        StandardCharsets.UTF_8);
-                logger.debug("Reading " + inputFileName);
+                String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("output", "out.json");
                 logger.debug("Output File: " + outputFile);
                 JsonLOutputWriter writer = new JsonLOutputWriter();
-                writer.writeQuery(client.query(inputSql), outputFile);
+                int rows = writer.writeQuery(client.query(inputSql), outputFile);
+                logger.info("finished " + rows + " rows");
             } catch (IOException e) {
                 e.printStackTrace();
             }

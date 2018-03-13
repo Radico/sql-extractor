@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.microsoft.sqlserver.jdbc.*;
+import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class SQLServer implements SQLClient {
 
         Connection conn = null;
         try {
+            DbUtils.loadDriver("com.microsoft.sqlserver.jdbc.Driver");
             SQLServerDataSource ds = new SQLServerDataSource();
             ds.setUser(params.getUser());
             ds.setPassword(params.getPassword());
@@ -37,8 +39,8 @@ public class SQLServer implements SQLClient {
             MapListHandler handler = new MapListHandler();
 
             logger.debug(queryText);
-
             return queryRunner.query(queryText, handler);
+
 
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -59,5 +61,30 @@ public class SQLServer implements SQLClient {
         }
         return null;
     }
+
+    public void printRows(String queryText) {
+        logger.info("Querying for: " + queryText);
+        try {
+            DbUtils.loadDriver("com.microsoft.sqlserver.jdbc.Driver");
+            SQLServerDataSource ds = new SQLServerDataSource();
+            ds.setUser(params.getUser());
+            ds.setPassword(params.getPassword());
+            ds.setServerName(params.getHost());
+            ds.setPortNumber(params.getPort());
+            ds.setDatabaseName(params.getDatabase());
+            QueryRunner queryRunner = new QueryRunner(ds);
+            MapListHandler handler = new MapListHandler();
+
+            logger.debug(queryText);
+            for (Map row : queryRunner.query(queryText, handler)) {
+                System.out.println(row);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+
+            e.printStackTrace();
+        }
+    }
+
 
 }

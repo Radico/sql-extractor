@@ -19,19 +19,19 @@ public class JsonLOutputWriter {
         this.gson = new Gson();
     }
 
-    String toJson(Map<String, Object> input) {
+    String toJson(Map input) {
         return this.gson.toJson(input);
     }
 
-    void writeQuery(List<Map<String, Object>> results, OutputStream os) {
+    void writeQuery(List results, OutputStream os) {
         this.writeQueryToWriter(results, new PrintWriter(os));
     }
 
-    public void writeQuery(List<Map<String, Object>> results, String filename) {
+    public int writeQuery(List results, String filename) {
         try {
             PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
             logger.info("Opening " + filename + " with encoding " + ENCODING);
-            this.writeQueryToWriterIterate(results, writer);
+            return this.writeQueryToWriter(results, writer);
         } catch (FileNotFoundException e)   {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -39,10 +39,10 @@ public class JsonLOutputWriter {
         }
     }
 
-    private void writeQueryToWriterIterate(List<Map<String, Object>> results, PrintWriter writer) {
+    private int writeQueryToWriter(List results, PrintWriter writer) {
         int count = 0;
-        for (Map<String, Object> result : results) {
-            writer.println(this.toJson(result));
+        for (Object result : results) {
+            writer.println(this.toJson((Map) result));
             count++;
             if (count % 10000 == 0) {
                 logger.info("Written " + count + " lines...");
@@ -50,13 +50,6 @@ public class JsonLOutputWriter {
         }
         writer.flush();
         logger.info("Flushed writer.");
-    }
-
-    private void writeQueryToWriter(List<Map<String, Object>> results, PrintWriter writer) {
-        results.stream().
-                map(this::toJson).
-                forEach(writer::println);
-        writer.flush();
-        logger.info("Flushed writer.");
+        return count;
     }
 }
