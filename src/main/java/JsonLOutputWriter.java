@@ -27,6 +27,7 @@ public class JsonLOutputWriter {
         this();
         try {
             this.writer = new PrintWriter(new File(filename), ENCODING);
+            logger.info("opening file + " + filename);
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
