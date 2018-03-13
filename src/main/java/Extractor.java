@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Extractor {
 
-    final static Logger logger = LoggerFactory.getLogger(Extractor.class);
+    private final static Logger logger = LoggerFactory.getLogger(Extractor.class);
 
     private static Options getOptions() {
         Options options = new Options();
