@@ -1,10 +1,11 @@
-import com.google.gson.Gson;
+import com.google.gson.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.List;
 import java.util.Map;
+
 
 public class JsonLOutputWriter {
 
@@ -17,10 +18,13 @@ public class JsonLOutputWriter {
     private PrintWriter writer = null;
 
     JsonLOutputWriter() {
-        this.gson = new Gson();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.serializeNulls();
+        this.gson = gsonBuilder.create();
     }
 
     JsonLOutputWriter(String filename) {
+        this();
         try {
             this.writer = new PrintWriter(new File(filename), ENCODING);
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -37,6 +41,10 @@ public class JsonLOutputWriter {
         this.writer.flush();
     }
 
+    void printRow(Map row) {
+        System.out.println(this.toJson(row));
+    }
+
     void writeQuery(List results, OutputStream os) {
         this.writeQueryToWriter(results, new PrintWriter(os));
     }
@@ -46,7 +54,7 @@ public class JsonLOutputWriter {
             logger.info("Opening " + filename + " with encoding " + ENCODING);
             PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
             return this.writeQueryToWriter(results, writer);
-        } catch (FileNotFoundException | UnsupportedEncodingException e)   {
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
             return 0;
         }

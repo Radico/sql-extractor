@@ -21,7 +21,8 @@ public class Extractor {
         options.addOption("d", "database", true, "database");
         options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
         options.addOption("s", "sql", true, "SQL file to read");
-        options.addOption("o", "output", true, "File to write to");
+        options.addOption("o", "print", false, "Print to stdout");
+        options.addOption("f", "file", true, "File to write to");
         return options;
     }
 
@@ -96,15 +97,19 @@ public class Extractor {
             SQLClient client = sqlClientFactory(type, params);
             try {
                 String inputSql = readSql(line.getOptionValue("sql"));
-                String outputFile = line.getOptionValue("output", "out.json");
-                logger.debug("Output File: " + outputFile);
+                String outputFile = line.getOptionValue("file", "out.json");
+                boolean print  = line.hasOption("print");
                 JsonLOutputWriter writer = new JsonLOutputWriter(outputFile);
+                logger.debug("Output File: " + outputFile);
                 int rows = 0;
                 for (Map row : client.query(inputSql)) {
-                    writer.writeRow(row);
+                    if (print) {
+                        writer.printRow(row);
+                    } else {
+                        writer.writeRow(row);
+                    }
                     rows++;
                 }
-//                int rows = writer.writeQuery(client.query(inputSql), outputFile);
                 logger.info("finished " + rows + " rows");
             } catch (IOException e) {
                 e.printStackTrace();
