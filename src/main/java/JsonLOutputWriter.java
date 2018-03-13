@@ -13,29 +13,42 @@ public class JsonLOutputWriter {
     static String ENCODING = "UTF-8";
 
     private Gson gson;
-    private String encoding;
+
+    private PrintWriter writer = null;
 
     JsonLOutputWriter() {
         this.gson = new Gson();
+    }
+
+    JsonLOutputWriter(String filename) {
+        try {
+            this.writer = new PrintWriter(new File(filename), ENCODING);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     String toJson(Map input) {
         return this.gson.toJson(input);
     }
 
+    void writeRow(Map row) {
+        this.writer.println(this.toJson(row));
+        this.writer.flush();
+    }
+
     void writeQuery(List results, OutputStream os) {
         this.writeQueryToWriter(results, new PrintWriter(os));
     }
 
-    public int writeQuery(List results, String filename) {
+    int writeQuery(List results, String filename) {
         try {
-            PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
             logger.info("Opening " + filename + " with encoding " + ENCODING);
+            PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
             return this.writeQueryToWriter(results, writer);
-        } catch (FileNotFoundException e)   {
+        } catch (FileNotFoundException | UnsupportedEncodingException e)   {
             e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            return 0;
         }
     }
 

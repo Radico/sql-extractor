@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 
 public class Extractor {
 
@@ -97,8 +98,13 @@ public class Extractor {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("output", "out.json");
                 logger.debug("Output File: " + outputFile);
-                JsonLOutputWriter writer = new JsonLOutputWriter();
-                int rows = writer.writeQuery(client.query(inputSql), outputFile);
+                JsonLOutputWriter writer = new JsonLOutputWriter(outputFile);
+                int rows = 0;
+                for (Map row : client.query(inputSql)) {
+                    writer.writeRow(row);
+                    rows++;
+                }
+//                int rows = writer.writeQuery(client.query(inputSql), outputFile);
                 logger.info("finished " + rows + " rows");
             } catch (IOException e) {
                 e.printStackTrace();

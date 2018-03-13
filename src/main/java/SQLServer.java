@@ -23,8 +23,6 @@ public class SQLServer implements SQLClient {
     public List<Map<String, Object>> query(String queryText) {
 
         logger.info("Querying for: " + queryText);
-
-        Connection conn = null;
         try {
             DbUtils.loadDriver("com.microsoft.sqlserver.jdbc.Driver");
             SQLServerDataSource ds = new SQLServerDataSource();
@@ -33,33 +31,15 @@ public class SQLServer implements SQLClient {
             ds.setServerName(params.getHost());
             ds.setPortNumber(params.getPort());
             ds.setDatabaseName(params.getDatabase());
-            conn = ds.getConnection();
-
             QueryRunner queryRunner = new QueryRunner(ds);
             MapListHandler handler = new MapListHandler();
-
-            logger.debug(queryText);
             return queryRunner.query(queryText, handler);
-
-
         } catch (Exception e) {
             logger.error(e.getMessage());
-
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    logger.debug("Closing connection...");
-                    conn.close();
-                } catch (Exception e) {
-
-                }
-            }
-
-            logger.debug("Exiting 1.");
-            System.exit(1);
+            return null;
         }
-        return null;
+
     }
 
     public void printRows(String queryText) {
