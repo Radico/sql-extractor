@@ -19,7 +19,7 @@ public class Extractor {
         options.addOption("h", "host", true, "host");
         options.addOption("p", "port", true, "port");
         options.addOption("d", "database", true, "database");
-        options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
+        options.addOption("t", "type", true, "Driver type (SQLServerClient | MySQL | Postgres )");
         options.addOption("s", "sql", true, "SQL file to read");
         options.addOption("o", "print", false, "Print to stdout");
         options.addOption("f", "file", true, "File to write to");
@@ -49,7 +49,7 @@ public class Extractor {
         switch (sqlType) {
             case "SQLSERVER":
             case "MSSQL":
-                client = new SQLServer(params);
+                client = new SQLServerClient(params);
                 break;
             case "MYSQL":
                 logger.error("Not supported yet.");

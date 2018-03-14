@@ -1,5 +1,4 @@
 
-import java.sql.*;
 import java.util.List;
 import java.util.Map;
 
@@ -10,13 +9,13 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SQLServer implements SQLClient {
+public class SQLServerClient implements SQLClient {
 
-    private final Logger logger = LoggerFactory.getLogger(SQLServer.class);
+    private final Logger logger = LoggerFactory.getLogger(SQLServerClient.class);
 
     private SQLParams params;
 
-    public SQLServer(SQLParams params) {
+    public SQLServerClient(SQLParams params) {
         this.params = params;
     }
 
