@@ -34,35 +34,12 @@ public class JsonLOutputWriterTest {
         JsonLOutputWriter subject = new JsonLOutputWriter();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        subject.writeQuery(input, baos);
+        int lines = subject.writeQuery(input, baos);
         assertEquals(
                 "{\"a\":\"abc\",\"b\":1}\n{\"a\":\"jkl\",\"b\":2}\n",
                 baos.toString(JsonLOutputWriter.ENCODING)
         );
+        assertEquals(2, lines);
 
     }
-
-    @Test
-    public void writeQueryFile() throws Exception {
-
-        Map<String, Object> test1 = new HashMap<>();
-        test1.put("a", "abc");
-        test1.put("b", 1);
-        Map<String, Object> test2 = new HashMap<>();
-        test2.put("a", "jkl");
-        test2.put("b", 2);
-
-        List<Map<String, Object>> input = Arrays.asList(test1, test2);
-        JsonLOutputWriter subject = new JsonLOutputWriter();
-        String filename = "test_file.json";
-        subject.writeQuery(input, filename);
-        Path path = Paths.get(filename);
-        assertEquals(
-                "{\"a\":\"abc\",\"b\":1}\n{\"a\":\"jkl\",\"b\":2}\n",
-                new String(Files.readAllBytes(Paths.get("test_file.json")))
-        );
-        Files.delete(path);
-
-    }
-
 }

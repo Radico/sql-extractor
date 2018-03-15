@@ -46,19 +46,8 @@ public class JsonLOutputWriter {
         System.out.println(this.toJson(row));
     }
 
-    void writeQuery(List results, OutputStream os) {
-        this.writeQueryToWriter(results, new PrintWriter(os));
-    }
-
-    int writeQuery(List results, String filename) {
-        try {
-            logger.info("Opening " + filename + " with encoding " + ENCODING);
-            PrintWriter writer = new PrintWriter(new File(filename), ENCODING);
-            return this.writeQueryToWriter(results, writer);
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return 0;
-        }
+    int writeQuery(List results, OutputStream os) {
+        return this.writeQueryToWriter(results, new PrintWriter(os));
     }
 
     private int writeQueryToWriter(List results, PrintWriter writer) {
