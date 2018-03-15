@@ -11,6 +11,9 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://s3.amazonaws.com/redshift-maven-repository/release"
+    }
 }
 
 dependencies {
