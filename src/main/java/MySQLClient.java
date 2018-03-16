@@ -3,7 +3,7 @@ import javax.sql.DataSource;
 
 public class MySQLClient extends AbstractSQLClient {
 
-    public MySQLClient(SQLParams params) {
+    MySQLClient(SQLParams params) {
         super(params);
     }
 
