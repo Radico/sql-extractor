@@ -5,7 +5,7 @@
 Most Java SQL projects are designed around Object Relational Mappings. While
 this is powerful it doesn't allow the flexibility for dynamic queries.
 
-We need a flexible way to connect to various JDBC data sources and run arbitrary queries, return line delimited JSON.
+We need a flexible way to connect to various JDBC data sources, run arbitrary queries, return line delimited JSON.
 
 More info: http://jsonlines.org/
 
@@ -28,12 +28,15 @@ java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
     -h <HOST> \
     -p <PORT> \
     -d <DATABASE NAME> \
-    -t <TYPE> (sqlserver, mysql, redshift...) \
+    -t <TYPE> (sqlserver, mysql...see full list below) \
     -s /path/to/query.sql \
     -f /path/to/outputfile.jsonl
 ```
 
 ### Tests
+```$sh
+gradle test
+```
 
 ## Additional Information
 
@@ -44,10 +47,10 @@ however, the preferred method is to use the password console prompt.
 
 ### Supported Databases
 
-* Microsoft SQLServer
-* MySQL / MariaDB
-* PostgreSQL
-* Amazon Redshift
+* Microsoft SQLServer: `sqlserver`
+* MySQL / MariaDB: `mysql`
+* PostgreSQL: `postgresql`
+* Amazon Redshift: `redshift`
 
 In future we may add drivers support for the following:
 * Oracle
@@ -58,3 +61,9 @@ In future we may add drivers support for the following:
 * IBM DB2
 * Google BigQuery
 * Amazon Athena
+
+## Future Enhancements
+
+* Provide different types of output
+* Improve JSON serialization configuration options
+* Read query SQL from stdin or console.
