@@ -27,6 +27,7 @@ java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
     -u <USERNAME> \
     -h <HOST> \
     -p <PORT> \
+    -d <DATABASE NAME> \
     -t <TYPE> (sqlserver, mysql, redshift...) \
     -s /path/to/query.sql \
     -f /path/to/outputfile.jsonl
@@ -40,3 +41,20 @@ java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
 
 Passwords can be passed via an environment variable: `EXTRACT_DB_PASSWORD`, 
 however, the preferred method is to use the password console prompt.
+
+### Supported Databases
+
+* Microsoft SQLServer
+* MySQL / MariaDB
+* PostgreSQL
+* Amazon Redshift
+
+In future we may add drivers support for the following:
+* Oracle
+* Sybase
+* Informix
+* Microsoft Access
+* Firebird/ Interbase
+* IBM DB2
+* Google BigQuery
+* Amazon Athena

@@ -13,6 +13,12 @@ public class Extractor {
 
     private final static Logger logger = LoggerFactory.getLogger(Extractor.class);
 
+    /*
+    TODO these could be configurable.
+     */
+    private static final String ENV_VAR_PASSWORD_KEY = "EXTRACT_DB_PASSWORD";
+    private static final String DEFAULT_OUTPUT_FILENAME = "out.json";
+
     private static Options getOptions() {
         Options options = new Options();
         options.addRequiredOption("u", "user", true, "user");
@@ -31,7 +37,7 @@ public class Extractor {
           Try to get password from environment var.
           If that doesn't exist prompt on console.
          */
-        String value = System.getenv("EXTRACT_DB_PASSWORD");
+        String value = System.getenv(ENV_VAR_PASSWORD_KEY);
         if (value != null) {
             return value;
         } else {
@@ -51,20 +57,31 @@ public class Extractor {
             case "MSSQL":
                 client = new SQLServerClient(params);
                 break;
+            case "MARIADB":
             case "MYSQL":
-                logger.error("Not supported yet.");
+                client = new MySQLClient(params);
                 break;
             case "POSTGRES":
             case "POSTGRESQL":
-                logger.error("Not supported yet.");
+                client = new PostgreSQLClient(params);
                 break;
             case "REDSHIFT":
                 client = new RedshiftClient(params);
+                break;
             case "ORACLE":
+            case "SYBASE":
+            case "INFORMIX":
+            case "ACCESS":
+            case "INTERBASE":
+            case "FIREBIRD":
+            case "IBMDB2":
+            case "DB2":
+            case "BIGQUERY":
+            case "ATHENA":
                 logger.error("Not supported yet.");
                 break;
             default:
-                logger.error("Invalid DB type.");
+                logger.error("Invalid or Unknown DB type.");
                 break;
         }
         return client;
@@ -98,9 +115,9 @@ public class Extractor {
             SQLClient client = sqlClientFactory(type, params);
             try {
                 String inputSql = readSql(line.getOptionValue("sql"));
-                String outputFile = line.getOptionValue("file", "out.json");
+                String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 boolean print  = line.hasOption("print");
-                JsonLOutputWriter writer = new JsonLOutputWriter(outputFile);
+                JsonLOutputWriter writer = print ? new JsonLOutputWriter() : new JsonLOutputWriter(outputFile);
                 logger.debug("Output File: " + outputFile);
                 int rows = 0;
                 for (Map row : client.query(inputSql)) {
@@ -111,7 +128,7 @@ public class Extractor {
                     }
                     rows++;
                 }
-                logger.info("finished " + rows + " rows");
+                logger.info("Finished " + rows + " rows");
             } catch (IOException e) {
                 e.printStackTrace();
             }
