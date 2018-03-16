@@ -19,7 +19,7 @@ public class Extractor {
         options.addOption("h", "host", true, "host");
         options.addOption("p", "port", true, "port");
         options.addOption("d", "database", true, "database");
-        options.addOption("t", "type", true, "Driver type (SQLServerClient | MySQL | Postgres )");
+        options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
         options.addOption("s", "sql", true, "SQL file to read");
         options.addOption("o", "print", false, "Print to stdout");
         options.addOption("f", "file", true, "File to write to");
@@ -58,6 +58,8 @@ public class Extractor {
             case "POSTGRESQL":
                 logger.error("Not supported yet.");
                 break;
+            case "REDSHIFT":
+                client = new RedshiftClient(params);
             case "ORACLE":
                 logger.error("Not supported yet.");
                 break;

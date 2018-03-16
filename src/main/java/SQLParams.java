@@ -45,5 +45,9 @@ public class SQLParams {
                 this.getHost(), this.getPort(), this.getDatabase());
     }
 
+    public String getRedshiftURL() {
+        return String.format("jdbc:redshift://%s:%s/%s", this.getHost(), this.getPort(), this.getDatabase())
+    }
+
 
 }
