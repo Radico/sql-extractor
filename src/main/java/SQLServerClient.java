@@ -9,7 +9,7 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SQLServerClient implements SQLClient {
+public class SQLServerClient extends AbstractSQLClient {
 
     private final Logger logger = LoggerFactory.getLogger(SQLServerClient.class);
 
@@ -19,6 +19,7 @@ public class SQLServerClient implements SQLClient {
         this.params = params;
     }
 
+    @Override
     public List<Map<String, Object>> query(String queryText) {
 
         logger.info("Querying for: " + queryText);
@@ -40,30 +41,4 @@ public class SQLServerClient implements SQLClient {
         }
 
     }
-
-    public void printRows(String queryText) {
-        logger.info("Querying for: " + queryText);
-        try {
-            DbUtils.loadDriver("com.microsoft.sqlserver.jdbc.Driver");
-            SQLServerDataSource ds = new SQLServerDataSource();
-            ds.setUser(params.getUser());
-            ds.setPassword(params.getPassword());
-            ds.setServerName(params.getHost());
-            ds.setPortNumber(params.getPort());
-            ds.setDatabaseName(params.getDatabase());
-            QueryRunner queryRunner = new QueryRunner(ds);
-            MapListHandler handler = new MapListHandler();
-
-            logger.debug(queryText);
-            for (Map row : queryRunner.query(queryText, handler)) {
-                System.out.println(row);
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-
-            e.printStackTrace();
-        }
-    }
-
-
 }
