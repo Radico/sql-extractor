@@ -22,6 +22,16 @@ gradle shadowJar
 
 ### Run
 
+```$sh
+java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
+    -u <USERNAME> \
+    -h <HOST> \
+    -p <PORT> \
+    -t <TYPE> (sqlserver, mysql, redshift...) \
+    -s /path/to/query.sql \
+    -f /path/to/outputfile.jsonl
+```
+
 ### Tests
 
 ## Additional Information
