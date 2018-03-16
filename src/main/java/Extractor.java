@@ -95,7 +95,6 @@ public class Extractor {
 
             SQLParams params = new SQLParams(host, port, user, password, database);
 
-            logger.info(params.getSqlServerConnectionUrl());
             SQLClient client = sqlClientFactory(type, params);
             try {
                 String inputSql = readSql(line.getOptionValue("sql"));

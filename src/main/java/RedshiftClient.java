@@ -12,10 +12,18 @@ public class RedshiftClient extends AbstractSQLClient {
 
     private final Logger logger = LoggerFactory.getLogger(SQLServerClient.class);
 
+    private static final int DEFAULT_PORT = 5439;
+
     private final SQLParams params;
 
     public RedshiftClient(SQLParams params) {
         this.params = params;
+    }
+
+    private String getRedshiftURL() {
+        return String.format("jdbc:redshift://%s:%s/%s",
+                this.params.getHost(), this.params.getPort(DEFAULT_PORT), this.params.getDatabase()
+        );
     }
 
     @Override
@@ -26,7 +34,7 @@ public class RedshiftClient extends AbstractSQLClient {
             DataSource ds = new DataSource();
             ds.setUserID(params.getUser());
             ds.setPassword(params.getPassword());
-            ds.setURL(params.getRedshiftURL());
+            ds.setURL(this.getRedshiftURL());
             QueryRunner queryRunner = new QueryRunner(ds);
             MapListHandler handler = new MapListHandler();
             return queryRunner.query(queryText, handler);

@@ -13,10 +13,19 @@ public class SQLServerClient extends AbstractSQLClient {
 
     private final Logger logger = LoggerFactory.getLogger(SQLServerClient.class);
 
+    private static final int DEFAULT_PORT = 1433;
+    private static final String DEFAULT_HOST = "localhost";
+
     private SQLParams params;
 
     public SQLServerClient(SQLParams params) {
         this.params = params;
+    }
+
+    private String getSqlServerConnectionUrl(SQLParams params) {
+        return String.format(
+                "jdbc:sqlserver://%s:%d;databaseName=%s;integratedSecurity=true;",
+                params.getHost(DEFAULT_HOST), params.getPort(DEFAULT_PORT), params.getDatabase());
     }
 
     @Override
@@ -29,7 +38,7 @@ public class SQLServerClient extends AbstractSQLClient {
             ds.setUser(params.getUser());
             ds.setPassword(params.getPassword());
             ds.setServerName(params.getHost());
-            ds.setPortNumber(params.getPort());
+            ds.setPortNumber(params.getPort(DEFAULT_PORT));
             ds.setDatabaseName(params.getDatabase());
             QueryRunner queryRunner = new QueryRunner(ds);
             MapListHandler handler = new MapListHandler();

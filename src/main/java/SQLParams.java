@@ -16,38 +16,39 @@ public class SQLParams {
     }
 
     public String getHost() {
-        return host;
+        return this.host;
     }
 
-    public int getPort() {
+    public String getHost(String defaultHost) {
+        if (this.host == null) {
+            return defaultHost;
+        } else {
+            return this.host;
+        }
+    }
+
+    public Integer getPort() {
+        return this.port;
+    }
+
+    public Integer getPort(int defaultPort) {
         if (this.port == null) {
-            return 1433;
+            return defaultPort;
         } else {
             return port;
         }
     }
 
     public String getUser() {
-        return user;
+        return this.user;
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public String getDatabase() {
-        return database;
+        return this.database;
     }
-
-    public String getSqlServerConnectionUrl() {
-        return String.format(
-                "jdbc:sqlserver://%s:%d;databaseName=%s;integratedSecurity=true;",
-                this.getHost(), this.getPort(), this.getDatabase());
-    }
-
-    public String getRedshiftURL() {
-        return String.format("jdbc:redshift://%s:%s/%s", this.getHost(), this.getPort(), this.getDatabase());
-    }
-
 
 }
