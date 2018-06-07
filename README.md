@@ -51,6 +51,7 @@ however, the preferred method is to use the password console prompt.
 * MySQL / MariaDB: `mysql`
 * PostgreSQL: `postgresql`
 * Amazon Redshift: `redshift`
+* Athena: `athena`
 
 In future we may add drivers support for the following:
 * Oracle
@@ -60,7 +61,6 @@ In future we may add drivers support for the following:
 * Firebird/ Interbase
 * IBM DB2
 * Google BigQuery
-* Amazon Athena
 
 ## Future Enhancements
 

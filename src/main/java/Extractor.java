@@ -78,7 +78,7 @@ public class Extractor {
             case "DB2":
             case "BIGQUERY":
             case "ATHENA":
-                logger.error("Not supported yet.");
+                client = new AwsAthenaClient(params);
                 break;
             default:
                 logger.error("Invalid or Unknown DB type.");
