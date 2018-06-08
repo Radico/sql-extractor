@@ -53,6 +53,9 @@ public class Extractor {
     private static SQLClient sqlClientFactory(String sqlType, SQLParams params) {
         SQLClient client = null;
         switch (sqlType) {
+            case "ATHENA":
+                client = new AwsAthenaClient(params);
+                break;
             case "SQLSERVER":
             case "MSSQL":
                 client = new SQLServerClient(params);
@@ -77,8 +80,7 @@ public class Extractor {
             case "IBMDB2":
             case "DB2":
             case "BIGQUERY":
-            case "ATHENA":
-                client = new AwsAthenaClient(params);
+                logger.error("Not supported yet.");
                 break;
             default:
                 logger.error("Invalid or Unknown DB type.");

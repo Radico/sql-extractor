@@ -6,6 +6,10 @@ public class AwsAthenaClient extends AbstractSQLClient {
         super(params);
     }
 
+    private String getUrl() {
+        return "jdbc:awsathena://athena.{REGION}.amazonaws.com:443";
+    }
+
     @Override
     protected DataSource initDataSource() {
         com.simba.athena.jdbc.DataSource ds = new com.simba.athena.jdbc.DataSource();
@@ -18,6 +22,6 @@ public class AwsAthenaClient extends AbstractSQLClient {
 
     @Override
     protected String getDriverName() {
-        return "com.simba.athena.jdb.Driver";
+        return "com.simba.athena.jdbc.Driver";
     }
 }
