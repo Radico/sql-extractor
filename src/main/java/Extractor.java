@@ -122,9 +122,9 @@ public class Extractor {
                 JsonLOutputWriter writer = new JsonLOutputWriter();
                 int rowcount;
                 if (print) {
-                    rowcount = writer.printRows(client.query(inputSql));
+                    rowcount = writer.writeRows(client.queryAsList(inputSql));
                 } else {
-                    rowcount = writer.writeQueryToFile(client.query(inputSql), outputFile);
+                    rowcount = writer.writeQueryToFile(client.queryAsStream(inputSql), outputFile);
                 }
                 logger.info("Finished " + rowcount + " rows");
             } catch (IOException e) {

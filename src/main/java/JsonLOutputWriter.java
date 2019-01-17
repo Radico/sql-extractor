@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 
 public class JsonLOutputWriter {
@@ -23,9 +25,12 @@ public class JsonLOutputWriter {
         this.gson = gsonBuilder.create();
     }
 
-    JsonLOutputWriter(String filename) {
-        this();
-        this.open(filename);
+    void open() {
+        this.writer = new PrintWriter(System.out);
+    }
+
+    void open(OutputStream out) {
+        this.writer = new PrintWriter(out);
     }
 
     void open(String filename) {
@@ -46,25 +51,21 @@ public class JsonLOutputWriter {
     }
 
     int writeRows(List<Map<String, Object>> rows) {
-        int num_rows = 0;
+        AtomicInteger counter = new AtomicInteger(0);
         for (Map row : rows) {
             this.writeRow(row);
-            num_rows++;
+            counter.getAndIncrement();
         }
-        return num_rows;
+        return counter.intValue();
     }
 
-    void printRow(Map row) {
-        System.out.println(this.toJson(row));
-    }
-
-    int printRows(List<Map<String, Object>> rows) {
-        int num_rows = 0;
-        for (Map row : rows) {
-            this.printRow(row);
-            num_rows++;
-        }
-        return num_rows;
+    int writeRows(Stream<Map<String, Object>> rows) {
+        AtomicInteger counter = new AtomicInteger(0);
+        rows.map(this::toJson).forEach(row -> {
+            counter.getAndIncrement();
+            this.writer.println(row);
+        });
+        return counter.intValue();
     }
 
     private void flush() {
@@ -78,7 +79,7 @@ public class JsonLOutputWriter {
         this.writer = null;
     }
 
-    int writeQueryToFile(List<Map<String, Object>> results, String filename) {
+    int writeQueryToFile(Stream<Map<String, Object>> results, String filename) {
         int result;
         try {
             this.open(filename);
