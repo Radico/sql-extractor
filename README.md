@@ -38,6 +38,17 @@ java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
 gradle test
 ```
 
+### Deploy
+
+Currently we run this via Python (see `jdbc.py`) in Jenkins. Deploying has two steps.
+First, we copy the fat jar up to S3, and then we copy that file to each Jenkins box.
+
+```$sh
+aws s3 cp build/libs/sql-extractor-1.0-SNAPSHOT-all.jar s3://prod.radi.co/build/libs/sql-extractor-1.0-SNAPSHOT-all.jar
+
+djprod fab jenkins.deploy_jdbc_extractor
+```
+
 ## Additional Information
 
 ### Security
@@ -64,6 +75,7 @@ In future we may add drivers support for the following:
 
 ## Future Enhancements
 
+* Add Jar versioning
 * Provide different types of output
 * Improve JSON serialization configuration options
 * Read query SQL from stdin or console.
