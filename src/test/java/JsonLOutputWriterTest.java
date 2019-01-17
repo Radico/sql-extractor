@@ -1,10 +1,6 @@
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -34,7 +30,7 @@ public class JsonLOutputWriterTest {
         JsonLOutputWriter subject = new JsonLOutputWriter();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        int lines = subject.writeQuery(input, baos);
+        int lines = subject.writeQueryToStream(input, baos);
         assertEquals(
                 "{\"a\":\"abc\",\"b\":1}\n{\"a\":\"jkl\",\"b\":2}\n",
                 baos.toString(JsonLOutputWriter.ENCODING)

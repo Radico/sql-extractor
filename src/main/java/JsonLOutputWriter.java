@@ -25,6 +25,10 @@ public class JsonLOutputWriter {
 
     JsonLOutputWriter(String filename) {
         this();
+        this.open(filename);
+    }
+
+    void open(String filename) {
         try {
             this.writer = new PrintWriter(new File(filename), ENCODING);
             logger.info("opening file + " + filename);
@@ -39,14 +43,53 @@ public class JsonLOutputWriter {
 
     void writeRow(Map row) {
         this.writer.println(this.toJson(row));
-        this.writer.flush();
+    }
+
+    int writeRows(List<Map<String, Object>> rows) {
+        int num_rows = 0;
+        for (Map row : rows) {
+            this.writeRow(row);
+            num_rows++;
+        }
+        return num_rows;
     }
 
     void printRow(Map row) {
         System.out.println(this.toJson(row));
     }
 
-    int writeQuery(List results, OutputStream os) {
+    int printRows(List<Map<String, Object>> rows) {
+        int num_rows = 0;
+        for (Map row : rows) {
+            this.printRow(row);
+            num_rows++;
+        }
+        return num_rows;
+    }
+
+    private void flush() {
+        if (this.writer != null) {
+            this.writer.flush();
+        }
+    }
+
+    void close() {
+        this.flush();
+        this.writer = null;
+    }
+
+    int writeQueryToFile(List<Map<String, Object>> results, String filename) {
+        int result;
+        try {
+            this.open(filename);
+            result = this.writeRows(results);
+        } finally {
+            this.close();
+        }
+        return result;
+    }
+
+    int writeQueryToStream(List results, OutputStream os) {
         return this.writeQueryToWriter(results, new PrintWriter(os));
     }
 
