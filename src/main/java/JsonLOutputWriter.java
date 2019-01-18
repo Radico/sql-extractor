@@ -25,7 +25,7 @@ public class JsonLOutputWriter {
         this.gson = gsonBuilder.create();
     }
 
-    void open() {
+    void openToStdOut() {
         this.writer = new PrintWriter(System.out);
     }
 

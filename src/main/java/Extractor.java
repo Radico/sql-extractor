@@ -120,13 +120,17 @@ public class Extractor {
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 boolean print  = line.hasOption("print");
                 JsonLOutputWriter writer = new JsonLOutputWriter();
-                int rowcount;
-                if (print) {
-                    rowcount = writer.writeRows(client.queryAsList(inputSql));
-                } else {
-                    rowcount = writer.writeQueryToFile(client.queryAsStream(inputSql), outputFile);
+                try {
+                    if (print) {
+                        writer.openToStdOut();
+                    } else {
+                        writer.open(outputFile);
+                    }
+                    int rowcount = writer.writeRows(client.queryAsStream(inputSql));
+                    logger.info("Finished " + rowcount + " rows");
+                } finally {
+                    writer.close();
                 }
-                logger.info("Finished " + rowcount + " rows");
             } catch (IOException e) {
                 e.printStackTrace();
             }
