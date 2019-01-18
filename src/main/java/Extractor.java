@@ -119,18 +119,18 @@ public class Extractor {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 boolean print  = line.hasOption("print");
-                JsonLOutputWriter writer = new JsonLOutputWriter();
-                try {
+                JsonLOutputWriter writer = print ? new JsonLOutputWriter() : new JsonLOutputWriter(outputFile);
+                logger.debug("Output File: " + outputFile);
+                int rows = 0;
+                for (Map row : client.query(inputSql)) {
                     if (print) {
-                        writer.openToStdOut();
+                        writer.printRow(row);
                     } else {
-                        writer.open(outputFile);
+                        writer.writeRow(row);
                     }
-                    int rowcount = writer.writeRows(client.queryAsStream(inputSql));
-                    logger.info("Finished " + rowcount + " rows");
-                } finally {
-                    writer.close();
+                    rows++;
                 }
+                logger.info("Finished " + rows + " rows");
             } catch (IOException e) {
                 e.printStackTrace();
             }
