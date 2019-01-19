@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class Extractor {
@@ -119,22 +120,19 @@ public class Extractor {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 boolean print  = line.hasOption("print");
-                JsonLOutputWriter writer = print ? new JsonLOutputWriter() : new JsonLOutputWriter(outputFile);
-                logger.debug("Output File: " + outputFile);
-                int rows = 0;
-                for (Map row : client.query(inputSql)) {
-                    if (print) {
-                        writer.printRow(row);
-                    } else {
-                        writer.writeRow(row);
-                    }
-                    rows++;
+                JsonLOutputWriter writer = new JsonLOutputWriter();
+                if (print) {
+                    writer.openStdOut();
+                } else {
+                    writer.open(outputFile);
                 }
+                RowHandler rh = new RowHandler(writer);
+                int rows = client.queryWithHandler(inputSql, rh);
                 logger.info("Finished " + rows + " rows");
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         } catch (ParseException exp) {
             logger.error("Parsing failed.  Reason: " + exp.getMessage());
         }

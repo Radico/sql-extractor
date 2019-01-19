@@ -6,11 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import javax.swing.plaf.nimbus.State;
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public abstract class AbstractSQLClient implements SQLClient {
 
@@ -33,7 +30,7 @@ public abstract class AbstractSQLClient implements SQLClient {
     }
 
     @Override
-    public List<Map<String, Object>> query(String queryText) {
+    public List<Map<String, Object>> queryAsList(String queryText) {
         logger.debug("Querying for: " + queryText);
         try {
             DbUtils.loadDriver(this.getDriverName());
@@ -49,12 +46,27 @@ public abstract class AbstractSQLClient implements SQLClient {
         }
     }
 
+    @Override
+    public int queryWithHandler(String queryText, RowHandler handler) {
+        logger.debug("Querying for: " + queryText);
+        try {
+            DbUtils.loadDriver(this.getDriverName());
+            DataSource ds = this.initDataSource();
+            StatementConfiguration sc = this.getDefaultStatementConfiguration();
+            CustomQueryRunner cqr = new CustomQueryRunner(ds, sc, handler);
+            return cqr.query(queryText);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
     @Override
     public void printRows(String queryText) {
         logger.debug("Querying for: " + queryText);
         try {
-            for (Map row : this.query(queryText)) {
+            for (Map row : this.queryAsList(queryText)) {
                 System.out.println(row);
             }
         } catch (Exception e) {

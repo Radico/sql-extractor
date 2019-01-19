@@ -1,10 +1,11 @@
-import com.google.common.collect.Lists;
 import com.google.gson.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 
@@ -24,6 +25,10 @@ public class JsonLOutputWriter {
         this.gson = gsonBuilder.create();
     }
 
+    /**
+     * Convenience constructor
+     * @param filename
+     */
     JsonLOutputWriter(String filename) {
         this();
         this.open(filename);
@@ -35,38 +40,23 @@ public class JsonLOutputWriter {
 
     void writeRow(Map row) {
         this.writer.println(this.toJson(row));
-        this.flush();
     }
 
     void printRow(Map row) {
         System.out.println(this.toJson(row));
     }
 
-    int writeQuery(List results, OutputStream os) {
-        return this.writeQueryToWriter(results, new PrintWriter(os));
-    }
-
-    private int writeQueryToWriter(List results, PrintWriter writer) {
-        int count = 0;
-        for (Object result : results) {
-            writer.println(this.toJson((Map) result));
-            count++;
-            if (count % 10000 == 0) {
-                logger.info("Written " + count + " lines...");
-            }
-        }
-        writer.flush();
-        logger.info("Flushed writer.");
-        return count;
-    }
-
     void open(String filename) {
         try {
             this.writer = new PrintWriter(new File(filename), ENCODING);
-            logger.info("opening file + " + filename);
+            logger.info("Opening file: " + filename);
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    void openStdOut() {
+        this.writer = new PrintWriter(System.out);
     }
 
     void flush() {
