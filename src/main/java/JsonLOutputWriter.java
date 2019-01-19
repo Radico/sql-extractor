@@ -26,12 +26,7 @@ public class JsonLOutputWriter {
 
     JsonLOutputWriter(String filename) {
         this();
-        try {
-            this.writer = new PrintWriter(new File(filename), ENCODING);
-            logger.info("opening file + " + filename);
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        this.open(filename);
     }
 
     String toJson(Map input) {
@@ -40,7 +35,7 @@ public class JsonLOutputWriter {
 
     void writeRow(Map row) {
         this.writer.println(this.toJson(row));
-        this.writer.flush();
+        this.flush();
     }
 
     void printRow(Map row) {
@@ -63,5 +58,25 @@ public class JsonLOutputWriter {
         writer.flush();
         logger.info("Flushed writer.");
         return count;
+    }
+
+    void open(String filename) {
+        try {
+            this.writer = new PrintWriter(new File(filename), ENCODING);
+            logger.info("opening file + " + filename);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void flush() {
+        if (this.writer != null) {
+            this.writer.flush();
+        }
+    }
+
+    void close() {
+        this.flush();
+        this.writer = null;
     }
 }
