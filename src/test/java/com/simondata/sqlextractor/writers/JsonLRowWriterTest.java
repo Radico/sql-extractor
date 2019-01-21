@@ -1,7 +1,6 @@
 package com.simondata.sqlextractor.writers;
 
 import org.junit.Test;
-import com.simondata.sqlextractor.writers.JsonLRowWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.util.*;
