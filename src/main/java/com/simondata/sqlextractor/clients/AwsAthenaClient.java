@@ -1,8 +1,10 @@
+package com.simondata.sqlextractor.clients;
+
 import javax.sql.DataSource;
 
 public class AwsAthenaClient extends AbstractSQLClient {
 
-    AwsAthenaClient(SQLParams params) {
+    public AwsAthenaClient(SQLParams params) {
         super(params);
     }
 

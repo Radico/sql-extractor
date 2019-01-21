@@ -1,17 +1,18 @@
+package com.simondata.sqlextractor.writers;
+
 import com.google.gson.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class JsonLOutputWriter {
+public class JsonLRowWriter implements RowWriter {
 
-    private final Logger logger = LoggerFactory.getLogger(JsonLOutputWriter.class);
+    private final Logger logger = LoggerFactory.getLogger(JsonLRowWriter.class);
 
     static String ENCODING = "UTF-8";
 
@@ -19,7 +20,7 @@ public class JsonLOutputWriter {
 
     private PrintWriter writer = null;
 
-    JsonLOutputWriter() {
+    public JsonLRowWriter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
         this.gson = gsonBuilder.create();
@@ -29,7 +30,7 @@ public class JsonLOutputWriter {
      * Convenience constructor
      * @param filename
      */
-    JsonLOutputWriter(String filename) {
+    JsonLRowWriter(String filename) {
         this();
         this.open(filename);
     }
@@ -38,15 +39,24 @@ public class JsonLOutputWriter {
         return this.gson.toJson(input);
     }
 
-    void writeRow(Map row) {
+    public void writeRow(Map row) {
         this.writer.println(this.toJson(row));
+    }
+
+    public int writeRows(List<Map> rows) {
+        AtomicInteger counter = new AtomicInteger();
+        for (Map row : rows) {
+            this.writeRow(row);
+            counter.getAndIncrement();
+        }
+        return counter.intValue();
     }
 
     void printRow(Map row) {
         System.out.println(this.toJson(row));
     }
 
-    void open(String filename) {
+    public void open(String filename) {
         try {
             this.writer = new PrintWriter(new File(filename), ENCODING);
             logger.info("Opening file: " + filename);
@@ -55,8 +65,12 @@ public class JsonLOutputWriter {
         }
     }
 
-    void openStdOut() {
-        this.writer = new PrintWriter(System.out);
+    void open(OutputStream outputStream) {
+        this.writer = new PrintWriter(outputStream);
+    }
+
+    public void openStdOut() {
+        this.open(System.out);
     }
 
     void flush() {
@@ -65,8 +79,11 @@ public class JsonLOutputWriter {
         }
     }
 
-    void close() {
+    public void close() {
         this.flush();
+        if (this.writer != null) {
+            this.writer.close();
+        }
         this.writer = null;
     }
 }

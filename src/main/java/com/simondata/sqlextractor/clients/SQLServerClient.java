@@ -1,13 +1,6 @@
-
-import java.util.List;
-import java.util.Map;
+package com.simondata.sqlextractor.clients;
 
 import com.microsoft.sqlserver.jdbc.*;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.MapListHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 
@@ -16,7 +9,7 @@ public class SQLServerClient extends AbstractSQLClient {
     private static final int DEFAULT_PORT = 1433;
     private static final String DEFAULT_HOST = "localhost";
 
-    SQLServerClient(SQLParams params) {
+    public SQLServerClient(SQLParams params) {
         super(params);
     }
 

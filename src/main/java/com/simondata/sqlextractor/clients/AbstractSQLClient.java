@@ -1,9 +1,12 @@
+package com.simondata.sqlextractor.clients;
+
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.StatementConfiguration;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.simondata.sqlextractor.writers.RowHandler;
 
 import javax.sql.DataSource;
 import java.util.List;

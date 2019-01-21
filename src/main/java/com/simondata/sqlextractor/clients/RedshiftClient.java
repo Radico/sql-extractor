@@ -1,3 +1,5 @@
+package com.simondata.sqlextractor.clients;
+
 import com.amazon.redshift.jdbc42.DataSource;
 
 
@@ -5,7 +7,7 @@ public class RedshiftClient extends AbstractSQLClient {
 
     private static final int DEFAULT_PORT = 5439;
 
-    RedshiftClient(SQLParams params) {
+    public RedshiftClient(SQLParams params) {
         super(params);
     }
 

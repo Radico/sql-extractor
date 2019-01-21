@@ -1,6 +1,9 @@
+package com.simondata.sqlextractor.clients;
 
 import org.apache.commons.dbutils.AbstractQueryRunner;
 import org.apache.commons.dbutils.StatementConfiguration;
+import com.simondata.sqlextractor.writers.RowHandler;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

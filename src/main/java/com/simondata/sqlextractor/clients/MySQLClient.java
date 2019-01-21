@@ -1,9 +1,11 @@
+package com.simondata.sqlextractor.clients;
+
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 
 public class MySQLClient extends AbstractSQLClient {
 
-    MySQLClient(SQLParams params) {
+    public MySQLClient(SQLParams params) {
         super(params);
     }
 

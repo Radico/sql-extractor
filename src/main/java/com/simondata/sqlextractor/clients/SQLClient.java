@@ -1,3 +1,7 @@
+package com.simondata.sqlextractor.clients;
+
+import com.simondata.sqlextractor.writers.RowHandler;
+
 import java.util.List;
 import java.util.Map;
 

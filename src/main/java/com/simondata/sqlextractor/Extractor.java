@@ -1,14 +1,19 @@
+package com.simondata.sqlextractor;
+
+import com.simondata.sqlextractor.clients.ClientFactory;
+import com.simondata.sqlextractor.clients.SQLClient;
+import com.simondata.sqlextractor.clients.SQLParams;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.simondata.sqlextractor.writers.JsonLRowWriter;
+import com.simondata.sqlextractor.writers.RowHandler;
 
 import java.io.Console;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.SQLException;
-import java.util.Map;
 
 public class Extractor {
 
@@ -47,47 +52,8 @@ public class Extractor {
         }
     }
 
-    private static void configure() {
+    private static void configureLogging() {
         System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace");
-    }
-
-    private static SQLClient sqlClientFactory(String sqlType, SQLParams params) {
-        SQLClient client = null;
-        switch (sqlType) {
-            case "ATHENA":
-                client = new AwsAthenaClient(params);
-                break;
-            case "SQLSERVER":
-            case "MSSQL":
-                client = new SQLServerClient(params);
-                break;
-            case "MARIADB":
-            case "MYSQL":
-                client = new MySQLClient(params);
-                break;
-            case "POSTGRES":
-            case "POSTGRESQL":
-                client = new PostgreSQLClient(params);
-                break;
-            case "REDSHIFT":
-                client = new RedshiftClient(params);
-                break;
-            case "ORACLE":
-            case "SYBASE":
-            case "INFORMIX":
-            case "ACCESS":
-            case "INTERBASE":
-            case "FIREBIRD":
-            case "IBMDB2":
-            case "DB2":
-            case "BIGQUERY":
-                logger.error("Not supported yet.");
-                break;
-            default:
-                logger.error("Invalid or Unknown DB type.");
-                break;
-        }
-        return client;
     }
 
     private static String readSql(String filename) throws IOException {
@@ -96,7 +62,7 @@ public class Extractor {
     }
 
     public static void main(String[] args) {
-        configure();
+        configureLogging();
 
         CommandLineParser parser = new DefaultParser();
         try {
@@ -115,12 +81,12 @@ public class Extractor {
 
             SQLParams params = new SQLParams(host, port, user, password, database);
 
-            SQLClient client = sqlClientFactory(type, params);
+            SQLClient client = ClientFactory.makeSQLClient(type, params);
             try {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 boolean print  = line.hasOption("print");
-                JsonLOutputWriter writer = new JsonLOutputWriter();
+                JsonLRowWriter writer = new JsonLRowWriter();
                 if (print) {
                     writer.openStdOut();
                 } else {
@@ -136,6 +102,5 @@ public class Extractor {
         } catch (ParseException exp) {
             logger.error("Parsing failed.  Reason: " + exp.getMessage());
         }
-
     }
 }

@@ -1,10 +1,12 @@
+package com.simondata.sqlextractor.clients;
+
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 
 public class PostgreSQLClient extends AbstractSQLClient {
 
-    PostgreSQLClient(SQLParams params) {
+    public PostgreSQLClient(SQLParams params) {
         super(params);
     }
 
