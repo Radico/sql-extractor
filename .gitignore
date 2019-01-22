@@ -16,6 +16,7 @@
 .mtj.tmp/
 
 build/
+out/
 gradle/wrapper/gradle-wrapper.jar
 
 # Package Files #
