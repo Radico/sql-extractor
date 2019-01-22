@@ -5,6 +5,9 @@ import javax.sql.DataSource;
 
 public class MySQLClient extends AbstractSQLClient {
 
+    private static final int DEFAULT_PORT = 3306;
+    private static final String DEFAULT_HOST = "localhost";
+
     public MySQLClient(SQLParams params) {
         super(params);
     }
@@ -13,7 +16,8 @@ public class MySQLClient extends AbstractSQLClient {
     protected DataSource initDataSource() {
         MysqlDataSource ds = new MysqlDataSource();
         ds.setUser(this.params.getUser());
-        ds.setServerName(this.params.getHost());
+        ds.setServerName(this.params.getHost(DEFAULT_HOST));
+        ds.setPort(this.params.getPort(DEFAULT_PORT));
         ds.setPassword(this.params.getPassword());
         ds.setDatabaseName(this.params.getDatabase());
         return ds;

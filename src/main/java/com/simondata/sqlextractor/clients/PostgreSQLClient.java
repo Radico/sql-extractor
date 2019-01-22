@@ -6,6 +6,9 @@ import javax.sql.DataSource;
 
 public class PostgreSQLClient extends AbstractSQLClient {
 
+    private static final int DEFAULT_PORT = 5432;
+    private static final String DEFAULT_HOST = "localhost";
+
     public PostgreSQLClient(SQLParams params) {
         super(params);
     }
@@ -17,9 +20,10 @@ public class PostgreSQLClient extends AbstractSQLClient {
          */
         PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setUser(this.params.getUser());
-        ds.setServerName(this.params.getHost());
+        ds.setServerName(this.params.getHost(DEFAULT_HOST));
         ds.setPassword(this.params.getPassword());
         ds.setDatabaseName(this.params.getDatabase());
+        ds.setPortNumber(this.params.getPort(DEFAULT_PORT));
         return ds;
     }
 

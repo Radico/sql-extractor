@@ -28,8 +28,12 @@ public class ClientFactory {
                 client = new RedshiftClient(params);
                 break;
             case "ORACLE":
-            case "SYBASE":
+                logger.error("Oracle uses logins to retrieve artifacts. Customize your own.");
+                break;
             case "INFORMIX":
+                client = new InformixSQLClient(params);
+                break;
+            case "SYBASE":
             case "ACCESS":
             case "INTERBASE":
             case "FIREBIRD":
