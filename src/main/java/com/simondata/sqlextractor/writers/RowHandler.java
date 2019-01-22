@@ -4,9 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import com.simondata.sqlextractor.util.TextFormat;
 import org.apache.commons.dbutils.BasicRowProcessor;
 import org.apache.commons.dbutils.RowProcessor;
+import org.apache.commons.text.CaseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,15 +21,18 @@ public class RowHandler {
     private static final RowProcessor ROW_PROCESSOR = new BasicRowProcessor();
     private RowWriter writer;
     private int logFrequency;
+    private Function<String, String> keyTransform;
 
-    public RowHandler(JsonLRowWriter writer) {
+    public RowHandler(RowWriter writer) {
         this.writer = writer;
         this.logFrequency = -1;
+        this.keyTransform = Function.identity();
     }
 
-    public RowHandler(RowWriter writer, int logFrequency) {
-        this.writer = writer;
+    public RowHandler(RowWriter writer, int logFrequency, KeyCaseFormat keyCaseFormat) {
+        this(writer);
         this.logFrequency = logFrequency;
+        this.keyTransform = TextFormat.getFunctionByKeyFormat(keyCaseFormat);
     }
 
     public int handle(ResultSet rs) throws SQLException {
@@ -41,7 +48,10 @@ public class RowHandler {
     }
 
     protected Map<String, Object> handleRow(ResultSet rs) throws SQLException {
-        return this.ROW_PROCESSOR.toMap(rs);
+        return this.ROW_PROCESSOR.toMap(rs).entrySet().stream().collect(
+                Collectors.toMap(e -> this.keyTransform.apply(e.getKey()), Map.Entry::getValue)
+        );
     }
+
 
 }

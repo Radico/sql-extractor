@@ -3,6 +3,7 @@ package com.simondata.sqlextractor;
 import com.simondata.sqlextractor.clients.ClientFactory;
 import com.simondata.sqlextractor.clients.SQLClient;
 import com.simondata.sqlextractor.clients.SQLParams;
+import com.simondata.sqlextractor.writers.KeyCaseFormat;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Key;
 
 public class Extractor {
 
@@ -35,6 +37,7 @@ public class Extractor {
         options.addOption("s", "sql", true, "SQL file to read");
         options.addOption("o", "print", false, "Print to stdout");
         options.addOption("f", "file", true, "File to write to");
+        options.addOption("c", "case", true, "Key case format (DEFAULT | Snake | Camel)");
         return options;
     }
 
@@ -61,25 +64,42 @@ public class Extractor {
         return new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
     }
 
+    private static KeyCaseFormat getKeyCaseFormat(String input) {
+        if (input == null) {
+            return KeyCaseFormat.DEFAULT;
+        }
+        if (input.toLowerCase().contains("camel")) {
+            return KeyCaseFormat.CAMEL_CASE;
+        }
+        if (input.toLowerCase().contains("snake")) {
+            return KeyCaseFormat.SNAKE_CASE;
+        }
+        return KeyCaseFormat.DEFAULT;
+    }
+
+    private static SQLParams getSqlParams(CommandLine commandLine) {
+        String user = commandLine.getOptionValue("user");
+        String host = commandLine.getOptionValue("host", "localhost");
+        String strPort = commandLine.getOptionValue("port");
+        Integer port = null;
+        if (strPort != null) {
+            port = Integer.parseInt(strPort);
+        }
+        String database = commandLine.getOptionValue("database");
+        String password = getPassword();
+        return new SQLParams(host, port, user, password, database);
+    }
+
     public static void main(String[] args) {
         configureLogging();
 
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine line = parser.parse(getOptions(), args);
+            SQLParams params = getSqlParams(line);
 
-            String user = line.getOptionValue("user");
-            String host = line.getOptionValue("host", "localhost");
             String type = line.getOptionValue("type", "SQLSERVER").toUpperCase();
-            String strPort = line.getOptionValue("port");
-            Integer port = null;
-            if (strPort != null) {
-                port = Integer.parseInt(strPort);
-            }
-            String database = line.getOptionValue("database");
-            String password = getPassword();
-
-            SQLParams params = new SQLParams(host, port, user, password, database);
+            String caseFormat = line.getOptionValue("case");
 
             SQLClient client = ClientFactory.makeSQLClient(type, params);
             try {
@@ -92,7 +112,7 @@ public class Extractor {
                 } else {
                     writer.open(outputFile);
                 }
-                RowHandler rh = new RowHandler(writer);
+                RowHandler rh = new RowHandler(writer, 100_000, getKeyCaseFormat(caseFormat));
                 int rows = client.queryWithHandler(inputSql, rh);
                 logger.info("Finished " + rows + " rows");
                 writer.close();
