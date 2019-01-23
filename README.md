@@ -21,6 +21,20 @@ gradle shadowJar
 ```
 
 ### Run
+Required Parameters:
+* `-u` `--user`: The username to connect with (required)
+* `-t` `--type`: The engine type to use (See full list below)
+* `-d` `--database`: The database name
+* `-s` `--sql`: The path to the input SQL
+
+Optional Parameters:
+* `-h` `--host`: The host to connect to (defaults to `localhost`)
+* `-c` `--case`: The case to apply to the keys (defaults to query values, `default`|`snake`|`camel`)
+* `-p` `--port`: The port to connect to (defaults to the standard port for the given engine e.g. `3306` for MySQL)
+* `-f` `--file`: The output file to write to (defaults to a basic filename)
+* `-o` `--print`: Boolean. Write results to `stdout`.
+
+Passwords are passed by TTY input or passed through a `EXTRACT_DB_PASSWORD` environment variable.
 
 ```$sh
 java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
@@ -29,6 +43,7 @@ java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
     -p <PORT> \
     -d <DATABASE NAME> \
     -t <TYPE> (sqlserver, mysql...see full list below) \
+    -c <CASE> (default, snake, camel)
     -s /path/to/query.sql \
     -f /path/to/outputfile.jsonl
 ```
@@ -63,18 +78,19 @@ however, the preferred method is to use the password console prompt.
 * PostgreSQL: `postgresql`
 * Amazon Redshift: `redshift`
 * Athena: `athena`
+* Informix `informix`
 
 In future we may add drivers support for the following:
-* Oracle
 * Sybase
-* Informix
 * Microsoft Access
 * Firebird/ Interbase
 * IBM DB2
 * Google BigQuery
 
-## Future Enhancements
+The following will be straightforward to implement by a fork
+* Oracle: `oracle`
 
+## Future Enhancements
 * Add Jar versioning
 * Provide different types of output
 * Improve JSON serialization configuration options
