@@ -7,6 +7,16 @@ public class SQLParams {
     private String user;
     private String password;
     private String database;
+    private boolean encrypt;
+
+    public SQLParams(String host, Integer port, String user, String password, String database, boolean encrypt) {
+        this.host = host;
+        this.port = port;
+        this.user = user;
+        this.password = password;
+        this.database = database;
+        this.encrypt = encrypt;
+    }
 
     public SQLParams(String host, Integer port, String user, String password, String database) {
         this.host = host;
@@ -14,10 +24,15 @@ public class SQLParams {
         this.user = user;
         this.password = password;
         this.database = database;
+        this.encrypt = false;
     }
 
     public String getHost() {
         return this.host;
+    }
+
+    public boolean getEncrypt() {
+        return this.encrypt
     }
 
     public String getHost(String defaultHost) {

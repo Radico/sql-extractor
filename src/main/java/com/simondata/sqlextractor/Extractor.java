@@ -37,6 +37,7 @@ public class Extractor {
         options.addOption("o", "print", false, "Print to stdout");
         options.addOption("f", "file", true, "File to write to");
         options.addOption("c", "case", true, "Key case format (DEFAULT | Snake | Camel)");
+        options.addOption("e", "encrypt", false, "Encrypt sql connection (only implemented with sqlserver)");
         return options;
     }
 
@@ -86,7 +87,8 @@ public class Extractor {
         }
         String database = commandLine.getOptionValue("database");
         String password = getPassword();
-        return new SQLParams(host, port, user, password, database);
+        boolean encrypt = comandLine.getOptionValue("encrypt")
+        return new SQLParams(host, port, user, password, database, encrypt);
     }
 
     public static void main(String[] args) {

@@ -21,6 +21,7 @@ public class SQLServerClient extends AbstractSQLClient {
         ds.setServerName(params.getHost(DEFAULT_HOST));
         ds.setPortNumber(params.getPort(DEFAULT_PORT));
         ds.setDatabaseName(params.getDatabase());
+        ds.setEncrypt(params.getEncrypt());
         return ds;
     }
 
