@@ -3,6 +3,7 @@ package com.simondata.sqlextractor.clients;
 public class SQLServerSQLParams extends SQLParams {
     private Boolean encrypt = null;
     private Boolean trustServerCertificate = null;
+    private String hostNameInCertificate = null;
 
     public SQLServerSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);
@@ -22,5 +23,13 @@ public class SQLServerSQLParams extends SQLParams {
 
     public Boolean getTrustServerCertificate() {
         return this.trustServerCertificate;
+    }
+
+    public void setHostNameInCertificate(String hostNameInCertificate) {
+        this.hostNameInCertificate = hostNameInCertificate;
+    }
+
+    public String getHostNameInCertificate() {
+        return this.hostNameInCertificate;
     }
 }
