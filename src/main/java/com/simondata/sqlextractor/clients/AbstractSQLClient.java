@@ -14,14 +14,20 @@ import java.util.Map;
 
 public abstract class AbstractSQLClient implements SQLClient {
 
-    SQLParams params;
+    protected SQLParams params;
+    private QueryParams queryParams;
 
     private final Logger logger = LoggerFactory.getLogger(SQLClient.class);
 
-    private final Integer FETCH_SIZE = 10000;
-
     AbstractSQLClient(SQLParams params) {
+
         this.params = params;
+        this.queryParams = QueryParams.getDefaultQueryParams();
+    }
+
+    AbstractSQLClient(SQLParams params, QueryParams queryParams) {
+        this.params = params;
+        this.queryParams = queryParams;
     }
 
     abstract protected DataSource initDataSource();

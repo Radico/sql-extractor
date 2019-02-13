@@ -30,13 +30,31 @@ public class Extractor {
         Options options = new Options();
         options.addRequiredOption("u", "user", true, "user");
         options.addOption("h", "host", true, "host");
-        options.addOption("p", "port", true, "port");
+        options.addOption(
+                "p",
+                "port",
+                true,
+                "Port, defaults to engine's default port.");
         options.addOption("d", "database", true, "database");
         options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
-        options.addOption("s", "sql", true, "SQL file to read");
+        options.addOption("s", "sql", true,
+                "SQL file to read.");
         options.addOption("o", "print", false, "Print to stdout");
-        options.addOption("f", "file", true, "File to write to");
+        options.addOption("f", "file", true, "File to write to. Defaults to " + DEFAULT_OUTPUT_FILENAME + '.');
         options.addOption("c", "case", true, "Key case format (DEFAULT | Snake | Camel)");
+        options.addOption("b", "fetchsize", true, "Fetch size");
+
+        Option customParams = Option.builder("custom")
+                .longOpt("custom")
+                .hasArgs()
+                .valueSeparator()
+                .argName("property=value")
+                .desc("Custom params")
+                .numberOfArgs(2)
+                .optionalArg(true)
+                .build();
+
+        options.addOption(customParams);
         return options;
     }
 
@@ -104,7 +122,7 @@ public class Extractor {
             try {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
-                boolean print  = line.hasOption("print");
+                boolean print = line.hasOption("print");
                 JsonLRowWriter writer = new JsonLRowWriter();
                 if (print) {
                     writer.openStdOut();
