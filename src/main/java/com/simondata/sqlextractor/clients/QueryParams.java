@@ -5,6 +5,9 @@ public class QueryParams {
     private static final Integer DEFAULT_FETCH_SIZE = 10000;
 
     private Integer fetchSize;
+    private Integer maxRows;
+    private Integer timeout;
+
 
     public QueryParams() {
         this.fetchSize = DEFAULT_FETCH_SIZE;
@@ -20,6 +23,14 @@ public class QueryParams {
         } else {
             return fetchSize;
         }
+    }
+
+    public Integer getMaxRows() {
+        return this.maxRows;
+    }
+
+    public Integer getTimeout() {
+        return this.timeout;
     }
 
     public static QueryParams getDefaultQueryParams() {

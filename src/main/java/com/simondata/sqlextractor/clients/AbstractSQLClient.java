@@ -35,7 +35,11 @@ public abstract class AbstractSQLClient implements SQLClient {
     abstract protected String getDriverName();
 
     private StatementConfiguration getDefaultStatementConfiguration() {
-        return new StatementConfiguration.Builder().fetchSize(FETCH_SIZE).build();
+        return new StatementConfiguration.Builder()
+                .fetchSize(this.queryParams.getFetchSize())
+                .queryTimeout(this.queryParams.getTimeout())
+                .maxRows(this.queryParams.getMaxRows())
+                .build();
     }
 
     @Override
