@@ -1,7 +1,6 @@
 package com.simondata.sqlextractor;
 
 import com.simondata.sqlextractor.clients.*;
-import com.simondata.sqlextractor.writers.KeyCaseFormat;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +12,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Properties;
 
 import static com.simondata.sqlextractor.util.TextFormat.parseInteger;
 
@@ -40,6 +40,7 @@ public class Extractor {
         options.addOption("s", "sql", true,
                 "SQL file to read.");
         options.addOption("o", "print", false, "Print to stdout");
+        options.addOption("dry", "dry", false, "Dry run");
         options.addOption("f", "file", true, "File to write to. Defaults to " + DEFAULT_OUTPUT_FILENAME + '.');
         options.addOption("c", "case", true, "Key case format (DEFAULT | Snake | Camel)");
         options.addOption("fetchsize", "fetchsize", true, "Fetch size");
@@ -89,7 +90,8 @@ public class Extractor {
         Integer port = parseInteger(commandLine.getOptionValue("port"));
         String database = commandLine.getOptionValue("database");
         String password = getPassword();
-        return new SQLParams(host, port, user, password, database);
+        Properties props = commandLine.getOptionProperties("custom");
+        return new SQLParams(host, port, user, password, database, props);
     }
 
     private static QueryParams getQueryParams(CommandLine commandLine) {
@@ -115,9 +117,14 @@ public class Extractor {
             SQLParams sqlParams = getSqlParams(line);
             FormattingParams formattingParams = getFormattingParams(line);
             QueryParams queryParams = getQueryParams(line);
-
             String type = line.getOptionValue("type", "SQLSERVER").toUpperCase();
 
+            if (line.hasOption("dry")) {
+                sqlParams.logValues();
+                queryParams.logValues();
+                formattingParams.logValues();
+                System.exit(0);
+            }
 
             SQLClient client = ClientFactory.makeSQLClient(type, sqlParams);
             client.setQueryParams(getQueryParams(line));

@@ -1,8 +1,12 @@
 package com.simondata.sqlextractor.clients;
 
 import com.simondata.sqlextractor.writers.KeyCaseFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class FormattingParams {
+public class FormattingParams implements InputParams {
+    private final static Logger logger = LoggerFactory.getLogger(InputParams.class);
+
     private KeyCaseFormat keyCaseFormat;
 
     public FormattingParams() {
@@ -31,5 +35,10 @@ public class FormattingParams {
             return KeyCaseFormat.SNAKE_CASE;
         }
         return KeyCaseFormat.DEFAULT;
+    }
+
+    @Override
+    public void logValues() {
+        logger.info("Key Case Format: " + this.getKeyCaseFormat().name());
     }
 }

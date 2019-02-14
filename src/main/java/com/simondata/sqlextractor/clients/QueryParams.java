@@ -1,6 +1,11 @@
 package com.simondata.sqlextractor.clients;
 
-public class QueryParams {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class QueryParams implements InputParams {
+
+    private final static Logger logger = LoggerFactory.getLogger(InputParams.class);
 
     private static final Integer DEFAULT_FETCH_SIZE = 10000;
 
@@ -37,5 +42,12 @@ public class QueryParams {
 
     public static QueryParams getDefaultQueryParams() {
         return new QueryParams();
+    }
+
+    @Override
+    public void logValues() {
+        logger.info("Query Max Rows: " + this.getMaxRows());
+        logger.info("Query Timeout: " + this.getTimeout());
+        logger.info("Query Fetch Size: " + this.getFetchSize());
     }
 }

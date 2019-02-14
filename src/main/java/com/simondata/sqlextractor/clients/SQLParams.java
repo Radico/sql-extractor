@@ -1,12 +1,20 @@
 package com.simondata.sqlextractor.clients;
 
-public class SQLParams {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Properties;
+
+public class SQLParams implements InputParams {
+
+    private final static Logger logger = LoggerFactory.getLogger(InputParams.class);
 
     private String host;
     private Integer port;
     private String user;
     private String password;
     private String database;
+    private Properties customProperties;
 
     public SQLParams(String host, Integer port, String user, String password, String database) {
         this.host = host;
@@ -14,6 +22,16 @@ public class SQLParams {
         this.user = user;
         this.password = password;
         this.database = database;
+    }
+
+    public SQLParams(
+            String host, Integer port, String user, String password, String database, Properties customProperties) {
+        this.host = host;
+        this.port = port;
+        this.user = user;
+        this.password = password;
+        this.database = database;
+        this.customProperties = customProperties;
     }
 
     public String getHost() {
@@ -52,4 +70,17 @@ public class SQLParams {
         return this.database;
     }
 
+    public Properties getCustomProperties() {
+        return this.customProperties;
+    }
+
+    @Override
+    public void logValues() {
+        logger.info("User: " + this.getUser());
+        logger.info("Port: " + this.getPort());
+        logger.info("Database: " + this.getDatabase());
+        for (String name : this.customProperties.stringPropertyNames()) {
+            logger.info(name + ":" + this.customProperties.getProperty(name));
+        }
+    }
 }
