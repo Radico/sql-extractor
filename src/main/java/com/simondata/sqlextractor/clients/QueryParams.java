@@ -13,8 +13,10 @@ public class QueryParams {
         this.fetchSize = DEFAULT_FETCH_SIZE;
     }
 
-    public QueryParams(Integer fetchSize) {
+    public QueryParams(Integer fetchSize, Integer maxRows, Integer timeout) {
         this.fetchSize = fetchSize;
+        this.maxRows = maxRows;
+        this.timeout = timeout;
     }
 
     public Integer getFetchSize() {

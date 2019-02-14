@@ -1,8 +1,6 @@
 package com.simondata.sqlextractor;
 
-import com.simondata.sqlextractor.clients.ClientFactory;
-import com.simondata.sqlextractor.clients.SQLClient;
-import com.simondata.sqlextractor.clients.SQLParams;
+import com.simondata.sqlextractor.clients.*;
 import com.simondata.sqlextractor.writers.KeyCaseFormat;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
@@ -15,6 +13,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static com.simondata.sqlextractor.util.TextFormat.parseInteger;
 
 public class Extractor {
 
@@ -42,7 +42,9 @@ public class Extractor {
         options.addOption("o", "print", false, "Print to stdout");
         options.addOption("f", "file", true, "File to write to. Defaults to " + DEFAULT_OUTPUT_FILENAME + '.');
         options.addOption("c", "case", true, "Key case format (DEFAULT | Snake | Camel)");
-        options.addOption("b", "fetchsize", true, "Fetch size");
+        options.addOption("fetchsize", "fetchsize", true, "Fetch size");
+        options.addOption("timeout", "timeout", true, "Query Timeout in seconds");
+        options.addOption("maxrows", "maxrows", true, "Maximum rows");
 
         Option customParams = Option.builder("custom")
                 .longOpt("custom")
@@ -81,30 +83,27 @@ public class Extractor {
         return new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
     }
 
-    private static KeyCaseFormat getKeyCaseFormat(String input) {
-        if (input == null) {
-            return KeyCaseFormat.DEFAULT;
-        }
-        if (input.toLowerCase().contains("camel")) {
-            return KeyCaseFormat.CAMEL_CASE;
-        }
-        if (input.toLowerCase().contains("snake")) {
-            return KeyCaseFormat.SNAKE_CASE;
-        }
-        return KeyCaseFormat.DEFAULT;
-    }
-
     private static SQLParams getSqlParams(CommandLine commandLine) {
         String user = commandLine.getOptionValue("user");
         String host = commandLine.getOptionValue("host", "localhost");
-        String strPort = commandLine.getOptionValue("port");
-        Integer port = null;
-        if (strPort != null) {
-            port = Integer.parseInt(strPort);
-        }
+        Integer port = parseInteger(commandLine.getOptionValue("port"));
         String database = commandLine.getOptionValue("database");
         String password = getPassword();
         return new SQLParams(host, port, user, password, database);
+    }
+
+    private static QueryParams getQueryParams(CommandLine commandLine) {
+        Integer fetchSize = parseInteger(commandLine.getOptionValue("fetchsize"));
+        Integer maxRows = parseInteger(commandLine.getOptionValue("maxRows"));
+        Integer timeout = parseInteger(commandLine.getOptionValue("timeout"));
+        return new QueryParams(fetchSize, maxRows, timeout);
+    }
+
+    private static FormattingParams getFormattingParams(CommandLine commandLine) {
+        String caseFormat = commandLine.getOptionValue("case");
+        FormattingParams params = new FormattingParams();
+        params.setKeyCaseFormat(caseFormat);
+        return params;
     }
 
     public static void main(String[] args) {
@@ -113,12 +112,15 @@ public class Extractor {
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine line = parser.parse(getOptions(), args);
-            SQLParams params = getSqlParams(line);
+            SQLParams sqlParams = getSqlParams(line);
+            FormattingParams formattingParams = getFormattingParams(line);
+            QueryParams queryParams = getQueryParams(line);
 
             String type = line.getOptionValue("type", "SQLSERVER").toUpperCase();
-            String caseFormat = line.getOptionValue("case");
 
-            SQLClient client = ClientFactory.makeSQLClient(type, params);
+
+            SQLClient client = ClientFactory.makeSQLClient(type, sqlParams);
+            client.setQueryParams(getQueryParams(line));
             try {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
@@ -129,7 +131,7 @@ public class Extractor {
                 } else {
                     writer.open(outputFile);
                 }
-                RowHandler rh = new RowHandler(writer, 100_000, getKeyCaseFormat(caseFormat));
+                RowHandler rh = new RowHandler(writer, 100_000, formattingParams);
                 int rows = client.queryWithHandler(inputSql, rh);
                 logger.info("Finished " + rows + " rows");
                 writer.close();

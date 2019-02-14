@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.simondata.sqlextractor.clients.FormattingParams;
 import com.simondata.sqlextractor.util.TextFormat;
 import org.apache.commons.dbutils.BasicRowProcessor;
 import org.apache.commons.dbutils.RowProcessor;
@@ -29,10 +30,10 @@ public class RowHandler {
         this.keyTransform = Function.identity();
     }
 
-    public RowHandler(RowWriter writer, int logFrequency, KeyCaseFormat keyCaseFormat) {
+    public RowHandler(RowWriter writer, int logFrequency, FormattingParams formattingParams) {
         this(writer);
         this.logFrequency = logFrequency;
-        this.keyTransform = TextFormat.getFunctionByKeyFormat(keyCaseFormat);
+        this.keyTransform = TextFormat.getFunctionByKeyFormat(formattingParams.getKeyCaseFormat());
     }
 
     public int handle(ResultSet rs) throws SQLException {

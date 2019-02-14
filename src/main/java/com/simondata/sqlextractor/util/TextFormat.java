@@ -49,4 +49,12 @@ public class TextFormat {
         return result.toString();
     }
 
+    public static Integer parseInteger(String nullOrValue) {
+        if (nullOrValue == null) {
+            return null;
+        } else {
+            return Integer.parseInt(nullOrValue);
+        }
+    }
+
 }
