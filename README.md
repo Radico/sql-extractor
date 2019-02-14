@@ -33,11 +33,15 @@ Optional Parameters:
 * `-p` `--port`: The port to connect to (defaults to the standard port for the given engine e.g. `3306` for MySQL)
 * `-f` `--file`: The output file to write to (defaults to a basic filename)
 * `-o` `--print`: Boolean. Write results to `stdout`.
+* `--dry`: Flag to show whether to just print out the input or whether to actually run the query.
+
+Custom Parameters
+* `-custom <key>=<value>`: For specific engines custom parameters may be provided
 
 Passwords are passed by TTY input or passed through a `EXTRACT_DB_PASSWORD` environment variable.
 
 ```$sh
-java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT-all.jar \
+java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT.jar \
     -u <USERNAME> \
     -h <HOST> \
     -p <PORT> \
@@ -59,7 +63,7 @@ Currently we run this via Python (see `jdbc.py`) in Jenkins. Deploying has two s
 First, we copy the fat jar up to S3, and then we copy that file to each Jenkins box.
 
 ```$sh
-aws s3 cp build/libs/sql-extractor-1.0-SNAPSHOT-all.jar s3://prod.radi.co/build/libs/sql-extractor-1.0-SNAPSHOT-all.jar
+aws s3 cp build/libs/sql-extractor-1.0-SNAPSHOT.jar s3://prod.radi.co/build/libs/sql-extractor-1.0-SNAPSHOT.jar
 
 djprod fab jenkins.deploy_jdbc_extractor
 ```
@@ -89,6 +93,20 @@ In future we may add drivers support for the following:
 
 The following will be straightforward to implement by a fork
 * Oracle: `oracle`
+
+## Custom Parameters By Engine
+### SQLServer
+* `-custom encrypt=true`
+* `-custom trustServerCertificate=true`
+* `-custom hostNameInCertificate=str`
+* `-custom accessToken=str`
+* `-custom authentication=str`
+* `-custom authenticationScheme=str`
+* `-custom columnEncryptionSetting=str`
+* `-custom failoverPartner=str`
+* `-custom integratedSecurity=true`
+
+
 
 ## Future Enhancements
 * Add Jar versioning
