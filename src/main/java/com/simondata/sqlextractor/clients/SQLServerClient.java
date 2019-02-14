@@ -24,6 +24,9 @@ public class SQLServerClient extends AbstractSQLClient {
         ds.setDatabaseName(params.getDatabase());
         ds.setEncrypt(params.getEncrypt());
         ds.setTrustServerCertificate(params.getTrustServerCertificate());
+        ds.setTrustStore(params.getTrustStore());
+        ds.setTrustStorePassword(params.getTrustStorePassword());
+        ds.setTrustStoreType(params.getTrustStoreType());
         ds.setAccessToken(params.getAccessToken());
         if  (params.getAuthentication() != null) {
             ds.setAuthentication(params.getAuthentication());

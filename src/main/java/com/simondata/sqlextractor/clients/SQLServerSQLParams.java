@@ -12,6 +12,9 @@ public class SQLServerSQLParams extends SQLParams {
     private String columnEncryptionSetting = null;
     private String failoverPartner = null;
     private Boolean integratedSecurity= null;
+    private String trustStore = null;
+    private String trustStorePassword = null;
+    private String trustStoreType = null;
 
     public SQLServerSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);
@@ -103,5 +106,29 @@ public class SQLServerSQLParams extends SQLParams {
 
     public Boolean getIntegratedSecurity() {
         return this.getCustomBooleanParameter(this.integratedSecurity, "integratedSecurity");
+    }
+
+    public void setTrustStore(String trustStore) {
+        this.trustStore = trustStore;
+    }
+
+    public String getTrustStore() {
+        return this.getCustomStringParameter(this.trustStore, "trustStore");
+    }
+
+    public void setTrustStorePassword(String trustStorePassword) {
+        this.trustStorePassword = trustStorePassword;
+    }
+
+    public String getTrustStorePassword() {
+        return this.getCustomStringParameter(this.trustStorePassword, "trustStorePassword");
+    }
+
+    public void setTrustStoreType(String trustStoreType) {
+        this.trustStoreType = trustStoreType;
+    }
+
+    public String getTrustStoreType() {
+        return this.getCustomStringParameter(this.trustStoreType, "trustStoreType");
     }
 }
