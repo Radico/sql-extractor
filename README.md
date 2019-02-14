@@ -9,6 +9,9 @@ We need a flexible way to connect to various JDBC data sources, run arbitrary qu
 
 More info: http://jsonlines.org/
 
+### Author and Contributors
+Written by @chetmancini and owned by Simon Data, Inc. Offered without warranty.
+
 ## Running
 
 ### System Dependencies
