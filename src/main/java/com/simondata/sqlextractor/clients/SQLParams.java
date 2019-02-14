@@ -34,6 +34,24 @@ public class SQLParams implements InputParams {
         this.customProperties = customProperties;
     }
 
+    protected String getCustomStringParameter(String instanceVar, String key) {
+        if (instanceVar != null) {
+            return instanceVar;
+        } else {
+            return this.getCustomProperties().getProperty(key);
+        }
+    }
+
+    protected Boolean getCustomBooleanParameter(Boolean instanceVar, String key) {
+        if (instanceVar != null) {
+            return instanceVar;
+        } else if (this.getCustomProperties().getProperty(key) == null) {
+            return null;
+        } else {
+            return Boolean.parseBoolean(this.getCustomProperties().getProperty(key));
+        }
+    }
+
     public String getHost() {
         return this.host;
     }

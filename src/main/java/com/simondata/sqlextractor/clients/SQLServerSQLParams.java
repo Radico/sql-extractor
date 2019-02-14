@@ -54,11 +54,7 @@ public class SQLServerSQLParams extends SQLParams {
     }
 
     public String getHostNameInCertificate() {
-        if (this.hostNameInCertificate != null) {
-            return this.hostNameInCertificate;
-        } else {
-            return this.getCustomProperties().getProperty("hostNameInCertificate");
-        }
+        return this.getCustomStringParameter(this.hostNameInCertificate, "hostNameInCertificate");
     }
 
     public void setAccessToken(String accessToken) {
@@ -66,11 +62,7 @@ public class SQLServerSQLParams extends SQLParams {
     }
 
     public String getAccessToken() {
-        if (this.accessToken != null) {
-            return this.accessToken;
-        } else {
-            return (String) this.getCustomProperties().getOrDefault("accessToken", "");
-        }
+        return this.getCustomStringParameter(this.accessToken, "accessToken");
     }
 
     public void setAuthentication(String authentication) {
@@ -78,11 +70,7 @@ public class SQLServerSQLParams extends SQLParams {
     }
 
     public String getAuthentication() {
-        if (this.authentication != null) {
-            return this.authentication;
-        } else {
-            return this.getCustomProperties().getProperty("authentication");
-        }
+        return this.getCustomStringParameter(this.authentication, "authentication");
     }
 
     public void setAuthenticationScheme(String authenticationScheme) {
@@ -90,11 +78,7 @@ public class SQLServerSQLParams extends SQLParams {
     }
 
     public String getAuthenticationScheme() {
-        if (this.authenticationScheme != null) {
-            return this.authenticationScheme;
-        } else {
-            return this.getCustomProperties().getProperty("authenticationScheme");
-        }
+        return this.getCustomStringParameter(this.authenticationScheme, "authenticationScheme");
     }
 
     public void setColumnEncryptionSetting(String columnEncryptionSetting) {
@@ -102,11 +86,7 @@ public class SQLServerSQLParams extends SQLParams {
     }
 
     public String getColumnEncryptionSetting() {
-        if (this.columnEncryptionSetting != null) {
-            return this.columnEncryptionSetting;
-        } else {
-            return this.getCustomProperties().getProperty("columnEncryptionSetting");
-        }
+        return this.getCustomStringParameter(this.columnEncryptionSetting, "columnEncryptionSetting");
     }
 
     public void setFailoverPartner(String failoverPartner) {
@@ -114,11 +94,7 @@ public class SQLServerSQLParams extends SQLParams {
     }
 
     public String getFailoverPartner() {
-        if (this.failoverPartner != null) {
-            return this.failoverPartner;
-        } else {
-            return this.getCustomProperties().getProperty("failoverPartner");
-        }
+        return this.getCustomStringParameter(this.failoverPartner, "failoverPartner");
     }
 
     public void setIntegratedSecurity(Boolean integratedSecurity) {
@@ -126,15 +102,6 @@ public class SQLServerSQLParams extends SQLParams {
     }
 
     public Boolean getIntegratedSecurity() {
-        if (this.integratedSecurity != null) {
-            return this.integratedSecurity;
-        } else {
-            String integratedSecurity = this.getCustomProperties().getProperty("integratedSecurity");
-            if (integratedSecurity == null) {
-                return null;
-            } else {
-                return Boolean.parseBoolean(integratedSecurity);
-            }
-        }
+        return this.getCustomBooleanParameter(this.integratedSecurity, "integratedSecurity");
     }
 }
