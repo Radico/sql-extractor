@@ -6,7 +6,7 @@ public class SQLServerSQLParams extends SQLParams {
     private Boolean encrypt = null;
     private Boolean trustServerCertificate = null;
     private String hostNameInCertificate = null;
-    private String accessToken = "";
+    private String accessToken = null;
     private String authentication = null;
     private String authenticationScheme = null;
     private String columnEncryptionSetting = null;
