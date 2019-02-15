@@ -15,37 +15,38 @@ public class SQLServerClient extends AbstractSQLClient {
 
     @Override
     public DataSource initDataSource() {
-        SQLServerSQLParams params = (SQLServerSQLParams) this.params;
+        SQLParams params = this.params;
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setUser(params.getUser());
         ds.setPassword(params.getPassword());
         ds.setServerName(params.getHost(DEFAULT_HOST));
         ds.setPortNumber(params.getPort(DEFAULT_PORT));
         ds.setDatabaseName(params.getDatabase());
-        ds.setEncrypt(params.getEncrypt());
-        ds.setTrustServerCertificate(params.getTrustServerCertificate());
-        ds.setTrustStore(params.getTrustStore());
-        ds.setTrustStorePassword(params.getTrustStorePassword());
-        ds.setTrustStoreType(params.getTrustStoreType());
-        ds.setAccessToken(params.getAccessToken());
-        if  (params.getAuthentication() != null) {
-            ds.setAuthentication(params.getAuthentication());
-        }
-        if  (params.getAuthenticationScheme() != null) {
-            ds.setAuthenticationScheme(params.getAuthenticationScheme());
-        }
-        if  (params.getColumnEncryptionSetting() != null) {
-            ds.setColumnEncryptionSetting(params.getColumnEncryptionSetting());
-        }
-        if  (params.getFailoverPartner() != null) {
-            ds.setFailoverPartner(params.getFailoverPartner());
-        }
-        if  (params.getIntegratedSecurity() != null) {
-            ds.setIntegratedSecurity(params.getIntegratedSecurity());
-        }
-        if (params.getHostNameInCertificate() != null) {
-            ds.setHostNameInCertificate(params.getHostNameInCertificate());
-        }
+
+//        ds.setEncrypt(params.getEncrypt());
+//        ds.setTrustServerCertificate(params.getTrustServerCertificate());
+//        ds.setTrustStore(params.getTrustStore());
+//        ds.setTrustStorePassword(params.getTrustStorePassword());
+//        ds.setTrustStoreType(params.getTrustStoreType());
+//        ds.setAccessToken(params.getAccessToken());
+//        if  (params.getAuthentication() != null) {
+//            ds.setAuthentication(params.getAuthentication());
+//        }
+//        if  (params.getAuthenticationScheme() != null) {
+//            ds.setAuthenticationScheme(params.getAuthenticationScheme());
+//        }
+//        if  (params.getColumnEncryptionSetting() != null) {
+//            ds.setColumnEncryptionSetting(params.getColumnEncryptionSetting());
+//        }
+//        if  (params.getFailoverPartner() != null) {
+//            ds.setFailoverPartner(params.getFailoverPartner());
+//        }
+//        if  (params.getIntegratedSecurity() != null) {
+//            ds.setIntegratedSecurity(params.getIntegratedSecurity());
+//        }
+//        if (params.getHostNameInCertificate() != null) {
+//            ds.setHostNameInCertificate(params.getHostNameInCertificate());
+//        }
         return ds;
     }
 
