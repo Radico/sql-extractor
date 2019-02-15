@@ -12,6 +12,7 @@ public class ClientFactory {
             case "ATHENA":
                 client = new AwsAthenaClient(params);
                 break;
+            case "AZURE":
             case "SQLSERVER":
             case "MSSQL":
                 client = new SQLServerClient(params);
