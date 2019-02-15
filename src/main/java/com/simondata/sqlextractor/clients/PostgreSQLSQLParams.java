@@ -20,12 +20,11 @@ public class PostgreSQLSQLParams extends SQLParams {
         super(host, port, user, password, database, customProperties);
     }
 
-    private String safeGetCustomStringParameter(String instanceVar, String key) {
-        if (instanceVar != null) {
-            return instanceVar;
-        } else {
-            return this.getCustomProperties().getProperty(key);
-        }
+    public static PostgreSQLSQLParams initEngineParams(SQLParams params) {
+        return new PostgreSQLSQLParams(
+                params.getHost(), params.getPort(), params.getUser(),
+                params.getPassword(), params.getDatabase(), params.getCustomProperties()
+        );
     }
 
     public Boolean getSsl() {

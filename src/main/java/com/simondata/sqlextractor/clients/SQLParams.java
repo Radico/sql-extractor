@@ -1,5 +1,6 @@
 package com.simondata.sqlextractor.clients;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,10 +49,8 @@ public class SQLParams implements InputParams {
     protected Boolean getCustomBooleanParameter(Boolean instanceVar, String key) {
         if (instanceVar != null) {
             return instanceVar;
-        } else if (this.getCustomProperties().getProperty(key) == null) {
-            return null;
         } else {
-            return Boolean.parseBoolean(this.getCustomProperties().getProperty(key));
+            return getPropertyAsBoolean(key);
         }
     }
 
@@ -85,6 +84,14 @@ public class SQLParams implements InputParams {
 
     public Properties getCustomProperties() {
         return this.customProperties;
+    }
+
+    public Boolean getPropertyAsBoolean(String propertyName) {
+        return BooleanUtils.toBooleanObject(this.customProperties.getProperty(propertyName));
+    }
+
+    public String getPropertyAsString(String propertyName) {
+        return this.customProperties.getProperty(propertyName);
     }
 
     @Override

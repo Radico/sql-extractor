@@ -18,7 +18,7 @@ public class PostgreSQLClient extends AbstractSQLClient {
         /*
         TODO can use connection pooling in future.
          */
-        PostgreSQLSQLParams postgresParams = (PostgreSQLSQLParams) this.params;
+        PostgreSQLSQLParams postgresParams = PostgreSQLSQLParams.initEngineParams(this.params);
         PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setUser(postgresParams.getUser());
         ds.setServerName(postgresParams.getHost(DEFAULT_HOST));

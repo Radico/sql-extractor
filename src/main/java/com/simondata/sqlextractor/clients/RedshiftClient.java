@@ -23,6 +23,7 @@ public class RedshiftClient extends AbstractSQLClient {
         ds.setUserID(params.getUser());
         ds.setPassword(params.getPassword());
         ds.setURL(this.getRedshiftURL());
+        ds.setLanguage(params.getPropertyAsString("language"));
         return ds;
     }
 
