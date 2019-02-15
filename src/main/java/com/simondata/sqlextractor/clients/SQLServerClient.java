@@ -15,7 +15,7 @@ public class SQLServerClient extends AbstractSQLClient {
 
     @Override
     public DataSource initDataSource() {
-        SQLParams params = this.params;
+        SQLServerSQLParams params = SQLServerSQLParams.initEngineParams(this.params);
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setUser(params.getUser());
         ds.setPassword(params.getPassword());
@@ -23,30 +23,42 @@ public class SQLServerClient extends AbstractSQLClient {
         ds.setPortNumber(params.getPort(DEFAULT_PORT));
         ds.setDatabaseName(params.getDatabase());
 
-//        ds.setEncrypt(params.getEncrypt());
-//        ds.setTrustServerCertificate(params.getTrustServerCertificate());
-//        ds.setTrustStore(params.getTrustStore());
-//        ds.setTrustStorePassword(params.getTrustStorePassword());
-//        ds.setTrustStoreType(params.getTrustStoreType());
-//        ds.setAccessToken(params.getAccessToken());
-//        if  (params.getAuthentication() != null) {
-//            ds.setAuthentication(params.getAuthentication());
-//        }
-//        if  (params.getAuthenticationScheme() != null) {
-//            ds.setAuthenticationScheme(params.getAuthenticationScheme());
-//        }
-//        if  (params.getColumnEncryptionSetting() != null) {
-//            ds.setColumnEncryptionSetting(params.getColumnEncryptionSetting());
-//        }
-//        if  (params.getFailoverPartner() != null) {
-//            ds.setFailoverPartner(params.getFailoverPartner());
-//        }
-//        if  (params.getIntegratedSecurity() != null) {
-//            ds.setIntegratedSecurity(params.getIntegratedSecurity());
-//        }
-//        if (params.getHostNameInCertificate() != null) {
-//            ds.setHostNameInCertificate(params.getHostNameInCertificate());
-//        }
+        if  (params.getEncrypt() != null) {
+            ds.setEncrypt(params.getEncrypt());
+        }
+        if  (params.getTrustServerCertificate() != null) {
+            ds.setTrustServerCertificate(params.getTrustServerCertificate());
+        }
+        if  (params.getTrustStore() != null) {
+            ds.setTrustStore(params.getTrustStore());
+        }
+        if  (params.getTrustStorePassword() != null) {
+            ds.setTrustStorePassword(params.getTrustStorePassword());
+        }
+        if (params.getTrustStoreType() != null) {
+            ds.setTrustStoreType(params.getTrustStoreType());
+        }
+        if (params.getAccessToken() != null) {
+            ds.setAccessToken(params.getAccessToken());
+        }
+        if  (params.getAuthentication() != null) {
+            ds.setAuthentication(params.getAuthentication());
+        }
+        if  (params.getAuthenticationScheme() != null) {
+            ds.setAuthenticationScheme(params.getAuthenticationScheme());
+        }
+        if  (params.getColumnEncryptionSetting() != null) {
+            ds.setColumnEncryptionSetting(params.getColumnEncryptionSetting());
+        }
+        if  (params.getFailoverPartner() != null) {
+            ds.setFailoverPartner(params.getFailoverPartner());
+        }
+        if  (params.getIntegratedSecurity() != null) {
+            ds.setIntegratedSecurity(params.getIntegratedSecurity());
+        }
+        if (params.getHostNameInCertificate() != null) {
+            ds.setHostNameInCertificate(params.getHostNameInCertificate());
+        }
         return ds;
     }
 

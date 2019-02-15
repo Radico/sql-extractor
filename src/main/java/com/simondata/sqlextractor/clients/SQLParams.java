@@ -5,16 +5,18 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
+
 public class SQLParams implements InputParams {
 
     private final static Logger logger = LoggerFactory.getLogger(InputParams.class);
 
-    private String host;
-    private Integer port;
-    private String user;
-    private String password;
-    private String database;
-    private Properties customProperties;
+    protected String host;
+    protected Integer port;
+    protected String user;
+    protected String password;
+    protected String database;
+    protected Properties customProperties;
 
     public SQLParams(String host, Integer port, String user, String password, String database) {
         this.host = host;
@@ -22,6 +24,7 @@ public class SQLParams implements InputParams {
         this.user = user;
         this.password = password;
         this.database = database;
+        this.customProperties = new Properties();
     }
 
     public SQLParams(
@@ -57,11 +60,7 @@ public class SQLParams implements InputParams {
     }
 
     public String getHost(String defaultHost) {
-        if (this.host == null) {
-            return defaultHost;
-        } else {
-            return this.host;
-        }
+        return defaultIfNull(this.host, defaultHost);
     }
 
     public Integer getPort() {
@@ -69,11 +68,7 @@ public class SQLParams implements InputParams {
     }
 
     public Integer getPort(int defaultPort) {
-        if (this.port == null) {
-            return defaultPort;
-        } else {
-            return port;
-        }
+        return defaultIfNull(this.port, defaultPort);
     }
 
     public String getUser() {
@@ -95,6 +90,7 @@ public class SQLParams implements InputParams {
     @Override
     public void logValues() {
         logger.info("User: " + this.getUser());
+        logger.info("Password: <not shown>");
         logger.info("Port: " + this.getPort());
         logger.info("Database: " + this.getDatabase());
         for (String name : this.customProperties.stringPropertyNames()) {

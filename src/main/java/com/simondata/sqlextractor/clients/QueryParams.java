@@ -9,9 +9,9 @@ public class QueryParams implements InputParams {
 
     private static final Integer DEFAULT_FETCH_SIZE = 10000;
 
-    private Integer fetchSize;
-    private Integer maxRows;
-    private Integer timeout;
+    private Integer fetchSize = null;
+    private Integer maxRows = null;
+    private Integer timeout = null;
 
 
     public QueryParams() {

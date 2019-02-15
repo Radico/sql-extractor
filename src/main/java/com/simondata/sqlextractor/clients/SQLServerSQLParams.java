@@ -25,6 +25,17 @@ public class SQLServerSQLParams extends SQLParams {
         super(host, port, user, password, database, customProperties);
     }
 
+    public static SQLServerSQLParams initEngineParams(SQLParams sqlParams) {
+        return new SQLServerSQLParams(
+                sqlParams.getHost(),
+                sqlParams.getPort(),
+                sqlParams.getUser(),
+                sqlParams.getPassword(),
+                sqlParams.getDatabase(),
+                sqlParams.getCustomProperties()
+        );
+    }
+
     public void setEncrypt(boolean encrypt) {
         this.encrypt = encrypt;
     }
