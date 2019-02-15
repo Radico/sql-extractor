@@ -86,8 +86,21 @@ public class SQLParams implements InputParams {
         return this.customProperties;
     }
 
+    public boolean hasProperty(String propertyName) {
+        return this.customProperties.containsKey(propertyName);
+    }
+
     public Boolean getPropertyAsBoolean(String propertyName) {
         return BooleanUtils.toBooleanObject(this.customProperties.getProperty(propertyName));
+    }
+
+    public Integer getPropertyAsInteger(String propertyName) {
+        String prop = this.customProperties.getProperty(propertyName);
+        if (prop == null) {
+            return null;
+        } else {
+            return Integer.parseInt(prop);
+        }
     }
 
     public String getPropertyAsString(String propertyName) {
