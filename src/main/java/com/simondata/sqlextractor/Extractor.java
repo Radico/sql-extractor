@@ -1,11 +1,10 @@
 package com.simondata.sqlextractor;
 
 import com.simondata.sqlextractor.clients.*;
+import com.simondata.sqlextractor.writers.*;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.simondata.sqlextractor.writers.JsonLRowWriter;
-import com.simondata.sqlextractor.writers.RowHandler;
 
 import java.io.Console;
 import java.io.IOException;
@@ -39,8 +38,9 @@ public class Extractor {
         options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
         options.addOption("s", "sql", true,
                 "SQL file to read.");
-        options.addOption("o", "print", false, "Print to stdout");
+        options.addOption("print", "print", false, "Print to stdout");
         options.addOption("dry", "dry", false, "Dry run");
+        options.addOption("format", "format", true, "The output format, defaults to json (JSON | CSV)");
         options.addOption("f", "file", true, "File to write to. Defaults to " + DEFAULT_OUTPUT_FILENAME + '.');
         options.addOption("c", "case", true, "Key case format (DEFAULT | Snake | Camel)");
         options.addOption("fetchsize", "fetchsize", true, "Fetch size");
@@ -108,6 +108,16 @@ public class Extractor {
         return params;
     }
 
+    private static FileRowWriter getRowWriter(FileOutputFormat outputFormat) throws ParseException {
+        if (outputFormat == FileOutputFormat.JSON) {
+            return new JsonLRowWriter();
+        } else if (outputFormat == FileOutputFormat.CSV){
+            return new CSVRowWriter();
+        } else {
+            throw new ParseException("Unknown output format");
+        }
+    }
+
     public static void main(String[] args) {
         configureLogging();
 
@@ -118,6 +128,7 @@ public class Extractor {
             FormattingParams formattingParams = getFormattingParams(line);
             QueryParams queryParams = getQueryParams(line);
             String type = line.getOptionValue("type", "SQLSERVER").toUpperCase();
+            FileOutputFormat outputFormat = FileOutputFormat.valueOf(line.getOptionValue("format", "json").toUpperCase());
 
             if (line.hasOption("dry")) {
                 sqlParams.logValues();
@@ -132,7 +143,7 @@ public class Extractor {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 boolean print = line.hasOption("print");
-                JsonLRowWriter writer = new JsonLRowWriter();
+                FileRowWriter writer = getRowWriter(outputFormat);
                 if (print) {
                     writer.openStdOut();
                 } else {

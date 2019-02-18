@@ -2,7 +2,6 @@ package com.simondata.sqlextractor.writers;
 
 import com.google.gson.*;
 
-import java.io.*;
 import java.util.Map;
 
 public class JsonLRowWriter extends FileRowWriter {
@@ -10,8 +9,6 @@ public class JsonLRowWriter extends FileRowWriter {
     static String ENCODING = "UTF-8";
 
     private Gson gson;
-
-    private PrintWriter writer = null;
 
     public JsonLRowWriter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -29,11 +26,11 @@ public class JsonLRowWriter extends FileRowWriter {
         this.open(filename);
     }
 
-    String toJson(Map input) {
+    String toJson(Map<String, Object> input) {
         return this.gson.toJson(input);
     }
 
-    public void writeRow(Map row) {
+    public void writeRow(Map<String, Object> row) {
         this.writer.println(this.toJson(row));
     }
 

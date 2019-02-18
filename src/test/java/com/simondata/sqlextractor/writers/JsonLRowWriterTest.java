@@ -28,8 +28,8 @@ public class JsonLRowWriterTest {
         test2.put("a", "jkl");
         test2.put("b", 2);
 
-        List<Map> input = Arrays.asList(test1, test2);
-        JsonLRowWriter subject = new JsonLRowWriter();
+        List<Map<String, Object>> input = Arrays.asList(test1, test2);
+        FileRowWriter subject = new JsonLRowWriter();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         subject.open(baos);
 

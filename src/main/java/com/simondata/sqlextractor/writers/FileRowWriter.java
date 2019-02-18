@@ -16,11 +16,11 @@ public abstract class FileRowWriter implements RowWriter {
 
     protected PrintWriter writer = null;
 
-    public abstract void writeRow(Map row);
+    public abstract void writeRow(Map<String, Object> row);
 
-    public int writeRows(List<Map> rows) {
+    public int writeRows(List<Map<String, Object>> rows) {
         AtomicInteger counter = new AtomicInteger();
-        for (Map row : rows) {
+        for (Map<String, Object> row : rows) {
             this.writeRow(row);
             counter.getAndIncrement();
         }
