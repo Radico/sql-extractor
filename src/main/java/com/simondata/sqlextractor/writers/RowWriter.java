@@ -7,7 +7,7 @@ public interface RowWriter {
 
     void writeRow(Map<String, Object> row);
 
-    int writeRows(List<Map<String, Object>> row);
+    int writeRows(List<Map<String, Object>> rows);
 
     void close();
 }

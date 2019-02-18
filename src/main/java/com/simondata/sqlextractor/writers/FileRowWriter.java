@@ -20,10 +20,10 @@ public abstract class FileRowWriter implements RowWriter {
 
     public int writeRows(List<Map<String, Object>> rows) {
         AtomicInteger counter = new AtomicInteger();
-        for (Map<String, Object> row : rows) {
+        rows.forEach(row -> {
             this.writeRow(row);
             counter.getAndIncrement();
-        }
+        });
         return counter.intValue();
     }
 
