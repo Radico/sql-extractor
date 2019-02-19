@@ -13,6 +13,10 @@ public class PostgreSQLClient extends AbstractSQLClient {
         super(params);
     }
 
+    public PostgreSQLClient(SQLParams params, QueryParams queryParams) {
+        super(params, queryParams);
+    }
+
     @Override
     public DataSource initDataSource() {
         /*
@@ -25,7 +29,8 @@ public class PostgreSQLClient extends AbstractSQLClient {
         ds.setPassword(postgresParams.getPassword());
         ds.setDatabaseName(postgresParams.getDatabase());
         ds.setPortNumber(postgresParams.getPort(DEFAULT_PORT));
-        ds.setReadOnly(true);
+        ds.setReadOnly(this.queryParams.getReadOnly());
+        ds.setDefaultRowFetchSize(this.queryParams.getFetchSize());
 
         // Custom params
         if (postgresParams.getSsl() != null) {

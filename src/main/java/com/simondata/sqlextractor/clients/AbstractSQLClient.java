@@ -15,7 +15,7 @@ import java.util.Map;
 public abstract class AbstractSQLClient implements SQLClient {
 
     protected SQLParams params;
-    private QueryParams queryParams;
+    protected QueryParams queryParams;
 
     private final Logger logger = LoggerFactory.getLogger(SQLClient.class);
 

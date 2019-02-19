@@ -13,6 +13,11 @@ public class QueryParams implements InputParams {
     private Integer maxRows = null;
     private Integer timeout = null;
 
+    /**
+     * Todo make optional.
+     */
+    private Boolean readOnly = true;
+
 
     public QueryParams() {
         this.fetchSize = DEFAULT_FETCH_SIZE;
@@ -38,6 +43,10 @@ public class QueryParams implements InputParams {
 
     public Integer getTimeout() {
         return this.timeout;
+    }
+
+    public Boolean getReadOnly() {
+        return this.readOnly;
     }
 
     public static QueryParams getDefaultQueryParams() {
