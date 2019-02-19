@@ -25,6 +25,7 @@ public class PostgreSQLClient extends AbstractSQLClient {
         ds.setPassword(postgresParams.getPassword());
         ds.setDatabaseName(postgresParams.getDatabase());
         ds.setPortNumber(postgresParams.getPort(DEFAULT_PORT));
+        ds.setReadOnly(true);
 
         // Custom params
         if (postgresParams.getSsl() != null) {
