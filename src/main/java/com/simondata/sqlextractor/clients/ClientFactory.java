@@ -34,6 +34,9 @@ public class ClientFactory {
             case "INFORMIX":
                 client = new InformixSQLClient(params);
                 break;
+            case "SNOWFLAKE":
+                client = new SnowflakeClient(params);
+                break;
             case "SYBASE":
             case "ACCESS":
             case "INTERBASE":

@@ -10,7 +10,8 @@ public enum SqlEngine {
     ORACLE,
     INFORMIX,
     REDSHIFT,
-    BIGQUERY;
+    BIGQUERY,
+    SNOWFLAKE;
 
     static SqlEngine byName(String name) {
         return EnumUtils.getEnum(SqlEngine.class, name.toUpperCase());
