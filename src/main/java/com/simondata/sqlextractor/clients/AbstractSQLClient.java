@@ -80,17 +80,4 @@ public abstract class AbstractSQLClient implements SQLClient {
         }
     }
 
-    @Override
-    public void printRows(String queryText) {
-        logger.debug("Querying for: " + queryText);
-        try {
-            for (Map row : this.queryAsList(queryText)) {
-                System.out.println(row);
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
 }

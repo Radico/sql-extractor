@@ -27,14 +27,30 @@ public class PostgreSQLClient extends AbstractSQLClient {
         ds.setPortNumber(postgresParams.getPort(DEFAULT_PORT));
 
         // Custom params
-        ds.setSsl(postgresParams.getSsl());
-        ds.setBinaryTransfer(postgresParams.getBinaryTransfer());
-        ds.setKerberosServerName(postgresParams.getKerberosServerName());
-        ds.setSslCert(postgresParams.getSslCert());
-        ds.setSslKey(postgresParams.getSslKey());
-        ds.setSslMode(postgresParams.getSslMode());
-        ds.setSslPassword(postgresParams.getSslPassword());
-        ds.setSslRootCert(postgresParams.getSslRootCert());
+        if (postgresParams.getSsl() != null) {
+            ds.setSsl(postgresParams.getSsl());
+        }
+        if (postgresParams.getBinaryTransfer() != null) {
+            ds.setBinaryTransfer(postgresParams.getBinaryTransfer());
+        }
+        if (postgresParams.getKerberosServerName() != null) {
+            ds.setKerberosServerName(postgresParams.getKerberosServerName());
+        }
+        if (postgresParams.getSslCert() != null) {
+            ds.setSslCert(postgresParams.getSslCert());
+        }
+        if (postgresParams.getSslKey() != null) {
+            ds.setSslKey(postgresParams.getSslKey());
+        }
+        if (postgresParams.getSslMode() != null) {
+            ds.setSslMode(postgresParams.getSslMode());
+        }
+        if (postgresParams.getSslPassword() != null) {
+            ds.setSslPassword(postgresParams.getSslPassword());
+        }
+        if (postgresParams.getSslRootCert() != null) {
+            ds.setSslRootCert(postgresParams.getSslRootCert());
+        }
         return ds;
     }
 

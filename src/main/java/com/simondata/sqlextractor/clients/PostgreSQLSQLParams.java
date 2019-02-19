@@ -22,8 +22,12 @@ public class PostgreSQLSQLParams extends SQLParams {
 
     public static PostgreSQLSQLParams initEngineParams(SQLParams params) {
         return new PostgreSQLSQLParams(
-                params.getHost(), params.getPort(), params.getUser(),
-                params.getPassword(), params.getDatabase(), params.getCustomProperties()
+                params.getHost(),
+                params.getPort(),
+                params.getUser(),
+                params.getPassword(),
+                params.getDatabase(),
+                params.getCustomProperties()
         );
     }
 
