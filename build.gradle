@@ -46,7 +46,6 @@ buildscript {
 }
 
 release {
-    preCommitText = ''
     preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
     tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
     newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
@@ -54,7 +53,6 @@ release {
     versionPropertyFile = 'gradle.properties'
     buildTasks = ['build', 'shadowJar']
     scmAdapters = [net.researchgate.release.GitAdapter]
-
     git {
         requireBranch = 'master'
         pushToRemote = 'origin'
