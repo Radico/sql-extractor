@@ -62,6 +62,10 @@ public class SQLParams implements InputParams {
         return defaultIfNull(this.host, defaultHost);
     }
 
+    public void setHost(String host) {
+        this.host = host;
+    }
+
     public Integer getPort() {
         return this.port;
     }
@@ -70,16 +74,32 @@ public class SQLParams implements InputParams {
         return defaultIfNull(this.port, defaultPort);
     }
 
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
     public String getUser() {
         return this.user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getPassword() {
         return this.password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getDatabase() {
         return this.database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
     }
 
     public Properties getCustomProperties() {
