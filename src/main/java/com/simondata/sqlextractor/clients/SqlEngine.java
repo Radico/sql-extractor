@@ -13,8 +13,28 @@ public enum SqlEngine {
     BIGQUERY,
     SNOWFLAKE;
 
+    private static String normalizeName(String name) {
+        String result;
+        switch (name.toUpperCase()) {
+            case "AZURE":
+            case "MSSQL":
+                result = SQLSERVER.name();
+                break;
+            case "MARIADB":
+                result = MYSQL.name();
+                break;
+            case "POSTGRES":
+                result = POSTGRESQL.name();
+                break;
+            default:
+                result = name.toUpperCase();
+                break;
+        }
+        return result;
+    }
+
     static SqlEngine byName(String name) {
-        return EnumUtils.getEnum(SqlEngine.class, name.toUpperCase());
+        return EnumUtils.getEnum(SqlEngine.class, normalizeName(name));
     }
 
 }
