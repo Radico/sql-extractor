@@ -35,6 +35,15 @@ public class SQLExtractor {
     }
 
     /**
+     * If you need to implement your own SQLClient
+     * @param sqlClient
+     */
+    public SQLExtractor(SQLClient sqlClient) {
+        this.sqlClient = sqlClient;
+        this.formattingParams = FormattingParams.getDefaultFormattingParams();
+    }
+
+    /**
      * Execute a query and return an arraylist of Maps
      *
      * @param sql
