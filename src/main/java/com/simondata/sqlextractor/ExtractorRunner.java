@@ -121,7 +121,7 @@ public class ExtractorRunner {
             SQLParams sqlParams = getSqlParams(line);
             FormattingParams formattingParams = getFormattingParams(line);
             QueryParams queryParams = getQueryParams(line);
-            String type = line.getOptionValue("type", "SQLSERVER").toUpperCase();
+            SqlEngine engine = SqlEngine.byName(line.getOptionValue("type", "SQLSERVER"));
             FileOutputFormat outputFormat = FileOutputFormat.valueOf(
                     line.getOptionValue("format", "json").toUpperCase());
 
@@ -131,13 +131,11 @@ public class ExtractorRunner {
                 formattingParams.logValues();
                 System.exit(0);
             }
-            SqlEngine engine = SqlEngine.byName(type);
             SQLExtractor sqlExtractor = new SQLExtractor(engine, sqlParams, formattingParams);
-
             try {
                 String inputSql = readSql(line.getOptionValue("sql"));
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
-                sqlExtractor.queryToFile(inputSql, new File(outputFile), outputFormat, queryParams, formattingParams);
+                sqlExtractor.queryToFile(inputSql, new File(outputFile), outputFormat, queryParams);
             } catch (IOException e) {
                 e.printStackTrace();
             }

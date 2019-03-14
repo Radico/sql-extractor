@@ -62,25 +62,23 @@ public class SQLExtractor {
      * @return Number of rows
      */
     public Integer queryWithCallback(String sql, Function<Map<String, Object>, ?> callback) {
-        return queryWithCallback(sql, callback, QueryParams.getDefaultQueryParams(), new FormattingParams());
+        return queryWithCallback(sql, callback, QueryParams.getDefaultQueryParams());
     }
 
     /**
      * @param sql
      * @param callback
      * @param queryParams
-     * @param formattingParams
      * @return Number of rows
      */
     public Integer queryWithCallback(
             String sql,
             Function<Map<String, Object>, ?> callback,
-            QueryParams queryParams,
-            FormattingParams formattingParams
+            QueryParams queryParams
     ) {
         this.sqlClient.setQueryParams(queryParams);
         CallbackRowWriter writer = new CallbackRowWriter(callback);
-        RowHandler rh = new RowHandler(writer, queryParams.getLogFrequency(), formattingParams);
+        RowHandler rh = new RowHandler(writer, queryParams.getLogFrequency(), this.formattingParams);
         return this.sqlClient.queryWithHandler(sql, rh);
     }
 
@@ -98,8 +96,7 @@ public class SQLExtractor {
                 sql,
                 file,
                 outputFormat,
-                QueryParams.getDefaultQueryParams(),
-                FormattingParams.getDefaultFormattingParams()
+                QueryParams.getDefaultQueryParams()
         );
     }
 
@@ -107,14 +104,13 @@ public class SQLExtractor {
             String sql,
             File file,
             FileOutputFormat outputFormat,
-            QueryParams queryParams,
-            FormattingParams formattingParams
+            QueryParams queryParams
     ) {
         this.sqlClient.setQueryParams(queryParams);
         FileRowWriter writer = SQLExtractor.getRowWriter(outputFormat);
         try {
             writer.open(file);
-            RowHandler rh = new RowHandler(writer, queryParams.getLogFrequency(), formattingParams);
+            RowHandler rh = new RowHandler(writer, queryParams.getLogFrequency(), this.formattingParams);
             this.sqlClient.queryWithHandler(sql, rh);
         } finally {
             writer.close();
