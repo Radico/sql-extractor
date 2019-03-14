@@ -8,10 +8,12 @@ public class QueryParams implements InputParams {
     private final static Logger logger = LoggerFactory.getLogger(InputParams.class);
 
     private static final Integer DEFAULT_FETCH_SIZE = 10000;
+    private static final Integer DEFAULT_LOG_FREQUENCY = 100_000;
 
     private Integer fetchSize = null;
     private Integer maxRows = null;
     private Integer timeout = null;
+    private Integer logFrequency = null;
 
     /**
      * Todo make optional.
@@ -21,6 +23,7 @@ public class QueryParams implements InputParams {
 
     public QueryParams() {
         this.fetchSize = DEFAULT_FETCH_SIZE;
+        this.logFrequency = DEFAULT_LOG_FREQUENCY;
     }
 
     public QueryParams(Integer fetchSize, Integer maxRows, Integer timeout) {
@@ -47,6 +50,10 @@ public class QueryParams implements InputParams {
 
     public Boolean getReadOnly() {
         return this.readOnly;
+    }
+
+    public Integer getLogFrequency() {
+        return this.logFrequency;
     }
 
     public static QueryParams getDefaultQueryParams() {

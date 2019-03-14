@@ -7,8 +7,12 @@ public class ClientFactory {
     private static final Logger logger = LoggerFactory.getLogger(ClientFactory.class);
 
     public static SQLClient makeSQLClient(String sqlType, SQLParams params) {
-        SQLClient client = null;
         SqlEngine engine = SqlEngine.byName(sqlType);
+        return ClientFactory.makeSQLClient(engine, params);
+    }
+
+    public static SQLClient makeSQLClient(SqlEngine engine, SQLParams params) {
+        SQLClient client = null;
         switch (engine) {
             case ATHENA:
                 client = new AwsAthenaClient(params);

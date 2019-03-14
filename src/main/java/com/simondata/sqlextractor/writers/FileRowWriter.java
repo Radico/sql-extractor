@@ -27,10 +27,18 @@ public abstract class FileRowWriter implements RowWriter {
         return counter.intValue();
     }
 
+    /**
+     * Convenience method.
+     * @param filename
+     */
     public void open(String filename) {
+        this.open(new File(filename));
+    }
+
+    public void open(File file) {
         try {
-            this.writer = new PrintWriter(new File(filename), ENCODING);
-            logger.info("Opening file: " + filename);
+            this.writer = new PrintWriter(file, ENCODING);
+            logger.info("Opening file: " + file.getName());
             this.postOpenHook();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();

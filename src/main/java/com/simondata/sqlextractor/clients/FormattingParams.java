@@ -37,6 +37,10 @@ public class FormattingParams implements InputParams {
         return KeyCaseFormat.DEFAULT;
     }
 
+    public static FormattingParams getDefaultFormattingParams() {
+        return new FormattingParams();
+    }
+
     @Override
     public void logValues() {
         logger.info("Key Case Format: " + this.getKeyCaseFormat().name());

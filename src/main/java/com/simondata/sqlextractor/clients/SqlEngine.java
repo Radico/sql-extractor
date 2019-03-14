@@ -33,7 +33,7 @@ public enum SqlEngine {
         return result;
     }
 
-    static SqlEngine byName(String name) {
+    public static SqlEngine byName(String name) {
         return EnumUtils.getEnum(SqlEngine.class, normalizeName(name));
     }
 
