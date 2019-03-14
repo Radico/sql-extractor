@@ -16,6 +16,9 @@ public enum SqlEngine {
     private static String normalizeName(String name) {
         String result;
         switch (name.toUpperCase()) {
+            case "AWSATHENA":
+                result = ATHENA.name();
+                break;
             case "AZURE":
             case "MSSQL":
                 result = SQLSERVER.name();
