@@ -37,7 +37,6 @@ public class ExtractorRunner {
         options.addOption("t", "type", true, "Driver type (SQLServer | MySQL | Postgres )");
         options.addOption("s", "sql", true,
                 "SQL file to read.");
-        options.addOption("print", "print", false, "Print to stdout");
         options.addOption("dry", "dry", false, "Dry run");
         options.addOption("format", "format", true, "The output format, defaults to json (JSON | CSV)");
         options.addOption(

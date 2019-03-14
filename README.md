@@ -2,10 +2,15 @@
 
 ## Project and Rationale
 
-Most Java SQL projects are designed around Object Relational Mappings. While
-this is powerful it doesn't allow the flexibility for dynamic queries.
+SQL has become one the most important ways to describe and query data in large data systems and the need for simple SQL interfaces is more important than ever. 
+However, most Java SQL projects are designed around Object Relational Mappings. 
+While this is powerful it doesn't allow the flexibility for dynamic queries.
 
-We need a flexible way to connect to various JDBC data sources, run arbitrary queries, return line delimited JSON.
+While there are various packages on the market, generally querying a database as a Java developer is much more complex than writing basic queries in languages like Python or PHP.
+
+The original rationale for this project was to design a flexible way to connect to various JDBC data sources, run arbitrary queries, return line delimited JSON for later storage and processing.
+
+The project has evolved and now offers a variety of features that offer power, scalability, and flexibility when querying SQL from a JVM project or directly from the command line.
 
 More info: http://jsonlines.org/
 
@@ -35,7 +40,6 @@ Optional Parameters:
 * `-c` `--case`: The case to apply to the keys (defaults to query values, `default`|`snake`|`camel`)
 * `-p` `--port`: The port to connect to (defaults to the standard port for the given engine e.g. `3306` for MySQL)
 * `-f` `--file`: The output file to write to (defaults to a basic filename)
-* `-o` `--print`: Boolean. Write results to `stdout`.
 * `--dry`: Flag to show whether to just print out the input or whether to actually run the query.
 
 Custom Parameters
@@ -58,17 +62,6 @@ java -jar build/libs/sql-extractor/sql-extractor-1.0-SNAPSHOT.jar \
 ### Tests
 ```$sh
 gradle test
-```
-
-### Deploy
-
-Currently we run this via Python (see `jdbc.py`) in Jenkins. Deploying has two steps.
-First, we copy the fat jar up to S3, and then we copy that file to each Jenkins box.
-
-```$sh
-aws s3 cp build/libs/sql-extractor-1.0-SNAPSHOT.jar s3://prod.radi.co/build/libs/sql-extractor-1.0-SNAPSHOT.jar
-
-djprod fab jenkins.deploy_jdbc_extractor
 ```
 
 ## Additional Information
@@ -98,6 +91,8 @@ In future we may add drivers support for the following:
 The following will be straightforward to implement by a fork
 * Oracle: `oracle`
 
+Since Oracle has specific licensing restrictions, it's easiest to implement this yourself by subclassing `AbstractSQLClient`.
+
 ## Custom Parameters By Engine
 ### SQLServer
 * `-custom encrypt=true`
@@ -112,8 +107,7 @@ The following will be straightforward to implement by a fork
 
 
 
-## Future Enhancements
-* Add Jar versioning
-* Provide different types of output
-* Improve JSON serialization configuration options
-* Read query SQL from stdin or console.
+## Ideas for Future Enhancements
+* Provide additional output formats beyond JSON and CSV
+* Enhance JSON serialization configuration options
+* Read query SQL from stdin or console for runner.
