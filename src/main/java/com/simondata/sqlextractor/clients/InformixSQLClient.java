@@ -6,7 +6,7 @@ import com.informix.util.InformixUrl;
 import javax.sql.DataSource;
 
 /**
- * Untested.
+ * Informix SQL Client
  */
 public class InformixSQLClient extends AbstractSQLClient {
     private static final int DEFAULT_PORT = 1526;
