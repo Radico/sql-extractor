@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * CSVRowWriter
+ */
 public class CSVRowWriter extends FileRowWriter {
 
     private static String QUOTE = "\"";

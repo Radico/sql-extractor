@@ -16,6 +16,9 @@ package com.simondata.sqlextractor.writers;
 import com.google.gson.*;
 import java.util.Map;
 
+/**
+ * JsonLRowWriter
+ */
 public class JsonLRowWriter extends FileRowWriter {
 
     static String ENCODING = "UTF-8";

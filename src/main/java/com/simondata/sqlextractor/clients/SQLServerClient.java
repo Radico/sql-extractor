@@ -19,6 +19,9 @@ import com.microsoft.sqlserver.jdbc.*;
 
 import javax.sql.DataSource;
 
+/**
+ * SQLServerClient
+ */
 public class SQLServerClient extends AbstractSQLClient {
 
     private static final int DEFAULT_PORT = 1433;

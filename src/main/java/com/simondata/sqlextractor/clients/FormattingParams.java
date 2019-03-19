@@ -19,6 +19,15 @@ import com.simondata.sqlextractor.writers.KeyCaseFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <h1>FormattingParams</h1>
+ *
+ * These parameters are supposed to provide information on how to format the output
+ * result of a query. Currently key case formats may be changed.
+ *
+ * @author Chet Mancini
+ * @since   2019-03-31
+ */
 public class FormattingParams implements InputParams {
     private final static Logger logger = LoggerFactory.getLogger(InputParams.class);
 

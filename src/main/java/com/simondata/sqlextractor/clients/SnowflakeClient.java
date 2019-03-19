@@ -18,6 +18,15 @@ package com.simondata.sqlextractor.clients;
 import javax.sql.DataSource;
 import net.snowflake.client.jdbc.SnowflakeBasicDataSource;
 
+/**
+ * <h1>PostgreSQL Client</h1>
+ * Provide facilities for querying Snowflake.
+ *
+ * This client is in DEVELOPMENT and has not yet been tested in production.
+ *
+ * @author  Chet Mancini
+ * @since   2019-03-31
+ */
 public class SnowflakeClient extends AbstractSQLClient {
 
     SnowflakeClient(SQLParams params) {

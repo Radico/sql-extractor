@@ -18,6 +18,14 @@ package com.simondata.sqlextractor.clients;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 
+/**
+ * <h1>MySQL Client</h1>
+ * Provide facilities for querying MySQL or compatible databases
+ * such as AWS Aurora or MariaDB
+ *
+ * @author  Chet Mancini
+ * @since   2019-03-31
+ */
 public class MySQLClient extends AbstractSQLClient {
 
     private static final int DEFAULT_PORT = 3306;

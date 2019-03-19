@@ -17,6 +17,10 @@ package com.simondata.sqlextractor.clients;
 
 import java.util.Properties;
 
+/**
+ * PostgreSQLSQLParams
+ *
+ */
 public class PostgreSQLSQLParams extends SQLParams {
     private Boolean ssl;
     private Boolean binaryTransfer;

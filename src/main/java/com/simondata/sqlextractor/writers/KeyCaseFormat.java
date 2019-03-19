@@ -15,6 +15,9 @@ limitations under the License.
 
 package com.simondata.sqlextractor.writers;
 
+/**
+ * Enum for representing output formats for keys.
+ */
 public enum KeyCaseFormat {
     SNAKE_CASE, CAMEL_CASE, DEFAULT
 }

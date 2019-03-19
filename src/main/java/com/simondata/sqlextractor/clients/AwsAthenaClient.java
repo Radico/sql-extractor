@@ -16,6 +16,16 @@ package com.simondata.sqlextractor.clients;
 
 import javax.sql.DataSource;
 
+/**
+ * <h1>Athena Client</h1>
+ * Provide facilities for querying AWS Athena
+ *
+ * This client is in DEVELOPMENT and has not yet been tested in production.
+ *
+ * @author  Chet Mancini
+ * @version 1.0
+ * @since   2019-03-31
+ */
 public class AwsAthenaClient extends AbstractSQLClient {
     public AwsAthenaClient(SQLParams params) {
         super(params);

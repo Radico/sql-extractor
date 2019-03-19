@@ -1,0 +1,21 @@
+package com.simondata.sqlextractor.writers;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public abstract class AbstractRowWriter implements RowWriter {
+
+    public abstract void writeRow(Map<String, Object> row);
+
+    public int writeRows(List<Map<String, Object>> rows) {
+        AtomicInteger counter = new AtomicInteger();
+        rows.forEach(row -> {
+            this.writeRow(row);
+            counter.getAndIncrement();
+        });
+        return counter.intValue();
+    }
+
+    public abstract void close();
+}

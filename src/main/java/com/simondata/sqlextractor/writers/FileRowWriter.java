@@ -18,11 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class FileRowWriter implements RowWriter {
+public abstract class FileRowWriter extends AbstractRowWriter implements RowWriter {
 
     private final Logger logger = LoggerFactory.getLogger(FileRowWriter.class);
 
@@ -31,15 +29,6 @@ public abstract class FileRowWriter implements RowWriter {
     protected PrintWriter writer = null;
 
     public abstract void writeRow(Map<String, Object> row);
-
-    public int writeRows(List<Map<String, Object>> rows) {
-        AtomicInteger counter = new AtomicInteger();
-        rows.forEach(row -> {
-            this.writeRow(row);
-            counter.getAndIncrement();
-        });
-        return counter.intValue();
-    }
 
     /**
      * Convenience method.

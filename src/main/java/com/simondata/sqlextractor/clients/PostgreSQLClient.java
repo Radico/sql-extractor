@@ -19,6 +19,13 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 
+/**
+ * <h1>PostgreSQL Client</h1>
+ * Provide facilities for querying to postgres.
+ *
+ * @author  Chet Mancini
+ * @since   2019-03-31
+ */
 public class PostgreSQLClient extends AbstractSQLClient {
 
     private static final int DEFAULT_PORT = 5432;

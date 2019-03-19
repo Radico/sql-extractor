@@ -16,6 +16,9 @@
 
 package com.simondata.sqlextractor.writers;
 
+/**
+ * FileOutputFormat
+ */
 public enum FileOutputFormat {
     JSON, CSV
 }

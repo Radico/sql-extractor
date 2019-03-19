@@ -23,6 +23,14 @@ import java.util.Properties;
 
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
+/**
+ * SQLParams
+ * SQLParams are provided to the SQL client and are used in setting up an initial connection.
+ * They will be reused as long as the client is in use.
+ *
+ * @author Chet Mancini
+ * @since   2019-03-31
+ */
 public class SQLParams implements InputParams {
 
     private final static Logger logger = LoggerFactory.getLogger(InputParams.class);

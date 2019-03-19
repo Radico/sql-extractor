@@ -17,6 +17,9 @@ package com.simondata.sqlextractor.clients;
 
 import org.apache.commons.lang3.EnumUtils;
 
+/**
+ * SQLEngine
+ */
 public enum SqlEngine {
     ATHENA,
     SQLSERVER,

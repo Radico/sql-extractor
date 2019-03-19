@@ -17,6 +17,9 @@ package com.simondata.sqlextractor.writers;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Writer that prints to stdout.
+ */
 public class PrettyPrintingWriter extends FileRowWriter {
 
     @Override

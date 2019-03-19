@@ -21,6 +21,11 @@ import org.apache.commons.text.CaseUtils;
 
 import java.util.function.Function;
 
+/**
+ * Textformat
+ *
+ * Utility class for formatting text.
+ */
 public class TextFormat {
 
     public static Function<String, String> getFunctionByKeyFormat(KeyCaseFormat keyCaseFormat) {

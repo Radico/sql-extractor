@@ -20,6 +20,9 @@ import com.simondata.sqlextractor.writers.RowHandler;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * SQLClient
+ */
 public interface SQLClient {
 
     void setQueryParams(QueryParams queryParams);

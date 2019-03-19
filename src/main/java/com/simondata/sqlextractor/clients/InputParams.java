@@ -15,6 +15,13 @@ limitations under the License.
 
 package com.simondata.sqlextractor.clients;
 
+/**
+ * InputParams represent a type of parameter classes which
+ * contain categories of parameters which are used at different
+ * points in the query process.
+ * @author Chet Mancini
+ * @since   2019-03-31
+ */
 public interface InputParams {
 
     void logValues();

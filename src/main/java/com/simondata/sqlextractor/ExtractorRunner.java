@@ -32,6 +32,10 @@ import java.util.Properties;
 
 import static com.simondata.sqlextractor.util.TextFormat.parseInteger;
 
+/**
+ * <h1>ExtractorRunner</h1>
+ *
+ */
 public class ExtractorRunner {
 
     private final static Logger logger = LoggerFactory.getLogger(ExtractorRunner.class);

@@ -15,6 +15,9 @@ limitations under the License.
 
 package com.simondata.sqlextractor.clients;
 
+/**
+ * SnowflakeSQLParams
+ */
 public class SnowflakeSQLParams extends SQLParams {
     public SnowflakeSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);

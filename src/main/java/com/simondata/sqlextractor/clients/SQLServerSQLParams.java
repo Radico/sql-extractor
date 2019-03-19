@@ -17,6 +17,11 @@ package com.simondata.sqlextractor.clients;
 
 import java.util.Properties;
 
+/**
+ * SQLServerSQLParams
+ *
+ * A set of params that can be sent to the SQLServer client
+ */
 public class SQLServerSQLParams extends SQLParams {
     private Boolean encrypt = null;
     private Boolean trustServerCertificate = null;

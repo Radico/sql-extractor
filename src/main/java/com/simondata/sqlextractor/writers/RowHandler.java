@@ -31,7 +31,9 @@ import org.slf4j.LoggerFactory;
 
 import static com.simondata.sqlextractor.util.TextFormat.getFunctionByKeyFormat;
 
-
+/**
+ * Process rows, apply formatting, and send to output.
+ */
 public class RowHandler {
     private final Logger logger = LoggerFactory.getLogger(RowHandler.class);
 

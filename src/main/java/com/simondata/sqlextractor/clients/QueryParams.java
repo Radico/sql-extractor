@@ -18,6 +18,8 @@ package com.simondata.sqlextractor.clients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ */
 public class QueryParams implements InputParams {
 
     private final static Logger logger = LoggerFactory.getLogger(InputParams.class);

@@ -26,6 +26,9 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * AbstractSQLClient
+ */
 public abstract class AbstractSQLClient implements SQLClient {
 
     protected SQLParams params;
@@ -53,12 +56,16 @@ public abstract class AbstractSQLClient implements SQLClient {
         this.queryParams = queryParams;
     }
 
-    private StatementConfiguration getDefaultStatementConfiguration() {
+    private StatementConfiguration buildStatementConfiguration() {
         return new StatementConfiguration.Builder()
                 .fetchSize(this.queryParams.getFetchSize())
                 .queryTimeout(this.queryParams.getTimeout())
                 .maxRows(this.queryParams.getMaxRows())
                 .build();
+    }
+
+    private StatementConfiguration getDefaultStatementConfiguration(){
+        return new StatementConfiguration.Builder().build();
     }
 
     @Override
@@ -67,7 +74,7 @@ public abstract class AbstractSQLClient implements SQLClient {
         try {
             DbUtils.loadDriver(this.getDriverName());
             DataSource ds = this.initDataSource();
-            StatementConfiguration sc = this.getDefaultStatementConfiguration();
+            StatementConfiguration sc = this.buildStatementConfiguration();
             QueryRunner queryRunner = new QueryRunner(ds, sc);
             MapListHandler handler = new MapListHandler();
             return queryRunner.query(queryText, handler);
@@ -84,7 +91,7 @@ public abstract class AbstractSQLClient implements SQLClient {
         try {
             DbUtils.loadDriver(this.getDriverName());
             DataSource ds = this.initDataSource();
-            StatementConfiguration sc = this.getDefaultStatementConfiguration();
+            StatementConfiguration sc = this.buildStatementConfiguration();
             CustomQueryRunner cqr = new CustomQueryRunner(ds, sc, handler);
             return cqr.query(queryText);
         } catch (Exception e) {

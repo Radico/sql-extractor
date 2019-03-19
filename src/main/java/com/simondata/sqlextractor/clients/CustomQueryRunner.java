@@ -25,6 +25,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 
+/**
+ * CustomQueryRunner
+ */
 class CustomQueryRunner extends AbstractQueryRunner {
 
     private final RowHandler rh;
