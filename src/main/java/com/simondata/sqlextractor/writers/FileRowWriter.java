@@ -38,10 +38,14 @@ public abstract class FileRowWriter extends AbstractRowWriter implements RowWrit
         this.open(new File(outputFilename));
     }
 
-    public void open(File file) {
+    /**
+     * Open an output file for writing
+     * @param outputFile the output file to open.
+     */
+    public void open(File outputFile) {
         try {
-            this.writer = new PrintWriter(file, ENCODING);
-            logger.info("Opening file: " + file.getName());
+            this.writer = new PrintWriter(outputFile, ENCODING);
+            logger.info("Opening file: " + outputFile.getName());
             this.postOpenHook();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -65,12 +69,15 @@ public abstract class FileRowWriter extends AbstractRowWriter implements RowWrit
 
     }
 
-    void flush() {
+    private void flush() {
         if (this.writer != null) {
             this.writer.flush();
         }
     }
 
+    /**
+     * Close out the writer safely.
+     */
     public void close() {
         this.flush();
         if (this.writer != null) {

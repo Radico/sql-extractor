@@ -27,6 +27,10 @@ public class CallbackRowWriter extends AbstractRowWriter implements RowWriter {
 
     private Function<Map<String, Object>, ?> callback;
 
+    /**
+     * Constructor
+     * @param callback the function to invoke on each row.
+     */
     public CallbackRowWriter(Function<Map<String, Object>, ?> callback) {
         this.callback = callback;
     }

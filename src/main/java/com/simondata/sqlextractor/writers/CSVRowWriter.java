@@ -21,7 +21,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * CSVRowWriter
+ * <h1>CSVRowWriter</h1>
+ * CSVRowWriter is a type of writer that outputs to CSV.
  */
 public class CSVRowWriter extends FileRowWriter {
 
@@ -33,18 +34,29 @@ public class CSVRowWriter extends FileRowWriter {
 
     private boolean headersWritten;
 
-    private boolean shouldWriteHeaders;
+    private boolean shouldWriteHeaders = true;
 
+    /**
+     * Constructor using default delimiter.
+     */
     public CSVRowWriter() {
         this.delimiter = ",";
-        this.shouldWriteHeaders = true;
     }
 
+    /**
+     * Constructor with custom delimiter.
+     * @param delimiter the delimiter to separate the columns.
+     */
     public CSVRowWriter(CharSequence delimiter) {
         this.delimiter = delimiter;
-        this.shouldWriteHeaders = true;
     }
 
+    /**
+     * Constructor with custom delimiter and
+     * flag to turn off headers.
+     * @param delimiter
+     * @param shouldWriteHeaders
+     */
     public CSVRowWriter(CharSequence delimiter, boolean shouldWriteHeaders) {
         this.delimiter = delimiter;
         this.shouldWriteHeaders = shouldWriteHeaders;
