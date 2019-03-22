@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * <h1>AbstractRowWriter</h1>
+ */
 public abstract class AbstractRowWriter implements RowWriter {
 
     public abstract void writeRow(Map<String, Object> row);
