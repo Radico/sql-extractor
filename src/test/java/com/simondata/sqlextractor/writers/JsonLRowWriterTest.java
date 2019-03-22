@@ -25,15 +25,6 @@ import static org.junit.Assert.*;
 public class JsonLRowWriterTest {
 
     @Test
-    public void toJson() throws Exception {
-        Map<String, Object> test1 = new HashMap<>();
-        test1.put("a", "abc");
-        test1.put("b", 1);
-        JsonLRowWriter subject = new JsonLRowWriter();
-        assertEquals("{\"a\":\"abc\",\"b\":1}", subject.toJson(test1));
-    }
-
-    @Test
     public void writeQuery() throws Exception {
 
         Map<String, Object> test1 = new HashMap<>();

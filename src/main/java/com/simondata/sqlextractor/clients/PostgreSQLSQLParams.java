@@ -19,7 +19,7 @@ import java.util.Properties;
 
 /**
  * PostgreSQLSQLParams
- *
+ * Use in place of SQLParams when working with PostgreSQL.
  */
 public class PostgreSQLSQLParams extends SQLParams {
     private Boolean ssl;

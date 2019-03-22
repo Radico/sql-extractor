@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * AbstractSQLClient
+ * <h1>AbstractSQLClient</h1>
  */
 public abstract class AbstractSQLClient implements SQLClient {
 
@@ -36,12 +36,20 @@ public abstract class AbstractSQLClient implements SQLClient {
 
     private final Logger logger = LoggerFactory.getLogger(SQLClient.class);
 
+    /**
+     * Constructor
+     * @param params SQLParams to setup the connection.
+     */
     AbstractSQLClient(SQLParams params) {
-
         this.params = params;
         this.queryParams = QueryParams.getDefaultQueryParams();
     }
 
+    /**
+     * Constructor with a default set of queryparams for future queries
+     * @param params SQLParams to setup the connection.
+     * @param queryParams QueryParams for future queries.
+     */
     AbstractSQLClient(SQLParams params, QueryParams queryParams) {
         this.params = params;
         this.queryParams = queryParams;
@@ -56,6 +64,11 @@ public abstract class AbstractSQLClient implements SQLClient {
         this.queryParams = queryParams;
     }
 
+    /**
+     * Builds the StatementConfiguration based on the
+     * provided QueryParams.
+     * @return StatementConfiguration
+     */
     private StatementConfiguration buildStatementConfiguration() {
         return new StatementConfiguration.Builder()
                 .fetchSize(this.queryParams.getFetchSize())
@@ -64,6 +77,10 @@ public abstract class AbstractSQLClient implements SQLClient {
                 .build();
     }
 
+    /**
+     * Base StatementConfiguration
+     * @return StatementConfiguration
+     */
     private StatementConfiguration getDefaultStatementConfiguration(){
         return new StatementConfiguration.Builder().build();
     }

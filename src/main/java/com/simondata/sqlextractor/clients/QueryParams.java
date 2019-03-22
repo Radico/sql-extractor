@@ -19,6 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <h1>QueryParams</h1>
+ * QueryParms are parameters that are passed at query-time.
+ * They control the actual querying mechanism, such as number
+ * of rows to retrieve at a time.
  */
 public class QueryParams implements InputParams {
 

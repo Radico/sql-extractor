@@ -36,12 +36,21 @@ public class SQLServerSQLParams extends SQLParams {
     private String trustStorePassword = null;
     private String trustStoreType = null;
 
+    /**
+     * Params for SQLServer
+     * @param host
+     * @param port
+     * @param user
+     * @param password
+     * @param database
+     */
     public SQLServerSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);
     }
 
     public SQLServerSQLParams(
-            String host, Integer port, String user, String password, String database, Properties customProperties) {
+            String host, Integer port, String user, String password, String database, Properties customProperties
+    ) {
         super(host, port, user, password, database, customProperties);
     }
 
@@ -91,26 +100,50 @@ public class SQLServerSQLParams extends SQLParams {
         return this.getCustomStringParameter(this.hostNameInCertificate, "hostNameInCertificate");
     }
 
+    /**
+     * Set SQLServer access token
+     * @param accessToken
+     */
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
+    /**
+     * Get SQLServer access token
+     * @return the SQLServer access token.
+     */
     public String getAccessToken() {
         return this.getCustomStringParameter(this.accessToken, "accessToken");
     }
 
+    /**
+     * Set SQLServer authentication.
+     * @param authentication
+     */
     public void setAuthentication(String authentication) {
         this.authentication = authentication;
     }
 
+    /**
+     * Get SQLServer authentication.
+     * @return the SQLServer authentication.
+     */
     public String getAuthentication() {
         return this.getCustomStringParameter(this.authentication, "authentication");
     }
 
+    /**
+     * Set AuthenticationScheme
+     * @param authenticationScheme
+     */
     public void setAuthenticationScheme(String authenticationScheme) {
         this.authenticationScheme = authenticationScheme;
     }
 
+    /**
+     * Get SQLServer authentication scheme
+     * @return the sqlserver authentication scheme.
+     */
     public String getAuthenticationScheme() {
         return this.getCustomStringParameter(this.authenticationScheme, "authenticationScheme");
     }
@@ -155,10 +188,18 @@ public class SQLServerSQLParams extends SQLParams {
         return this.getCustomStringParameter(this.trustStorePassword, "trustStorePassword");
     }
 
+    /**
+     * Set SQLServer trust store type.
+     * @param trustStoreType SQLServer trust store type.
+     */
     public void setTrustStoreType(String trustStoreType) {
         this.trustStoreType = trustStoreType;
     }
 
+    /**
+     * Get SQLServer trust store type.
+     * @return SQLServer trust store type.
+     */
     public String getTrustStoreType() {
         return this.getCustomStringParameter(this.trustStoreType, "trustStoreType");
     }

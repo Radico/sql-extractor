@@ -32,10 +32,10 @@ public abstract class FileRowWriter extends AbstractRowWriter implements RowWrit
 
     /**
      * Convenience method.
-     * @param filename
+     * @param outputFilename
      */
-    public void open(String filename) {
-        this.open(new File(filename));
+    public void open(String outputFilename) {
+        this.open(new File(outputFilename));
     }
 
     public void open(File file) {

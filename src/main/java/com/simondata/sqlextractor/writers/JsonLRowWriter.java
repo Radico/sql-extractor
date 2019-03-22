@@ -18,6 +18,8 @@ import java.util.Map;
 
 /**
  * JsonLRowWriter
+ * A file writer that outputs jsonl files.
+ * Leverages Google's GSON library to flexibly and quickly serialize json.
  */
 public class JsonLRowWriter extends FileRowWriter {
 
@@ -25,6 +27,10 @@ public class JsonLRowWriter extends FileRowWriter {
 
     private Gson gson;
 
+    /**
+     * Base Constructor
+     * Requires open() be called after.
+     */
     public JsonLRowWriter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
@@ -34,14 +40,14 @@ public class JsonLRowWriter extends FileRowWriter {
     /**
      * Convenience constructor
      *
-     * @param filename
+     * @param outputFilename the name of the output file
      */
-    JsonLRowWriter(String filename) {
+    JsonLRowWriter(String outputFilename) {
         this();
-        this.open(filename);
+        this.open(outputFilename);
     }
 
-    String toJson(Map<String, Object> input) {
+    private String toJson(Map<String, Object> input) {
         return this.gson.toJson(input);
     }
 

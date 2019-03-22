@@ -35,12 +35,12 @@ public class SQLParams implements InputParams {
 
     private final static Logger logger = LoggerFactory.getLogger(InputParams.class);
 
-    protected String host;
-    protected Integer port;
-    protected String user;
-    protected String password;
-    protected String database;
-    protected Properties customProperties;
+    private String host;
+    private Integer port;
+    private String user;
+    private String password;
+    private String database;
+    private Properties customProperties;
 
     public SQLParams(String host, Integer port, String user, String password, String database) {
         this.host = host;

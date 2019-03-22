@@ -27,6 +27,11 @@ import javax.sql.DataSource;
  * @since   2019-03-31
  */
 public class AwsAthenaClient extends AbstractSQLClient {
+
+    /**
+     * Constructor
+     * @param params SQLParams the params for the connection.
+     */
     public AwsAthenaClient(SQLParams params) {
         super(params);
     }

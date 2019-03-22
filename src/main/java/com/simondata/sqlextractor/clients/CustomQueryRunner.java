@@ -26,12 +26,20 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 /**
- * CustomQueryRunner
+ * <h1>CustomQueryRunner</h1>
+ * A subtype of the Apache DbUtils AbstractQueryRunner
+ * that offers more flexibility.
  */
 class CustomQueryRunner extends AbstractQueryRunner {
 
     private final RowHandler rh;
 
+    /**
+     * Constructor
+     * @param ds
+     * @param stmtConfig
+     * @param rh
+     */
     CustomQueryRunner(DataSource ds, StatementConfiguration stmtConfig, RowHandler rh) {
         super(ds, stmtConfig);
         this.rh = rh;

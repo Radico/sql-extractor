@@ -31,6 +31,10 @@ public class MySQLClient extends AbstractSQLClient {
     private static final int DEFAULT_PORT = 3306;
     private static final String DEFAULT_HOST = "localhost";
 
+    /**
+     * Constructor
+     * @param params
+     */
     public MySQLClient(SQLParams params) {
         super(params);
     }

@@ -9,9 +9,15 @@ import javax.sql.DataSource;
  * Informix SQL Client
  */
 public class InformixSQLClient extends AbstractSQLClient {
+
     private static final int DEFAULT_PORT = 1526;
+
     private static final String DEFAULT_HOST = "localhost";
 
+    /**
+     * Constructor
+     * @param params SQLParams to setup connection.
+     */
     InformixSQLClient(SQLParams params) {
         super(params);
     }

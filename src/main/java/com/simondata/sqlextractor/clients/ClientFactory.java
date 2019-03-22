@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * ClientFactory
  *
  * Factory class to build the correct type of SQLClient based on input.
+ *
  */
 public class ClientFactory {
     private static final Logger logger = LoggerFactory.getLogger(ClientFactory.class);

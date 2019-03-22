@@ -20,7 +20,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 
 /**
- * <h1>PostgreSQL Client</h1>
+ * <h1>PostgreSQLClient</h1>
  * Provide facilities for querying to postgres.
  *
  * @author  Chet Mancini

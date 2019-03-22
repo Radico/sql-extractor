@@ -20,7 +20,8 @@ import com.microsoft.sqlserver.jdbc.*;
 import javax.sql.DataSource;
 
 /**
- * SQLServerClient
+ * <h1>SQLServerClient</h1>
+ * Client for SQLServer
  */
 public class SQLServerClient extends AbstractSQLClient {
 

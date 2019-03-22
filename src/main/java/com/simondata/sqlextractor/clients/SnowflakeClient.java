@@ -29,10 +29,19 @@ import net.snowflake.client.jdbc.SnowflakeBasicDataSource;
  */
 public class SnowflakeClient extends AbstractSQLClient {
 
+    /**
+     * Constructor
+     * @param params SQLParams for the connection
+     */
     SnowflakeClient(SQLParams params) {
         super(params);
     }
 
+    /**
+     * Constructor
+     * @param params SQLParams for the connection
+     * @param queryParams QueryParams to default to future queries.
+     */
     SnowflakeClient(SQLParams params, QueryParams queryParams) {
         super(params, queryParams);
     }

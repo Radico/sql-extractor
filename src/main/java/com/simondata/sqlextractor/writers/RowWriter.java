@@ -23,9 +23,22 @@ import java.util.Map;
  */
 public interface RowWriter {
 
+    /**
+     * Write a row out.
+     * @param row the row data to write out.
+     */
     void writeRow(Map<String, Object> row);
 
+    /**
+     * Write a set of rows out.
+     * @param rows
+     * @return
+     */
     int writeRows(List<Map<String, Object>> rows);
 
+    /**
+     * Should be called after all rows written.
+     * Hook to perform all cleanup on the writer.
+     */
     void close();
 }

@@ -16,7 +16,8 @@ limitations under the License.
 package com.simondata.sqlextractor.clients;
 
 /**
- * SnowflakeSQLParams
+ * <h1>SnowflakeSQLParams</h1>
+ * A subtype of SQLParams used to work with Snowflake.
  */
 public class SnowflakeSQLParams extends SQLParams {
     public SnowflakeSQLParams(String host, Integer port, String user, String password, String database) {

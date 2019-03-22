@@ -28,6 +28,10 @@ public class RedshiftClient extends AbstractSQLClient {
 
     private static final int DEFAULT_PORT = 5439;
 
+    /**
+     * Constructor
+     * @param params SQLParams for the connection.
+     */
     public RedshiftClient(SQLParams params) {
         super(params);
     }

@@ -18,7 +18,8 @@ package com.simondata.sqlextractor.clients;
 import org.apache.commons.lang3.EnumUtils;
 
 /**
- * SQLEngine
+ * <h1>SQLEngine</h1>
+ * The type of database to connect to.
  */
 public enum SqlEngine {
     ATHENA,
@@ -35,9 +36,11 @@ public enum SqlEngine {
         String result;
         switch (name.toUpperCase()) {
             case "AWSATHENA":
+            case "AWS_ATHENA":
                 result = ATHENA.name();
                 break;
             case "AZURE":
+            case "SQL_SERVER":
             case "MSSQL":
                 result = SQLSERVER.name();
                 break;
@@ -46,9 +49,6 @@ public enum SqlEngine {
                 break;
             case "POSTGRES":
                 result = POSTGRESQL.name();
-                break;
-            case "INFORMIX":
-                result = INFORMIX.name();
                 break;
             default:
                 result = name.toUpperCase();
