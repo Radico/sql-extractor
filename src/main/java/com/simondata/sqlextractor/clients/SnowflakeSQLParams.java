@@ -20,6 +20,15 @@ package com.simondata.sqlextractor.clients;
  * A subtype of SQLParams used to work with Snowflake.
  */
 public class SnowflakeSQLParams extends SQLParams {
+
+    /**
+     * Constructor
+     * @param host
+     * @param port
+     * @param user
+     * @param password
+     * @param database
+     */
     public SnowflakeSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);
     }

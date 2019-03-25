@@ -31,10 +31,19 @@ public class PostgreSQLClient extends AbstractSQLClient {
     private static final int DEFAULT_PORT = 5432;
     private static final String DEFAULT_HOST = "localhost";
 
+    /**
+     * Constructor
+     * @param params
+     */
     public PostgreSQLClient(SQLParams params) {
         super(params);
     }
 
+    /**
+     * Constructor
+     * @param params
+     * @param queryParams
+     */
     public PostgreSQLClient(SQLParams params, QueryParams queryParams) {
         super(params, queryParams);
     }

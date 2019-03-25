@@ -31,11 +31,34 @@ public class PostgreSQLSQLParams extends SQLParams {
     private String sslPassword;
     private String sslRootCert;
 
+    /**
+     * Base Constructor
+     * @param host
+     * @param port
+     * @param user
+     * @param password
+     * @param database
+     */
     public PostgreSQLSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);
     }
 
-    public PostgreSQLSQLParams(String host, Integer port, String user, String password, String database, Properties customProperties) {
+    /**
+     * Constructor with custom properties.
+     * @param host
+     * @param port
+     * @param user
+     * @param password
+     * @param database
+     * @param customProperties
+     */
+    public PostgreSQLSQLParams(
+            String host,
+            Integer port,
+            String user,
+            String password,
+            String database,
+            Properties customProperties) {
         super(host, port, user, password, database, customProperties);
     }
 
