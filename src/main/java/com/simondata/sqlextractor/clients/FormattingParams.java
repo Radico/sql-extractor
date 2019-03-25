@@ -34,6 +34,11 @@ public class FormattingParams implements InputParams {
     private KeyCaseFormat keyCaseFormat;
 
     public FormattingParams() {
+        this.keyCaseFormat = KeyCaseFormat.DEFAULT;
+    }
+
+    public FormattingParams(KeyCaseFormat keyCaseFormat) {
+        this.keyCaseFormat = keyCaseFormat;
     }
 
     public void setKeyCaseFormat(String keyCaseFormat) {
