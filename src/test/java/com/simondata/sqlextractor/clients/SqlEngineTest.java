@@ -40,4 +40,12 @@ public class SqlEngineTest {
         assertEquals(SqlEngine.BIGQUERY, SqlEngine.byName("bigquery"));
         assertEquals(SqlEngine.SNOWFLAKE, SqlEngine.byName("snowflake"));
     }
+
+    @Test
+    public void testByNameIgnoresSpaces() {
+        assertEquals(SqlEngine.SQLSERVER, SqlEngine.byName("ms sql"));
+        assertEquals(SqlEngine.SQLSERVER, SqlEngine.byName("SQL Server"));
+        assertEquals(SqlEngine.ORACLE, SqlEngine.byName("oracle db"));
+        assertEquals(SqlEngine.INFORMIX, SqlEngine.byName("ibm informix"));
+    }
 }

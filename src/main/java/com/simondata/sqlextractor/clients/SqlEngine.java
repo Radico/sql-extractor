@@ -34,21 +34,32 @@ public enum SqlEngine {
 
     private static String normalizeName(String name) {
         String result;
-        switch (name.toUpperCase()) {
+        String cleaned = name.toUpperCase().replaceAll(" ", "_");
+        switch (cleaned) {
             case "AWSATHENA":
             case "AWS_ATHENA":
                 result = ATHENA.name();
                 break;
             case "AZURE":
             case "SQL_SERVER":
+            case "MS_SQL":
+            case "MICROSOFT_SQL_SERVER":
+            case "MS_SQL_SERVER":
             case "MSSQL":
                 result = SQLSERVER.name();
                 break;
             case "MARIADB":
+            case "MARIA":
                 result = MYSQL.name();
+                break;
+            case "ORACLE_DB":
+                result = ORACLE.name();
                 break;
             case "POSTGRES":
                 result = POSTGRESQL.name();
+                break;
+            case "IBM_INFORMIX":
+                result = INFORMIX.name();
                 break;
             default:
                 result = name.toUpperCase();
@@ -57,6 +68,14 @@ public enum SqlEngine {
         return result;
     }
 
+    /**
+     * Safer version of converting a string to enum.
+     * Resiliant against differences in common names (MySQL vs MariaDB)
+     * or Postgres vs Postgresql.
+     * Case insensitive
+     * @param name
+     * @return
+     */
     public static SqlEngine byName(String name) {
         return EnumUtils.getEnum(SqlEngine.class, normalizeName(name));
     }
