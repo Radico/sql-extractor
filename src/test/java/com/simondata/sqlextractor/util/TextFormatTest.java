@@ -28,6 +28,7 @@ public class TextFormatTest {
         assertEquals("theRainInSpain", toCamelCase("the rain in spain"));
         assertEquals("theRainInSpain", toCamelCase("theRainInSpain"));
         assertEquals("theRainInSpain", toCamelCase("the_rain_in_spain"));
+        assertEquals("thisOneHas3Dig1tsInI7", toCamelCase("this_one_has_3_dig1tsInI7"));
     }
 
     @Test
@@ -35,6 +36,7 @@ public class TextFormatTest {
         assertEquals("the_rain_in_spain", toSnakeCase("the rain in spain"));
         assertEquals("the_rain_in_spain", toSnakeCase("the_rain_in_spain"));
         assertEquals("the_rain_in_spain", toSnakeCase("theRainInSpain"));
+        assertEquals("this_one_has3_dig1ts_in_i7", toSnakeCase("thisOneHas3Dig1tsInI7"));
     }
 
 }

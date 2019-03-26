@@ -64,7 +64,7 @@ public class TextFormat {
      * @return String formatted as snake case.
      */
     public static String toSnakeCase(String value) {
-        char sep = '_';
+        char underscore = '_';
         if (value == null) {
             return null;
         }
@@ -74,15 +74,15 @@ public class TextFormat {
             char ch = value.charAt(i);
             if ((ch >= 'A') && (ch <= 'Z')) {
                 if (!underscoreWritten) {
-                    result.append(sep);
+                    result.append(underscore);
                 }
             }
             if (ch == ' ') {
-                result.append(sep);
+                result.append(underscore);
                 underscoreWritten = true;
             } else {
                 result.append(Character.toLowerCase(ch));
-                underscoreWritten = (ch == sep);
+                underscoreWritten = (ch == underscore);
             }
         }
         return result.toString();
