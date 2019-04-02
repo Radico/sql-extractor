@@ -23,17 +23,29 @@ More info: http://jsonlines.org/
 ### Author and Contributors
 Written by @chetmancini and owned by Simon Data, Inc. Offered without warranty.
 
-## Running
+## Installation
 
 ### System Dependencies
 * Gradle
 * Java 8
 
 ### Build
+Build 'uberjar' to run as a standalone app.
 ```$sh
 gradle shadowJar
 ```
 
+Generate sources jar to `/build/libs` 
+```$sh
+gradle sources
+```
+
+Generate javadoc to `build/docs`
+```$sh
+gradle javadoc
+```
+
+## Usage
 ### Use as a library
 
 ```$java
@@ -125,5 +137,6 @@ Since Oracle has specific licensing restrictions, it's easiest to implement this
 
 ## Ideas for Future Enhancements
 * Provide additional output formats beyond JSON and CSV
+* Allow splitting out to multiple files by row or filesize.
 * Enhance JSON serialization configuration options
 * Read query SQL from stdin or console for runner.

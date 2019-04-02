@@ -22,9 +22,7 @@ import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Console;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -102,9 +100,20 @@ public class ExtractorRunner {
         System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace");
     }
 
-    private static String readSql(String filename) throws IOException {
+    private static String readSqlFromFile(String filename) throws IOException {
         logger.debug("Reading " + filename);
         return new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+    }
+
+    private static String readSqlFromStdIn() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String s;
+        while ((s = br.readLine()) != null) {
+            sb.append(s);
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 
     private static SQLParams getSqlParams(CommandLine commandLine) {
@@ -152,7 +161,13 @@ public class ExtractorRunner {
             }
             SQLExtractor sqlExtractor = new SQLExtractor(engine, sqlParams, formattingParams);
             try {
-                String inputSql = readSql(line.getOptionValue("sql"));
+                String inputFilename = line.getOptionValue("sql");
+                String inputSql;
+                if (inputFilename != null) {
+                    inputSql = readSqlFromFile(inputFilename);
+                } else {
+                    inputSql = readSqlFromStdIn();
+                }
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 sqlExtractor.queryToFile(inputSql, new File(outputFile), outputFormat, queryParams);
             } catch (IOException e) {
