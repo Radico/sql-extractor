@@ -139,4 +139,3 @@ Since Oracle has specific licensing restrictions, it's easiest to implement this
 * Provide additional output formats beyond JSON and CSV
 * Allow splitting out to multiple files by row or filesize.
 * Enhance JSON serialization configuration options
-* Read query SQL from stdin or console for runner.
