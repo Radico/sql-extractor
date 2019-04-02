@@ -33,11 +33,11 @@ public class PostgreSQLSQLParams extends SQLParams {
 
     /**
      * Base Constructor
-     * @param host
-     * @param port
-     * @param user
-     * @param password
-     * @param database
+     * @param host server host. Defaults to localhost.
+     * @param port server port. Defaults to postgres port.
+     * @param user database username.
+     * @param password database user's password.
+     * @param database the database to use.
      */
     public PostgreSQLSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);
@@ -45,11 +45,11 @@ public class PostgreSQLSQLParams extends SQLParams {
 
     /**
      * Constructor with custom properties.
-     * @param host
-     * @param port
-     * @param user
-     * @param password
-     * @param database
+     * @param host server host. Defaults to localhost.
+     * @param port server port. Defaults to postgres port.
+     * @param user database username.
+     * @param password database user's password.
+     * @param database the database to use.
      * @param customProperties
      */
     public PostgreSQLSQLParams(
@@ -73,34 +73,66 @@ public class PostgreSQLSQLParams extends SQLParams {
         );
     }
 
+    /**
+     * Get SSL parameter. Boolean.
+     * @return whether to use SSL
+     */
     public Boolean getSsl() {
         return getCustomBooleanParameter(this.ssl, "ssl");
     }
 
+    /**
+     * Get binary transfer parameter. Boolean
+     * @return whether to use binary transfer.
+     */
     public Boolean getBinaryTransfer() {
         return getCustomBooleanParameter(this.binaryTransfer, "binaryTransfer");
     }
 
+    /**
+     * Get Kerberos Server Name. String.
+     * @return Kerberos server name.
+     */
     public String getKerberosServerName() {
         return getCustomStringParameter(this.kerberosServerName, "kerberosServerName");
     }
 
+    /**
+     * Get SSL cert. String.
+     * @return SSL cert
+     */
     public String getSslCert() {
         return getCustomStringParameter(this.sslCert, "sslCert");
     }
 
+    /**
+     * SSL Key. String
+     * @return SSL Key
+     */
     public String getSslKey() {
         return getCustomStringParameter(this.sslKey, "sslKey");
     }
 
+    /**
+     * SSL Mode. String.
+     * @return SSL mode
+     */
     public String getSslMode() {
         return getCustomStringParameter(this.sslMode, "sslMode");
     }
 
+    /**
+     * SSL password. String.
+     * @return SSL password
+     */
     public String getSslPassword() {
         return getCustomStringParameter(this.sslMode, "sslPassword");
     }
 
+    /**
+     * Get SSL Root cert.
+     * @return SSL Root cert.
+     */
     public String getSslRootCert() {
         return getCustomStringParameter(this.sslRootCert, "sslRootCert");
     }

@@ -32,8 +32,8 @@ public class ClientFactory {
 
     /**
      * Factory method to build a client by engine type.
-     * @param engine
-     * @param params
+     * @param engine the type of client to build
+     * @param params SQLParams to put in the client
      * @return SQLClient
      */
     public static SQLClient makeSQLClient(SqlEngine engine, SQLParams params) {
