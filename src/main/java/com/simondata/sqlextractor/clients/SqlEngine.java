@@ -73,8 +73,8 @@ public enum SqlEngine {
      * Resiliant against differences in common names (MySQL vs MariaDB)
      * or Postgres vs Postgresql.
      * Case insensitive
-     * @param name
-     * @return
+     * @param name the String name of the db type to parse.
+     * @return The SQLEngine that matches the given name.
      */
     public static SqlEngine byName(String name) {
         return EnumUtils.getEnum(SqlEngine.class, normalizeName(name));

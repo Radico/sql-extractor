@@ -31,8 +31,8 @@ public interface RowWriter {
 
     /**
      * Write a set of rows out.
-     * @param rows
-     * @return
+     * @param rows List of all the rows to write.
+     * @return the number of rows written.
      */
     int writeRows(List<Map<String, Object>> rows);
 

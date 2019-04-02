@@ -28,11 +28,15 @@ public abstract class FileRowWriter extends AbstractRowWriter implements RowWrit
 
     protected PrintWriter writer = null;
 
+    /**
+     * Abstract method.
+     * @param row the row data to write out.
+     */
     public abstract void writeRow(Map<String, Object> row);
 
     /**
      * Convenience method.
-     * @param outputFilename
+     * @param outputFilename the file name to write to.
      */
     public void open(String outputFilename) {
         this.open(new File(outputFilename));
@@ -52,11 +56,18 @@ public abstract class FileRowWriter extends AbstractRowWriter implements RowWrit
         }
     }
 
+    /**
+     * Open an OutputStream and initialize writing process for a new query.
+     * @param outputStream the OutputStream to open.
+     */
     public void open(OutputStream outputStream) {
         this.writer = new PrintWriter(outputStream);
         this.postOpenHook();
     }
 
+    /**
+     * Open Stdout as an OutputStream.
+     */
     public void openStdOut() {
         this.open(System.out);
     }

@@ -50,7 +50,7 @@ public class PostgreSQLSQLParams extends SQLParams {
      * @param user database username.
      * @param password database user's password.
      * @param database the database to use.
-     * @param customProperties
+     * @param customProperties the custom properties to use in the connection.
      */
     public PostgreSQLSQLParams(
             String host,
@@ -62,6 +62,11 @@ public class PostgreSQLSQLParams extends SQLParams {
         super(host, port, user, password, database, customProperties);
     }
 
+    /**
+     * init engine params
+     * @param params existing SQLParams for a connection
+     * @return SQLParams of type PostgresSQL with the properties all setup.
+     */
     public static PostgreSQLSQLParams initEngineParams(SQLParams params) {
         return new PostgreSQLSQLParams(
                 params.getHost(),

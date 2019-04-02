@@ -33,10 +33,19 @@ public class MySQLClient extends AbstractSQLClient {
 
     /**
      * Constructor
-     * @param params
+     * @param params the parameters to use for the connection.
      */
     public MySQLClient(SQLParams params) {
         super(params);
+    }
+
+    /**
+     * Constructor.
+     * @param params the params for the connection
+     * @param queryParams the params for each query./
+     */
+    public MySQLClient(SQLParams params, QueryParams queryParams) {
+        super(params, queryParams);
     }
 
     @Override

@@ -38,16 +38,25 @@ public class SQLServerSQLParams extends SQLParams {
 
     /**
      * Params for SQLServer
-     * @param host
-     * @param port
-     * @param user
-     * @param password
-     * @param database
+     * @param host sqlserver host uri. Defaults to localhost
+     * @param port sqlserver port. Defaults to 1433.
+     * @param user the sqlserver user.
+     * @param password the sqlserver user's password
+     * @param database the database to use on the SQL Server.
      */
     public SQLServerSQLParams(String host, Integer port, String user, String password, String database) {
         super(host, port, user, password, database);
     }
 
+    /**
+     * Constructor with custom params
+     * @param host sqlserver host uri. Defaults to localhost
+     * @param port sqlserver port. Defaults to 1433.
+     * @param user the sqlserver user.
+     * @param password the sqlserver user's password
+     * @param database the database to use on the SQL Server.
+     * @param customProperties the custom properties to use
+     */
     public SQLServerSQLParams(
             String host, Integer port, String user, String password, String database, Properties customProperties
     ) {
@@ -65,10 +74,18 @@ public class SQLServerSQLParams extends SQLParams {
         );
     }
 
+    /**
+     * Set whether or not to encrypt. Boolean.
+     * @param encrypt whether or not to encrypt.
+     */
     public void setEncrypt(boolean encrypt) {
         this.encrypt = encrypt;
     }
 
+    /**
+     * Get whether or not to encrypt. Boolean
+     * @return whether or not to encrypt.
+     */
     public Boolean getEncrypt() {
         if (this.encrypt != null) {
             return this.encrypt;
@@ -78,10 +95,18 @@ public class SQLServerSQLParams extends SQLParams {
         }
     }
 
-    public void setTrustServerCertificate(boolean trustServerCertificate) {
+    /**
+     * Set Trust Server Certificate. Boolean.
+     * @param trustServerCertificate the trust server certificate.
+     */
+    public void setTrustServerCertificate(Boolean trustServerCertificate) {
         this.trustServerCertificate = trustServerCertificate;
     }
 
+    /**
+     * Get the trust server certificate. Boolean.
+     * @return the trust server certificate.
+     */
     public Boolean getTrustServerCertificate() {
         if (this.trustServerCertificate != null) {
             return this.trustServerCertificate;
@@ -92,17 +117,25 @@ public class SQLServerSQLParams extends SQLParams {
         }
     }
 
+    /**
+     * Set host name in certificate. String.
+     * @param hostNameInCertificate the host name in certificate.
+     */
     public void setHostNameInCertificate(String hostNameInCertificate) {
         this.hostNameInCertificate = hostNameInCertificate;
     }
 
+    /**
+     * Get host name in certificate.
+     * @return host name in certificate.
+     */
     public String getHostNameInCertificate() {
         return this.getCustomStringParameter(this.hostNameInCertificate, "hostNameInCertificate");
     }
 
     /**
      * Set SQLServer access token
-     * @param accessToken
+     * @param accessToken the SQLServer access token.
      */
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
@@ -118,7 +151,7 @@ public class SQLServerSQLParams extends SQLParams {
 
     /**
      * Set SQLServer authentication.
-     * @param authentication
+     * @param authentication the SQLServer authentication
      */
     public void setAuthentication(String authentication) {
         this.authentication = authentication;
@@ -134,7 +167,7 @@ public class SQLServerSQLParams extends SQLParams {
 
     /**
      * Set AuthenticationScheme
-     * @param authenticationScheme
+     * @param authenticationScheme the SQLServer authentication scheme
      */
     public void setAuthenticationScheme(String authenticationScheme) {
         this.authenticationScheme = authenticationScheme;
@@ -148,42 +181,82 @@ public class SQLServerSQLParams extends SQLParams {
         return this.getCustomStringParameter(this.authenticationScheme, "authenticationScheme");
     }
 
+    /**
+     * Set Column Encryption Setting
+     * @param columnEncryptionSetting the SQLserver column encryption setting.
+     */
     public void setColumnEncryptionSetting(String columnEncryptionSetting) {
         this.columnEncryptionSetting = columnEncryptionSetting;
     }
 
+    /**
+     * Get Column Encryption Setting. String.
+     * @return Column Encryption Setting
+     */
     public String getColumnEncryptionSetting() {
         return this.getCustomStringParameter(this.columnEncryptionSetting, "columnEncryptionSetting");
     }
 
+    /**
+     * Set Failover partner. String.
+     * @param failoverPartner the failover partner
+     */
     public void setFailoverPartner(String failoverPartner) {
         this.failoverPartner = failoverPartner;
     }
 
+    /**
+     * Get Failover partner. String.
+     * @return the failover partner.
+     */
     public String getFailoverPartner() {
         return this.getCustomStringParameter(this.failoverPartner, "failoverPartner");
     }
 
+    /**
+     * Set use integrated security
+     * @param integratedSecurity whether to use integrated security.
+     */
     public void setIntegratedSecurity(Boolean integratedSecurity) {
         this.integratedSecurity = integratedSecurity;
     }
 
+    /**
+     * Get whether to use integrated security
+     * @return whether to use integrated security.
+     */
     public Boolean getIntegratedSecurity() {
         return this.getCustomBooleanParameter(this.integratedSecurity, "integratedSecurity");
     }
 
+    /**
+     * Set Trust Store. String.
+     * @param trustStore The trust store to set.
+     */
     public void setTrustStore(String trustStore) {
         this.trustStore = trustStore;
     }
 
+    /**
+     * Get Trust Store. String.
+     * @return The Trust Store.
+     */
     public String getTrustStore() {
         return this.getCustomStringParameter(this.trustStore, "trustStore");
     }
 
+    /**
+     * Set the trust store password
+     * @param trustStorePassword the trust store password.
+     */
     public void setTrustStorePassword(String trustStorePassword) {
         this.trustStorePassword = trustStorePassword;
     }
 
+    /**
+     * Get the trust store password.
+     * @return the trust store password.
+     */
     public String getTrustStorePassword() {
         return this.getCustomStringParameter(this.trustStorePassword, "trustStorePassword");
     }

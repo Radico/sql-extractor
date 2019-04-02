@@ -54,8 +54,8 @@ public class CSVRowWriter extends FileRowWriter {
     /**
      * Constructor with custom delimiter and
      * flag to turn off headers.
-     * @param delimiter
-     * @param shouldWriteHeaders
+     * @param delimiter The delimiter for the CSV. defaults to comma.
+     * @param shouldWriteHeaders Whether to write the headers as the first row of the CSV.
      */
     public CSVRowWriter(CharSequence delimiter, boolean shouldWriteHeaders) {
         this.delimiter = delimiter;

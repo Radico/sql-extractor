@@ -33,7 +33,7 @@ public class PostgreSQLClient extends AbstractSQLClient {
 
     /**
      * Constructor
-     * @param params
+     * @param params SQLParams for the connection.
      */
     public PostgreSQLClient(SQLParams params) {
         super(params);
@@ -41,8 +41,8 @@ public class PostgreSQLClient extends AbstractSQLClient {
 
     /**
      * Constructor
-     * @param params
-     * @param queryParams
+     * @param params the SQLParams for the connection.
+     * @param queryParams the default params for each query.
      */
     public PostgreSQLClient(SQLParams params, QueryParams queryParams) {
         super(params, queryParams);

@@ -28,8 +28,21 @@ public class SQLServerClient extends AbstractSQLClient {
     private static final int DEFAULT_PORT = 1433;
     private static final String DEFAULT_HOST = "localhost";
 
+    /**
+     * Constructor
+     * @param params the SQLParams for the connection.
+     */
     public SQLServerClient(SQLParams params) {
         super(params);
+    }
+
+    /**
+     * Constructor.
+     * @param params the SQLParams for the connection
+     * @param queryParams the params for the queries.
+     */
+    public SQLServerClient(SQLParams params, QueryParams queryParams) {
+        super(params, queryParams);
     }
 
     @Override
@@ -42,16 +55,16 @@ public class SQLServerClient extends AbstractSQLClient {
         ds.setPortNumber(params.getPort(DEFAULT_PORT));
         ds.setDatabaseName(params.getDatabase());
 
-        if  (params.getEncrypt() != null) {
+        if (params.getEncrypt() != null) {
             ds.setEncrypt(params.getEncrypt());
         }
-        if  (params.getTrustServerCertificate() != null) {
+        if (params.getTrustServerCertificate() != null) {
             ds.setTrustServerCertificate(params.getTrustServerCertificate());
         }
-        if  (params.getTrustStore() != null) {
+        if (params.getTrustStore() != null) {
             ds.setTrustStore(params.getTrustStore());
         }
-        if  (params.getTrustStorePassword() != null) {
+        if (params.getTrustStorePassword() != null) {
             ds.setTrustStorePassword(params.getTrustStorePassword());
         }
         if (params.getTrustStoreType() != null) {
@@ -60,19 +73,19 @@ public class SQLServerClient extends AbstractSQLClient {
         if (params.getAccessToken() != null) {
             ds.setAccessToken(params.getAccessToken());
         }
-        if  (params.getAuthentication() != null) {
+        if (params.getAuthentication() != null) {
             ds.setAuthentication(params.getAuthentication());
         }
-        if  (params.getAuthenticationScheme() != null) {
+        if (params.getAuthenticationScheme() != null) {
             ds.setAuthenticationScheme(params.getAuthenticationScheme());
         }
-        if  (params.getColumnEncryptionSetting() != null) {
+        if (params.getColumnEncryptionSetting() != null) {
             ds.setColumnEncryptionSetting(params.getColumnEncryptionSetting());
         }
-        if  (params.getFailoverPartner() != null) {
+        if (params.getFailoverPartner() != null) {
             ds.setFailoverPartner(params.getFailoverPartner());
         }
-        if  (params.getIntegratedSecurity() != null) {
+        if (params.getIntegratedSecurity() != null) {
             ds.setIntegratedSecurity(params.getIntegratedSecurity());
         }
         if (params.getHostNameInCertificate() != null) {
