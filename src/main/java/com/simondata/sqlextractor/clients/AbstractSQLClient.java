@@ -28,6 +28,7 @@ import java.util.Map;
 
 /**
  * <h1>AbstractSQLClient</h1>
+ * Subclass for all different engine types
  */
 public abstract class AbstractSQLClient implements SQLClient {
 
