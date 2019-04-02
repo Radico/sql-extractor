@@ -47,12 +47,22 @@ public class QueryParams implements InputParams {
         this.logFrequency = DEFAULT_LOG_FREQUENCY;
     }
 
+    /**
+     * Constructor
+     * @param fetchSize the number of rows to fetch in each batch
+     * @param maxRows the maximum number of rows to retrieve.
+     * @param timeout the timeout period on the query in seconds.
+     */
     public QueryParams(Integer fetchSize, Integer maxRows, Integer timeout) {
         this.fetchSize = fetchSize;
         this.maxRows = maxRows;
         this.timeout = timeout;
     }
 
+    /**
+     * Get setting for fetch size
+     * @return the number of rows to retrieve per batch.
+     */
     public Integer getFetchSize() {
         if (fetchSize == null) {
             return DEFAULT_FETCH_SIZE;
@@ -61,22 +71,42 @@ public class QueryParams implements InputParams {
         }
     }
 
+    /**
+     * Get setting for maxrows
+     * @return the maximum rows to return from a query.
+     */
     public Integer getMaxRows() {
         return this.maxRows;
     }
 
+    /**
+     * Get setting for timeout.
+     * @return the maximum time a query will wait for result (seconds)
+     */
     public Integer getTimeout() {
         return this.timeout;
     }
 
+    /**
+     * Get setting for readonly.
+     * @return whether this query is readonly.
+     */
     public Boolean getReadOnly() {
         return this.readOnly;
     }
 
+    /**
+     * Get setting for how often to print rows retrieved.
+     * @return how often to log rowcount.
+     */
     public Integer getLogFrequency() {
         return this.logFrequency;
     }
 
+    /**
+     * Get default query params
+     * @return a Queryparams that represents default settings.
+     */
     public static QueryParams getDefaultQueryParams() {
         return new QueryParams();
     }

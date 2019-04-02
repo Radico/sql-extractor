@@ -33,22 +33,41 @@ public class FormattingParams implements InputParams {
 
     private KeyCaseFormat keyCaseFormat;
 
+    /**
+     * Constructor. Default FormattingParams.
+     */
     public FormattingParams() {
         this.keyCaseFormat = KeyCaseFormat.DEFAULT;
     }
 
+    /**
+     * Constructor
+     * @param keyCaseFormat the KeyCaseFormat to use
+     */
     public FormattingParams(KeyCaseFormat keyCaseFormat) {
         this.keyCaseFormat = keyCaseFormat;
     }
 
+    /**
+     * Set setting for keyCaseFormat
+     * @param keyCaseFormat String representing the keyCaseFormat to use.
+     */
     public void setKeyCaseFormat(String keyCaseFormat) {
         this.keyCaseFormat = getKeyCaseFormat(keyCaseFormat);
     }
 
+    /**
+     * Set setting for keyCaseFormat
+     * @param keyCaseFormat KeyCaseFormat to use.
+     */
     public void setKeyCaseFormat(KeyCaseFormat keyCaseFormat) {
         this.keyCaseFormat = keyCaseFormat;
     }
 
+    /**
+     * Get settinf for keyCaseFormat.
+     * @return the configured KeyCaseFormat. Defaults to no modifications.
+     */
     public KeyCaseFormat getKeyCaseFormat() {
         return this.keyCaseFormat;
     }
