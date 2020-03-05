@@ -18,6 +18,8 @@ package com.simondata.sqlextractor;
 
 import com.simondata.sqlextractor.clients.*;
 import com.simondata.sqlextractor.writers.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
@@ -31,6 +33,8 @@ public class SQLExtractor {
 
     private final SQLClient sqlClient;
     private FormattingParams formattingParams;
+
+    private final Logger logger = LoggerFactory.getLogger(SQLExtractor.class);
 
     /**
      * Constructor

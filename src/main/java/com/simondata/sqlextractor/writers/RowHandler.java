@@ -48,10 +48,14 @@ public class RowHandler {
         this.formattingParams = new FormattingParams();
     }
 
-    public RowHandler(RowWriter writer, int logFrequency, FormattingParams formattingParams) {
+    public RowHandler(RowWriter writer, Integer logFrequency, FormattingParams formattingParams) {
         this(writer);
-        this.logFrequency = logFrequency;
-        this.formattingParams = formattingParams;
+        if (logFrequency != null) {
+            this.logFrequency = logFrequency;
+        }
+        if (formattingParams != null) {
+            this.formattingParams = formattingParams;
+        }
     }
 
     public int handle(ResultSet rs) throws SQLException {

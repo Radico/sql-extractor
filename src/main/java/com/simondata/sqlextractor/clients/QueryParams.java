@@ -57,6 +57,7 @@ public class QueryParams implements InputParams {
         this.fetchSize = fetchSize;
         this.maxRows = maxRows;
         this.timeout = timeout;
+        this.logFrequency = DEFAULT_LOG_FREQUENCY;
     }
 
     /**
