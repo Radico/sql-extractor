@@ -45,6 +45,13 @@ Generate javadoc to `build/docs`
 gradle javadoc
 ```
 
+### Publish
+
+Publish a new release to JFrog Artifactory
+```sh
+gradle artifactoryPublish
+```
+
 ## Usage
 ### Use as a library
 
