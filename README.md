@@ -35,22 +35,17 @@ Build 'uberjar' to run as a standalone app.
 gradle shadowJar
 ```
 
-Generate sources jar to `/build/libs` 
-```$sh
-gradle sources
-```
-
-Generate javadoc to `build/docs`
-```$sh
-gradle javadoc
-```
-
 ### Publish
 
-Publish a new release to JFrog Artifactory
+First publish a new release to [JFrog Artifactory](https://simondata.jfrog.io/ui/repos/tree/General/gradle-virtual/gradle-int/sql-extractor)
 ```sh
-gradle artifactoryPublish
+gradle clean shadowJar artifactoryPublish
 ```
+
+You will see a version pushed like `sql-extractor-0.0.x-all.jar` in the output of the publish.
+
+Next, update Jenkins build argument for the version to pull into the container.
+[Jenkins Build Base Container](https://misc.automation.simondata.net/job/build-base-web-container/configure)
 
 ## Usage
 ### Use as a library
