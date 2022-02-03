@@ -37,7 +37,7 @@ gradle shadowJar
 
 ### Publish
 
-First publish a new release to [JFrog Artifactory](https://simondata.jfrog.io/ui/repos/tree/General/gradle-virtual/gradle-int/simon/sql-extractor)
+First publish a new release to [JFrog Artifactory](https://simondata.jfrog.io/ui/repos/tree/General/gradle-virtual/gradle-int/sql-extractor)
 ```sh
 gradle clean shadowJar artifactoryPublish
 ```
