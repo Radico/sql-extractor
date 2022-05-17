@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.guava:guava:27.0.1-jre'
     implementation group: 'com.ibm.informix', name: 'jdbc', version: '4.10.12'
-    implementation group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '7.0.0.jre8'
+    implementation group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '10.2.1.jre8'
     implementation group: 'com.amazon.redshift', name: 'redshift-jdbc42', version: '1.2.10.1009'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.9-rc'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.1'
