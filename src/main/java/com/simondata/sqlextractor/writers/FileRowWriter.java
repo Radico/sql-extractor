@@ -52,7 +52,7 @@ public abstract class FileRowWriter extends AbstractRowWriter implements RowWrit
             logger.info("Opening file: " + outputFile.getName());
             this.postOpenHook();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

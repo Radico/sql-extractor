@@ -97,8 +97,7 @@ public abstract class AbstractSQLClient implements SQLClient {
             MapListHandler handler = new MapListHandler();
             return queryRunner.query(queryText, handler);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }
@@ -113,8 +112,7 @@ public abstract class AbstractSQLClient implements SQLClient {
             CustomQueryRunner cqr = new CustomQueryRunner(ds, sc, handler);
             return cqr.query(queryText);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return -1;
         }
     }

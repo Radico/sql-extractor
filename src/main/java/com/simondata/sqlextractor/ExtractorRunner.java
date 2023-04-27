@@ -171,7 +171,7 @@ public class ExtractorRunner {
                 String outputFile = line.getOptionValue("file", DEFAULT_OUTPUT_FILENAME);
                 sqlExtractor.queryToFile(inputSql, new File(outputFile), outputFormat, queryParams);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         } catch (ParseException exp) {
             logger.error("Parsing failed.  Reason: " + exp.getMessage());
