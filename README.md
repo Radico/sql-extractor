@@ -25,9 +25,15 @@ Written by @chetmancini and owned by Simon Data, Inc. Offered without warranty.
 
 ## Installation
 
-### System Dependencies
+### Dependencies
+
+#### System
 * Gradle
 * Java 8
+
+#### Build and Run
+
+**Athena JDBC Libraries** - These are downloaded manually and pushed directly to Artifactory from [AWS Athena JDBC Download](https://docs.aws.amazon.com/athena/latest/ug/connect-with-jdbc.html).  We use the non-AWS SDK library and push to the path of `maven-local:com/syncron/amazonaws/AthenaJDBC42` or the current Athena Driver version to match.  This should match the `jdbc` major/minor version.
 
 ### Build
 Build 'uberjar' to run as a standalone app.
