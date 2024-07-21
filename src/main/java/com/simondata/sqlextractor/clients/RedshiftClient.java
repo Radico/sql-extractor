@@ -17,6 +17,7 @@ package com.simondata.sqlextractor.clients;
 
 import com.amazon.redshift.jdbc42.DataSource;
 import com.amazon.redshift.util.RedshiftException;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +52,8 @@ public class RedshiftClient extends AbstractSQLClient {
         DataSource ds = new DataSource();
         ds.setUserID(params.getUser());
         ds.setPassword(params.getPassword());
+        ds.setLocale(new Locale(params.getPropertyAsString("language")));
+        //ds.setLanguage(params.getPropertyAsString("language"));
         try {
             ds.setURL(this.getRedshiftURL());
         } catch (RedshiftException re) {
